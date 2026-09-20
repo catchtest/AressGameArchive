@@ -52,10 +52,18 @@ function showSettingsSidebar(){
   const values=['',...[...new Set([...host.querySelectorAll('[data-school]')].map(r=>r.dataset.school))]];
   html+=values.map(value=>`<button class="event sidebar-filter ${value===settingSidebar?'active':''}" data-sidebar-school="${esc(value)}"><span>${esc(value||'全部')}</span></button>`).join('');
  }else if(['characters','enemies'].includes(settingId)){
-  const profiles=[...host.querySelectorAll('[data-profile-card]')].filter(b=>!b.hidden),selected=profiles.find(b=>b.classList.contains('selected'));
-  html+=button('列表','data-sidebar-profile=""',!selected)+profiles.map(b=>{
-   const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',portrait=b.querySelector('img')?.getAttribute('src')||'';
-   return `<button class="event sidebar-filter sidebar-profile ${b.classList.contains('selected')?'active':''}" data-sidebar-profile="${b.dataset.profile}"><img class="sidebar-profile-avatar" loading="lazy" src="${esc(portrait)}" alt=""><span class="sidebar-profile-copy"><strong>${esc(label)}</strong>${context?`<small>${esc(context)}</small>`:''}</span></button>`;
+ const profiles=[...host.querySelectorAll('[data-profile-card]')].filter(b=>!b.hidden),selected=profiles.find(b=>b.classList.contains('selected'));
+ html+=button('列表','data-sidebar-profile=""',!selected)+profiles.map(b=>{
+   const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',sourcePortrait=b.querySelector('img');
+   let portrait='';
+   if(sourcePortrait){
+    const image=sourcePortrait.cloneNode();
+    image.classList.add('sidebar-profile-avatar');
+    image.loading='lazy';
+    image.alt='';
+    portrait=image.outerHTML;
+   }
+   return `<button class="event sidebar-filter sidebar-profile ${b.classList.contains('selected')?'active':''}" data-sidebar-profile="${b.dataset.profile}">${portrait}<span class="sidebar-profile-copy"><strong>${esc(label)}</strong>${context?`<small>${esc(context)}</small>`:''}</span></button>`;
   }).join('');
  }else if(settingId==='shops'){
   html+=[...host.querySelectorAll('.town-store')].map(d=>{const label=d.dataset.townLabel||'',point=d.dataset.townPoint;return `<button class="event sidebar-filter sidebar-town ${d.hidden?'':'active'}" data-sidebar-town="${d.dataset.townId}">${point!==undefined?pointSprite(Number(point)):''}<span>${esc(label)}</span></button>`;}).join('');
