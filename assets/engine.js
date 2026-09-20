@@ -54,7 +54,12 @@
       else if(op===0x10){s.scene=r.scene;if(event.id>=130){s.kind='scene';return s;}}
       else if(op===0xff){if(guided){s.kind='end';s.window=false;return s;}s.notes.push('事件結束標記；逐段模式仍保留後續靜態內容');}
       else if(op===0x74){s.kind='choice';s.choice={firstTarget:event.instructions[s.pc]?.offset,secondTarget:r.branch_target,options:['答應','拒絕']};return s;}
-      else if(op===0x72){s.pc=instructionIndex(event,r.branch_target);}
+      else if(op===0x72){
+        // The archive's normal reader walks source order so every conditional
+        // dialogue variant remains reviewable with its appearance condition.
+        // Guided playback follows the game's jump and shows one actual route.
+        if(guided)s.pc=instructionIndex(event,r.branch_target);
+      }
       else if(op===0x20){s.kind='battle';s.battle={field:r.field};if(guided)s.branch={...r};return s;}
       else if(r.branch_target!==undefined){
         if(guided){s.kind=op===0x20?'battle':'branch';s.branch={...r};return s;}
