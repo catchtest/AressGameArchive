@@ -13,6 +13,7 @@
     for(let guard=0;guard<event.instructions.length+1;guard++){
       const r=event.instructions[s.pc++];
       if(!r){s.kind='end';s.window=false;return s;}
+      if(r.suppress_reader)continue;
       const condition=r.entry_condition_text||'';
       if(condition.includes('戰鬥中死亡'))continue;
       s.offset=r.offset;s.hex=r.hex;s.condition=condition;s.conditionGroups=r.entry_condition_groups||[];const op=parseInt(r.opcode,16);
@@ -22,7 +23,7 @@
       else if(op===3)s.window=false;
       else if(op===4)s.left=null;
       else if(op===5)s.right=null;
-      else if(op===6||op===7){const body=r.display_body||r.body||r.text||'';if(!body.trim())continue;s.kind='dialogue';s.speaker=op===6?r.speaker||'':'';s.body=body;s.color=op===6?r.args[1]:0;s.textId=r.dialogue_id;s.endingFaceIds=r.ending_face_ids||[];if(!s.window)s.notes.push('此路徑未記錄開窗指令，閱讀器仍以對話框呈現文字；不是遊戲畫面的完整模擬。');return s;}
+      else if(op===6||op===7){const body=r.display_body||r.body||r.text||'';if(!body.trim())continue;if(r.scene)s.scene=r.scene;s.kind='dialogue';s.speaker=op===6?r.speaker||'':'';s.body=body;s.color=op===6?r.args[1]:0;s.textId=r.dialogue_id;s.endingFaceIds=r.ending_face_ids||[];if(!s.window)s.notes.push('此路徑未記錄開窗指令，閱讀器仍以對話框呈現文字；不是遊戲畫面的完整模擬。');return s;}
       else if(op===0x40){
         const rewards=[{id:r.args[0]+256*r.args[1],condition:r.entry_condition_text||'',offset:r.offset}];
         while(s.pc<event.instructions.length){
@@ -68,5 +69,19 @@
     }
     throw Error('指令步數超過事件長度');
   }
-  const api={initial,advance};if(typeof module!=='undefined')module.exports=api;else root.AressReader=api;
+  // Count reader frames, not bytecode instructions. Control instructions and
+  // grouped rewards can consume many instructions without adding a screen.
+  function frames(event, previous=initial(), guided=false) {
+    const result=[];
+    let state=previous;
+    for(let guard=0;guard<=event.instructions.length;guard++){
+      const target=state.kind==='choice'?state.choice.firstTarget:undefined;
+      state=advance(event,state,guided,target);
+      if(state.kind==='end')return result;
+      result.push(state);
+      if(state.kind==='branch')return result;
+    }
+    throw Error('劇情路徑未能結束');
+  }
+  const api={initial,advance,frames};if(typeof module!=='undefined')module.exports=api;else root.AressReader=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

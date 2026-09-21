@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://catchtest.github.io/AressGameArchive/sitemap.xml
