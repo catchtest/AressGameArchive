@@ -507,6 +507,12 @@ button.primary:active:not(:disabled),
 .sidebar-flow-number{font:700 15px Georgia, serif;color:peru;vertical-align:text-top;width:20px;display:inline-block;text-align:center;}
 .story-progress-accessible{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
+.class-sort{padding:0;border:0;border-radius:0;background:transparent;color:inherit;font-weight:inherit;white-space:nowrap}
+.class-sort::after{content:" ↕";color:var(--muted);font-size:.8em}
+th[aria-sort="ascending"] .class-sort::after{content:" ↑";color:var(--accent)}
+button.class-sort:hover:not(:disabled){background:transparent;color:var(--accent)}
+.floating-table-header .class-sort{pointer-events:auto}
+
 .sprite-0{background-position:0% 0%}
 .sprite-1{background-position:14.2857% 0%}
 .sprite-2{background-position:28.5714% 0%}

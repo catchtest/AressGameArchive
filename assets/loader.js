@@ -27,7 +27,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='7d71df500ec7';
+const assetVersion='6fa9b684d64d';
 const versioned=src=>src+'?v='+assetVersion;
 function loadApplication(){
  if(appPromise)return appPromise;
@@ -58,7 +58,7 @@ function loadApplication(){
  return appPromise;
 }
 function interceptNavigation(event){
- const button=event.target.closest?.('[data-section]');
+ const button=event.target.closest?.('a[data-section],button[data-section]');
  if(!button||appReady)return;
  // Hash links also work before data loads; initialization reads the latest hash.
  if(button.matches('a[href]'))return;
