@@ -27,8 +27,27 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='ae991fedf804';
+const assetVersion='d5da039871b2';
 const versioned=src=>src+'?v='+assetVersion;
+function buildReferencePages(){
+ const templates=[...document.querySelectorAll('template[data-page-template]')].map(template=>({
+  element:template.hasAttribute('data-svg-child')?template.content.firstElementChild.firstElementChild:template.content.firstElementChild,
+  attributes:JSON.parse(template.dataset.attrs)
+ }));
+ const build=reference=>{
+  if(typeof reference==='string')return document.createTextNode(reference);
+  const [templateId,values,children]=REFERENCE_PAGES.nodes[reference],template=templates[templateId],element=template.element.cloneNode(false);
+  template.attributes.forEach((name,index)=>{
+   if(name==='+class')element.classList.add(...values[index].split(' '));
+   else element.setAttribute(name,values[index]);
+  });
+  for(const child of children)element.appendChild(build(child));
+  return element;
+ };
+ const content=document.createDocumentFragment();
+ for(const root of REFERENCE_PAGES.roots)content.appendChild(build(root));
+ byId('settingsContent').replaceChildren(content);
+}
 function loadApplication(){
  if(appPromise)return appPromise;
  const status=byId('runtimeStatus');
@@ -39,7 +58,10 @@ function loadApplication(){
  document.body.classList.add('app-loading');
  appPromise=loadScript(versioned('assets/data.js'))
   .then(()=>loadScript(versioned('assets/engine.js')))
-  .then(()=>loadScript(versioned('assets/app.js')))
+  .then(()=>{
+   buildReferencePages();
+   return loadScript(versioned('assets/app.js'));
+  })
   .then(()=>{
    appReady=true;
    status.hidden=true;

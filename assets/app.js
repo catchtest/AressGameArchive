@@ -1,12 +1,39 @@
 (function(){
 'use strict';
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const cloneTemplate=id=>$(id).content.cloneNode(true);
+function renderRewards(host,state){
+ if(state.kind==='money'){
+  const content=cloneTemplate('moneyTemplate');content.querySelector('p').textContent=Number(state.amount).toLocaleString()+' G';host.replaceChildren(content);return;
+ }
+ const content=cloneTemplate('rewardTemplate'),items=content.querySelector('.reward-items');
+ const titles={'reward':'得到物品','item-loss':'失去物品','party':state.partyAction==='join'?'角色加入':'角色離隊','class-unlock':'開放職系'};
+ content.querySelector('h2').textContent=titles[state.kind];
+ if(state.kind==='reward'||state.kind==='item-loss'){
+  const merged=new Map();state.rewards.forEach(reward=>merged.set(reward.id,(merged.get(reward.id)||0)+1));
+  for(const [id,count] of merged){
+   const card=cloneTemplate('rewardItemTemplate'),label=D.item_names[id]||`道具 ${id}`,icon=card.querySelector('.item-icon');
+   icon.style.backgroundPosition=spritePosition(id,16,24);icon.setAttribute('aria-label',label);
+   card.querySelector('[data-label]').textContent=label+(count>1?` × ${count}`:'');items.append(card);
+  }
+ }else{
+  const members=state.kind==='party'?state.characters.map(characterId=>({characterId})):[...new Map(state.classUnlocks.map(row=>[`${row.characterId}:${row.classId}`,row])).values()];
+  for(const {characterId:id,classId} of members){
+   const card=cloneTemplate('partyMemberTemplate'),label=card.querySelector('[data-label]');
+   card.querySelector('button').dataset.openCharacter=id;
+   card.querySelector('[data-portrait]').outerHTML=portraitSprite(id);
+   label.textContent=D.character_names[id]||`角色 ${id}`;
+   if(classId!==undefined){const detail=cloneTemplate('classUnlockLabelTemplate');detail.querySelector('[data-class-name]').textContent=D.class_names[classId]||`職系 ${classId}`;label.append(detail);}
+   items.append(card);
+  }
+ }
+ host.replaceChildren(content);
+}
 let eventId=130,history=[],position=0,guided=false,section='home',storyGroup='main',battleGroup='main',settingId='equipment',settingSidebar='',shopView='products',world=1,pointId=0,fieldFile=A.fields[0].file;
 const imagePath=(name,category)=>`assets/${category}/${name.replace(/\.[^.]+$/,'.png')}`;
 const spritePosition=(id,columns,rows)=>`${columns>1?id%columns/(columns-1)*100:0}% ${rows>1?Math.floor(id/columns)/(rows-1)*100:0}%`;
 const pointSprite=id=>`<span class="point-sprite" style="background-position:${spritePosition(id,8,8)}" aria-hidden="true"></span>`;
 const itemSprite=(id,label='')=>`<span class="item-icon item-sprite" style="background-position:${spritePosition(id,16,24)}" role="img" aria-label="${esc(label)}"></span>`;
-const transparentImage='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
 const imageLoads=new Map(),imageRequests=new Map();
 function preloadImage(src){
  if(!src)return Promise.resolve();
@@ -17,7 +44,7 @@ function preloadImage(src){
  }));
  return imageLoads.get(src);
 }
-const spriteImage=(path,index,columns,rows,label='',cls='')=>`<img class="sprite-image ${cls}" src="${transparentImage}" style="--sprite-image:url(&quot;${path}&quot;);--sprite-size:${columns*100}% ${rows*100}%;--sprite-position:${spritePosition(index,columns,rows)}" alt="${esc(label)}">`;
+const spriteImage=(path,index,columns,rows,label='',cls='')=>`<i class="sprite-image ${cls}" role="img" style="--sprite-image:url(&quot;${path}&quot;);--sprite-size:${columns*100}% ${rows*100}%;--sprite-position:${spritePosition(index,columns,rows)}" aria-label="${esc(label)}"></i>`;
 const portraitSprite=(id,label='')=>spriteImage('portraits/FACE_SPRITE.png',id,16,13,label);
 const mapUnitSprite=(path,label='',cls='')=>{const match=String(path).match(/(MIKATA|TEKI)_(\d+)\.png$/);if(!match)return '';const index=Number(match[2])+(match[1]==='TEKI'?95:0);return spriteImage('map_sprites/UNIT_SPRITE.png',index,16,7,label,cls);};
 const source=id=>A.sources[id],eventName=id=>{const row=source(id),title=row.title||'';return !title||['主線劇情','地點劇情',row.name].includes(title)?row.name:`${row.name} · ${title}`;};
@@ -46,7 +73,7 @@ function setSidebarHidden(hidden){document.body.classList.toggle('sidebar-hidden
 function setImage(id,name,category){
  const el=$(id);el.hidden=!name;
  if(name&&category==='portraits'){
-  const face=Number((String(name).match(/FACE(\d+)/)||[])[1]);el.src=transparentImage;el.classList.add('sprite-image');el.style.setProperty('--sprite-image','url("portraits/FACE_SPRITE.png")');el.style.setProperty('--sprite-size','1600% 1300%');el.style.setProperty('--sprite-position',spritePosition(face,16,13));el.alt=name;
+  const face=Number((String(name).match(/FACE(\d+)/)||[])[1]);el.classList.add('sprite-image');el.style.setProperty('--sprite-image','url("portraits/FACE_SPRITE.png")');el.style.setProperty('--sprite-size','1600% 1300%');el.style.setProperty('--sprite-position',spritePosition(face,16,13));el.setAttribute('aria-label',name);
  }else if(name){
   const nextSrc=imagePath(name,category);
   const request=(imageRequests.get(id)||0)+1;imageRequests.set(id,request);
@@ -92,13 +119,12 @@ function showSettingsSidebar(){
   const profiles=[...host.querySelectorAll('[data-profile-card]')].filter(b=>!b.hidden),selected=profiles.find(b=>b.classList.contains('selected'));
   const characterConditions=settingId==='characters'?host.querySelector('[data-character-conditions]'):null,characterEndings=settingId==='characters'?host.querySelector('[data-character-endings]'):null;
   html+=button('列表','data-sidebar-profile=""',!selected&&(!characterConditions||characterConditions.hidden&&characterEndings.hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!characterConditions.hidden)+button('結局','data-character-endings-nav',!characterEndings.hidden):'')+profiles.map(b=>{
-   const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',sourcePortrait=b.querySelector('img');
+   const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',sourcePortrait=b.querySelector('.sprite-image,img');
    let portrait='';
    if(sourcePortrait){
     const image=sourcePortrait.cloneNode();
     image.classList.add('sidebar-profile-avatar');
-    image.loading='lazy';
-    image.alt='';
+    image.setAttribute('aria-label','');
     portrait=image.outerHTML;
    }
    return `<button class="event sidebar-filter sidebar-profile ${b.classList.contains('selected')?'active':''}" data-sidebar-profile="${b.dataset.profile}">${portrait}<span class="sidebar-profile-copy"><strong>${esc(label)}</strong>${context?`<small>${esc(context)}</small>`:''}</span></button>`;
@@ -206,18 +232,7 @@ function render(){
  setImage('leftFace',showFaces?leftPortrait:null,'portraits');setImage('rightFace',showFaces?rightPortrait:null,'portraits');$('portraitRow').hidden=!showFaces||(!leftPortrait&&!rightPortrait);
  $('dialogue').hidden=s.kind!=='dialogue';$('speaker').hidden=false;$('speaker').textContent=narration?'':s.speaker;$('body').textContent=s.body;$('body').classList.toggle('red',!!s.color);$('body').scrollTop=0;
  const rewardPanel=$('rewardPanel'),statusKinds=['reward','item-loss','party','money','class-unlock'];rewardPanel.hidden=!statusKinds.includes(s.kind);
- if(s.kind==='reward'||s.kind==='item-loss'){
-  const merged=new Map();
-  s.rewards.forEach(reward=>{const row=merged.get(reward.id)||{...reward,count:0};row.count++;merged.set(reward.id,row);});
- rewardPanel.innerHTML=`<h2>${s.kind==='reward'?'得到物品':'失去物品'}</h2><div class="reward-items">`+[...merged.values()].map(reward=>{const label=D.item_names[reward.id]||`道具 ${reward.id}`;return `<article class="reward-item">${itemSprite(reward.id,label)}<span>${esc(label)}${reward.count>1?` × ${reward.count}`:''}</span></article>`;}).join('')+'</div>';
- }else if(s.kind==='party'){
-  rewardPanel.innerHTML=`<h2>${s.partyAction==='join'?'角色加入':'角色離隊'}</h2><div class="reward-items">`+s.characters.map(id=>`<button class="reward-item party-member" data-open-character="${id}">${portraitSprite(id)}<span>${esc(D.character_names[id]||`角色 ${id}`)}</span></button>`).join('')+'</div>';
- }else if(s.kind==='money'){
-  rewardPanel.innerHTML=`<h2>獲得金錢</h2><p class="money-change">${Number(s.amount).toLocaleString()} G</p>`;
- }else if(s.kind==='class-unlock'){
-  const unlocks=[...new Map((s.classUnlocks||[]).map(row=>[`${row.characterId}:${row.classId}`,row])).values()];
-  rewardPanel.innerHTML=`<h2>開放職系</h2><div class="reward-items">`+unlocks.map(row=>{const id=row.characterId,classId=row.classId;return `<button class="reward-item party-member" data-open-character="${id}">${portraitSprite(id)}<span>${esc(D.character_names[id]||`角色 ${id}`)}<small>可轉職為<br>${esc(D.class_names[classId]||`職系 ${classId}`)}</small></span></button>`;}).join('')+`</div>`;
- }
+ if(statusKinds.includes(s.kind))renderRewards(rewardPanel,s);
  const conditionBanner=$('conditionBanner'),rawCondition=s.condition&&s.condition!=='不需額外條件'?s.condition:'',storedConditionGroups=s.conditionGroups||[];
  const parsedConditionGroups=rawCondition?(rawCondition.startsWith('（')&&rawCondition.endsWith('）')?rawCondition.slice(1,-1).split('） 或 （'): [rawCondition]).map(group=>group.split(' 且 ').filter(Boolean)):[];
  const parsedConditionCount=parsedConditionGroups.reduce((total,group)=>total+group.length,0);
@@ -236,7 +251,12 @@ function render(){
  battleLink.classList.toggle('story-continuation',nextId!==null&&s.kind!=='battle');
  battleLink.innerHTML=(field?`<div><span>接續戰鬥</span><button data-open-field="${esc(field.file)}">${esc(field.title)} ↗</button></div>`:'')+(nextId!==null?`<div><span>接續劇情</span><button data-open-event="${nextId}">${esc(eventName(nextId))} ↗</button></div>`:'');
  const panel=$('interlude');panel.hidden=s.kind!=='choice';
- panel.innerHTML=s.kind==='choice'?`<h2>請選擇</h2><div class="choices"><button class="primary" data-choice-target="${s.choice.firstTarget}">${esc(s.choice.options[0])}</button><button data-choice-target="${s.choice.secondTarget}">${esc(s.choice.options[1])}</button></div>`:'';
+ panel.replaceChildren();
+ if(s.kind==='choice'){
+  const content=cloneTemplate('choiceTemplate');
+  content.querySelectorAll('button').forEach((button,index)=>{button.textContent=s.choice.options[index];button.dataset.choiceTarget=index?s.choice.secondTarget:s.choice.firstTarget;});
+  panel.append(content);
+ }
  $('prev').disabled=position===0;$('next').disabled=s.kind==='branch'||(lastFrame&&nextEventId()===null);
  $('next').textContent='▶';
 }
@@ -389,7 +409,7 @@ $('sourceLine').onclick=e=>{if(e.target.closest('#showLocation')){pointId=source
 $('toggleSidebar').onclick=()=>setSidebarHidden(!document.body.classList.contains('sidebar-hidden'));
 $('homeLink').onclick=e=>{e.preventDefault();setSection('home');};
 $('stage').onclick=e=>{if(e.target.closest('#interlude,#storyBattleLink,[data-open-character]'))return;step();};
-$('interlude').onclick=e=>{const choice=e.target.closest('[data-choice-target]');if(choice)step(Number(choice.dataset.choiceTarget));};
+$('interlude').onclick=e=>{const choice=e.target.closest('[data-choice-target]');if(!choice)return;e.stopPropagation();step(Number(choice.dataset.choiceTarget));};
 for(const id of ['dialogue','rewardPanel'])$(id).oncontextmenu=e=>{e.preventDefault();previous();};
 $('stage').onkeydown=e=>{if(e.key==='Enter'&&!e.target.closest('button')){e.preventDefault();step();}};
 $('settingsFilter').oninput=filterSettings;
@@ -445,9 +465,10 @@ $('worldPanel').onclick=e=>{
 };
 function sortClassColumn(column){
  const table=$('classes').querySelector('[data-class-overview] table');
- const rank=cell=>cell.querySelector('.class-status-initial')?0:cell.querySelector('.class-status-unlocked')?1:2;
+ const rank=cell=>cell.querySelector('.class-status-initial')?0:cell.querySelector('.class-status-final')?2:cell.querySelector('.class-status-unlocked')?1:3;
  const rows=[...table.tBodies[0].rows];
- rows.sort((a,b)=>rank(a.cells[column])-rank(b.cells[column])||Number(a.dataset.openCharacter)-Number(b.dataset.openCharacter));
+ const originalOrder=new Map(rows.map((row,index)=>[row,index]));
+ rows.sort((a,b)=>rank(a.cells[column])-rank(b.cells[column])||originalOrder.get(a)-originalOrder.get(b));
  table.tBodies[0].append(...rows);
  table.querySelectorAll('thead th').forEach((cell,index)=>{if(index===column)cell.setAttribute('aria-sort','ascending');else cell.removeAttribute('aria-sort');});
  scheduleTableHeader();
