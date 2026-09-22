@@ -90,7 +90,8 @@ function showSettingsSidebar(){
   html+=values.map(value=>`<button class="event sidebar-filter ${value===settingSidebar?'active':''}" data-sidebar-school="${esc(value)}"><span>${esc(value||'全部')}</span></button>`).join('');
  }else if(['characters','enemies'].includes(settingId)){
   const profiles=[...host.querySelectorAll('[data-profile-card]')].filter(b=>!b.hidden),selected=profiles.find(b=>b.classList.contains('selected'));
-  html+=button('列表','data-sidebar-profile=""',!selected&&(settingId!=='characters'||host.querySelector('[data-character-conditions]').hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!host.querySelector('[data-character-conditions]').hidden):'')+profiles.map(b=>{
+  const characterConditions=settingId==='characters'?host.querySelector('[data-character-conditions]'):null,characterEndings=settingId==='characters'?host.querySelector('[data-character-endings]'):null;
+  html+=button('列表','data-sidebar-profile=""',!selected&&(!characterConditions||characterConditions.hidden&&characterEndings.hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!characterConditions.hidden)+button('結局','data-character-endings-nav',!characterEndings.hidden):'')+profiles.map(b=>{
    const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',sourcePortrait=b.querySelector('img');
    let portrait='';
    if(sourcePortrait){
@@ -193,7 +194,7 @@ function render(){
  const s=history[position],e=D.events[eventId],origin=source(eventId);
  const lastFrame=position===history.length-1,progress=(position+1)/history.length*100,bottomBar=document.querySelector('.story-bottom-bar'),progressNode=$('storyProgress');
  bottomBar.style.setProperty('--story-progress',progress+'%');progressNode.setAttribute('aria-valuenow',String(Math.round(progress)));
- $('sourceLine').innerHTML=`<span>${esc(origin.kind)}</span><span class="breadcrumb-separator">›</span><strong>${esc(origin.name)}</strong>${origin.point_id!==null?'<button id="showLocation">世界地圖 ↗</button>':''}`;
+ $('sourceLine').innerHTML=`<span>${esc(origin.kind)}</span><span class="breadcrumb-separator">›</span><strong>${esc(origin.name)}</strong>${origin.point_id!==null?'<button id="showLocation">地圖 ↗</button>':''}`;
  const eventPoint=origin.point_id,backdropPoint=eventPoint===null?null:A.points[eventPoint],backdropWorld=backdropPoint?.world||world;
  if(backdropPoint?.background)$('mapBackdrop').innerHTML=`<img class="location-default-bg" src="${backdropPoint.background}" alt="${esc(backdropPoint.name)}景色">`;
  else $('mapBackdrop').innerHTML=worldArtwork(backdropWorld,eventPoint,false)+(backdropPoint?`<div class="map-hover-label story-location-label">${esc(backdropPoint.name)}</div>`:'');
@@ -259,7 +260,7 @@ function worldArtwork(mapWorld,activePoint,interactive=true){
  const routes=A.routes.filter(r=>r.world===mapWorld).map(r=>{const a=A.points[r.from_id],b=A.points[r.to_id];return `<line x1="${a.x+4}" y1="${a.y}" x2="${b.x+4}" y2="${b.y}"/>`;}).join('');
  const borderPoint=A.points[mapWorld===1?28:29],portalY=mapWorld===1?25:374;
  const markers=pts.map(p=>interactive?`<button class="map-point ${p.id===activePoint?'active':''}" data-point="${p.id}" style="left:${(p.x+4)/640*100}%;top:${p.y/400*100}%" title="${esc(p.name)}" aria-label="${esc(p.name)}">${pointSprite(p.id)}</button>`:`<span class="map-point ${p.id===activePoint?'active':''}" style="left:${(p.x+4)/640*100}%;top:${p.y/400*100}%" aria-hidden="true">${pointSprite(p.id)}</span>`).join('');
- return `<img src="assets/scenes/IDO${mapWorld}.png" alt="${mapWorld===1?'前半':'後半'}世界地圖"><svg class="world-routes" viewBox="0 0 640 400" aria-hidden="true">${routes}<line class="world-crossing" x1="${borderPoint.x}" y1="${borderPoint.y}" x2="188" y2="${portalY}"/></svg>${markers}`+(interactive?`<div class="map-hover-label" data-map-label aria-live="polite">${esc(A.points[activePoint]?.name||'')}</div><button class="world-switch-strip" data-cross-world aria-label="切換至${mapWorld===1?'後半':'前半'}世界" title="切換至${mapWorld===1?'後半':'前半'}世界"></button>`:'');
+ return `<img src="assets/scenes/IDO${mapWorld}.png" alt="${mapWorld===1?'前半':'後半'}地圖"><svg class="world-routes" viewBox="0 0 640 400" aria-hidden="true">${routes}<line class="world-crossing" x1="${borderPoint.x}" y1="${borderPoint.y}" x2="188" y2="${portalY}"/></svg>${markers}`+(interactive?`<div class="map-hover-label" data-map-label aria-live="polite">${esc(A.points[activePoint]?.name||'')}</div><button class="world-switch-strip" data-cross-world aria-label="切換至${mapWorld===1?'後半':'前半'}世界" title="切換至${mapWorld===1?'後半':'前半'}世界"></button>`:'');
 }
 function townServices(town){
  if(!town)return '';
@@ -282,18 +283,18 @@ function renderWorld(){
  $('locationInfo').innerHTML=`<h2>${esc(p.name)}</h2>${p.background?`<img class="location-background" src="${p.background}" alt="${esc(p.name)}景色">`:''}<h3>劇情</h3><div class="location-events">`+ids.filter(i=>i<D.events.length&&(i!==p.side_event||hasDialogue(i))).map(i=>`<button data-open-event="${i}">${esc(source(i).title)}</button>`).join('')+`</div>${battles.length?'<h3 class="location-battles">戰鬥</h3><div class="location-events">'+battles.map(f=>`<button data-open-field="${f.file}">${esc(f.title)}</button>`).join('')+'</div>':''}${townServices(town)}${templeServices(p)}`;
 }
 const battleRequests=new WeakMap();
-async function renderBattle(host,f,rosterMode){
+async function renderBattle(host,f){
  const request={};battleRequests.set(host,request);
  if(!f){host.innerHTML='<p>沒有找到此戰場資料。</p>';return;}
  try{await preloadImage(f.image);}catch{/* Keep the battle controls available even if its image is unavailable. */}
  if(battleRequests.get(host)!==request)return;
- const initial=f.number===1&&rosterMode!=='slots';
+ const initial=f.number===1;
  const enemies=f.enemies,allies=f.allies.filter(u=>u.on_map&&(!initial||u.slot<=A.initial_party.length)),units=[...enemies.map(u=>({...u,side:'enemy',prefix:'敵'})),...allies.map(u=>({...u,side:'ally',prefix:'我',name:initial?A.initial_party[u.slot-1].name:`我方 ${u.slot}`,portrait:initial?A.initial_party[u.slot-1].portrait:null}))];
  const nativeWidth=f.width*16,nativeHeight=f.height*16,defaultScale=2;
  const unitMarkup=units.filter(u=>u.on_map).map(u=>{const content=u.sprite?mapUnitSprite(u.sprite,u.name):`<span class="ally-position">${u.slot}</span>`,nativeUnitSize=32,attrs=`class="unit ${u.side}" style="left:${u.x*16/nativeWidth*100}%;top:${u.y*16/nativeHeight*100}%;width:${nativeUnitSize/nativeWidth*100}%;height:${nativeUnitSize/nativeHeight*100}%" title="${esc(u.name)} (${u.x}, ${u.y})" aria-label="${esc(u.name)}，座標 ${u.x}, ${u.y}"`;return u.side==='enemy'?`<button type="button" ${attrs} data-enemy-profile="${u.profile_key}">${content}</button>`:`<span ${attrs}>${content}</span>`;}).join('');
  const groupMap=new Map();enemies.forEach(u=>{const key=u.profile_key,group=groupMap.get(key)||{unit:u,count:0};group.count++;groupMap.set(key,group);});
  const summary=[...groupMap.values()].map(({unit:u,count})=>`<button class="battle-enemy-card" data-enemy-profile="${u.profile_key}">${mapUnitSprite(u.sprite)}<span><strong>${esc(u.name)}</strong><small>HP ${u.hp}</small></span>${count>1?`<b>×${count}</b>`:''}</button>`).join('');
- const tools=`<div class="battle-tools"><h3>${esc(f.title)}</h3><div class="battle-layer-toggles"><label><input type="checkbox" data-layer="ally" checked>顯示我方</label><label><input type="checkbox" data-layer="enemy" checked>顯示敵方</label></div>${f.number===1?`<label>我方隊伍<select data-roster aria-label="我方名單"><option value="initial" ${initial?'selected':''}>開局隊伍</option><option value="slots" ${!initial?'selected':''}>全部出陣槽位</option></select></label>`:''}<label>縮放 <span class="zoom-control"><input type="range" data-zoom min="100" max="300" value="200" step="25" aria-label="地圖縮放"><output data-zoom-label>2×</output></span></label></div>`;
+ const tools=`<div class="battle-tools"><h3>${esc(f.title)}</h3><div class="battle-layer-toggles"><label><input type="checkbox" data-layer="ally" checked>顯示我方</label><label><input type="checkbox" data-layer="enemy" checked>顯示敵方</label></div><label>縮放 <span class="zoom-control"><input type="range" data-zoom min="100" max="300" value="200" step="25" aria-label="地圖縮放"><output data-zoom-label>2×</output></span></label></div>`;
  const related=f.events.length?'<div class="battle-related"><h4>相關劇情</h4>'+f.events.map(i=>`<button data-open-event="${i}">${esc(eventName(i))}</button>`).join('')+'</div>':'';
  host.innerHTML=`<div class="battle-layout"><div class="battle-scroll"><div class="battle-board" style="width:${nativeWidth*defaultScale}px;height:${nativeHeight*defaultScale}px" data-field="${f.file}" data-native-width="${nativeWidth}" data-native-height="${nativeHeight}"><img class="battle-map" src="${f.image}" alt="${esc(f.title)}的戰場" style="width:100%;height:100%"><div class="battle-grid" style="background-size:${16/nativeWidth*100}% ${16/nativeHeight*100}%"></div>${unitMarkup}</div></div><div class="battle-sidebar">${tools}<h4>敵方總覽</h4><div class="battle-enemy-summary">${summary}</div>${related}</div></div><div class="profile-drawer battle-drawer" data-battle-drawer hidden><button class="drawer-scrim" data-close-battle-drawer aria-label="關閉敵方資料"></button><aside class="profile-panel" role="dialog" aria-label="敵方角色資料"><button class="drawer-close battle-drawer-close" data-close-battle-drawer aria-label="關閉敵方資料">✕</button><div data-battle-profile></div></aside></div>`;
 }
@@ -316,7 +317,7 @@ function selectProfile(section,key){
  section.querySelector('[data-profile-drawer]').hidden=!key;
 }
 function openProfile(section,key){
- if(section.id==='characters'&&!key)setCharacterConditions(false);
+ if(section.id==='characters'&&!key)setCharacterView('overview');
  selectProfile(section,key);showSettingsSidebar();
 }
 function filterSettings(){
@@ -378,10 +379,10 @@ function openTownStore(townId,storeIndex=0,view=shopView){
 }
 $('storyCategories').onclick=e=>{const b=e.target.closest('[data-story-group]');if(b)setStoryGroup(b.dataset.storyGroup);};
 $('battleCategories').onclick=e=>{const b=e.target.closest('[data-battle-group]');if(b)setBattleGroup(b.dataset.battleGroup);};
-function setCharacterConditions(show){
- const host=$('characters');host.querySelector('[data-character-overview]').hidden=show;host.querySelector('[data-character-conditions]').hidden=!show;
+function setCharacterView(view){
+ const host=$('characters');host.querySelector('[data-character-overview]').hidden=view!=='overview';host.querySelector('[data-character-conditions]').hidden=view!=='conditions';host.querySelector('[data-character-endings]').hidden=view!=='endings';
 }
-$('eventList').onclick=e=>{if(e.target.closest('[data-character-conditions-nav]')){selectProfile($('characters'),null);setCharacterConditions(true);showSettingsSidebar();return;}const category=e.target.closest('[data-sidebar-category]');if(category){settingSidebar=category.dataset.sidebarCategory;filterSettings();return;}const school=e.target.closest('[data-sidebar-school]');if(school){settingSidebar=school.dataset.sidebarSchool;filterSettings();return;}const race=e.target.closest('[data-sidebar-race]');if(race){settingSidebar=race.dataset.sidebarRace;filterSettings();return;}const classView=e.target.closest('[data-sidebar-class]');if(classView){settingSidebar=classView.dataset.sidebarClass;filterSettings();return;}const term=e.target.closest('[data-term-anchor]');if(term){$(term.dataset.termAnchor)?.scrollIntoView({block:'start'});return;}const profile=e.target.closest('[data-sidebar-profile]');if(profile){openProfile($(settingId),profile.dataset.sidebarProfile);return;}const town=e.target.closest('[data-sidebar-town]');if(town){selectTownStore(town.dataset.sidebarTown,0);return;}const row=e.target.closest('[data-sidebar-row]');if(row){$(settingId).querySelectorAll('[data-filter-row]')[Number(row.dataset.sidebarRow)]?.scrollIntoView({block:'center'});return;}const direct=e.target.closest('[data-event]');if(direct){loadEvent(Number(direct.dataset.event));return;}const b=e.target.closest('[data-location]');if(!b)return;pointId=Number(b.dataset.location);world=A.points[pointId].world;if(section==='story')loadEvent(storyGroup==='side'?A.points[pointId].side_event:A.points[pointId].main_events[0]);else setSection('world');};
+$('eventList').onclick=e=>{if(e.target.closest('[data-character-conditions-nav]')){selectProfile($('characters'),null);setCharacterView('conditions');showSettingsSidebar();return;}if(e.target.closest('[data-character-endings-nav]')){selectProfile($('characters'),null);setCharacterView('endings');showSettingsSidebar();return;}const category=e.target.closest('[data-sidebar-category]');if(category){settingSidebar=category.dataset.sidebarCategory;filterSettings();return;}const school=e.target.closest('[data-sidebar-school]');if(school){settingSidebar=school.dataset.sidebarSchool;filterSettings();return;}const race=e.target.closest('[data-sidebar-race]');if(race){settingSidebar=race.dataset.sidebarRace;filterSettings();return;}const classView=e.target.closest('[data-sidebar-class]');if(classView){settingSidebar=classView.dataset.sidebarClass;filterSettings();return;}const term=e.target.closest('[data-term-anchor]');if(term){$(term.dataset.termAnchor)?.scrollIntoView({block:'start'});return;}const profile=e.target.closest('[data-sidebar-profile]');if(profile){openProfile($(settingId),profile.dataset.sidebarProfile);return;}const town=e.target.closest('[data-sidebar-town]');if(town){selectTownStore(town.dataset.sidebarTown,0);return;}const row=e.target.closest('[data-sidebar-row]');if(row){$(settingId).querySelectorAll('[data-filter-row]')[Number(row.dataset.sidebarRow)]?.scrollIntoView({block:'center'});return;}const direct=e.target.closest('[data-event]');if(direct){loadEvent(Number(direct.dataset.event));return;}const b=e.target.closest('[data-location]');if(!b)return;pointId=Number(b.dataset.location);world=A.points[pointId].world;if(section==='story')loadEvent(storyGroup==='side'?A.points[pointId].side_event:A.points[pointId].main_events[0]);else setSection('world');};
 $('prev').onclick=previous;$('next').onclick=()=>step();$('restart').onclick=e=>{e.preventDefault();restartEvent();};
 $('sourceLine').onclick=e=>{if(e.target.closest('#showLocation')){pointId=source(eventId).point_id;world=A.points[pointId].world;setSection('world');}};
 $('toggleSidebar').onclick=()=>setSidebarHidden(!document.body.classList.contains('sidebar-hidden'));
@@ -393,7 +394,7 @@ $('stage').onkeydown=e=>{if(e.key==='Enter'&&!e.target.closest('button')){e.prev
 $('settingsFilter').oninput=filterSettings;
 $('shopViewSwitch').onclick=e=>{const shopMode=e.target.closest('[data-shop-view]');if(shopMode)setShopView(shopMode.dataset.shopView);};
 $('settingsContent').onclick=e=>{
- if(e.target.closest('[data-special-event]')){e.stopPropagation();$('sacrificeDialog').showModal();return;}
+ if(e.target.closest('[data-special-event]')){e.preventDefault();e.stopPropagation();$('sacrificeDialog').showModal();return;}
  if(e.target.closest('[data-close-special-event]')){$('sacrificeDialog').close();return;}
 
  const flowEvent=e.target.closest('[data-open-event]');if(flowEvent){e.stopPropagation();loadEvent(Number(flowEvent.dataset.openEvent));return;}
@@ -462,7 +463,6 @@ document.addEventListener('click',e=>{
  const item=e.target.closest('[data-jump-item]');if(item)openItem(Number(item.dataset.jumpItem));
  const spell=e.target.closest('[data-jump-spell]');if(spell)openSpell(Number(spell.dataset.jumpSpell));
 });
-document.addEventListener('change',e=>{if(!e.target.matches('[data-roster]'))return;const host=e.target.closest('#storyBattle,#fieldViewer');const f=A.fields.find(f=>f.file===host.querySelector('[data-field]').dataset.field);renderBattle(host,f,e.target.value);});
 document.addEventListener('input',e=>{const host=e.target.closest('#storyBattle,#fieldViewer');if(!host)return;const board=host.querySelector('.battle-board');if(e.target.matches('[data-zoom]')){const scale=Number(e.target.value)/100;board.style.width=Number(board.dataset.nativeWidth)*scale+'px';board.style.height=Number(board.dataset.nativeHeight)*scale+'px';const label=host.querySelector('[data-zoom-label]');if(label)label.textContent=Number(scale.toFixed(2))+'×';}if(e.target.matches('[data-layer]'))board.classList.toggle('hide-'+(e.target.dataset.layer==='ally'?'allies':'enemies'),!e.target.checked);});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('sacrificeDialog')?.open)return;document.querySelectorAll('[data-profile-drawer],[data-item-drawer],[data-battle-drawer],[data-temple-advice-drawer]').forEach(d=>d.hidden=true);document.querySelectorAll('[data-profile]').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});return;}if(['INPUT','SELECT','TEXTAREA','BUTTON','A','SUMMARY'].includes(document.activeElement.tagName)||section!=='story')return;if(['ArrowRight',' '].includes(e.key)){e.preventDefault();step();}else if(e.key==='ArrowLeft'){e.preventDefault();$('prev').click();}else if(e.key==='Home'){e.preventDefault();restartEvent();}else if(e.key==='End'){e.preventDefault();jumpToEnd();}});
 function applyLocation(){const target=pageFromLocation();if(target.setting)selectSetting(target.setting);setSection(target.section,false);}

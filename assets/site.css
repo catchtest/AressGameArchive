@@ -517,19 +517,36 @@ button.class-sort:hover:not(:disabled){background:transparent;color:var(--accent
 .special-event-dialog h2{padding-right:30px;color:var(--accent)}
 .special-event-close{position:absolute;right:12px;top:12px}
 .special-event-dialog .reward-items{margin-bottom:18px}
-[data-character-conditions] td{white-space:normal;text-align:left;min-width:240px}
+[data-character-conditions] td,[data-character-endings] td{white-space:normal;text-align:left;min-width:240px}
+[data-character-conditions] .archive-table td,[data-character-endings] .archive-table td{text-align:left}
 [data-character-conditions] .archive-table thead th,
-[data-character-conditions] .archive-table tbody th{text-align:left}
+[data-character-conditions] .archive-table tbody th,
+[data-character-endings] .archive-table thead th,
+[data-character-endings] .archive-table tbody th{text-align:left}
 [data-character-conditions] .character-history{gap:0}
 [data-character-conditions] .character-history article{padding:7px 0;border-radius:0;background:transparent}
 [data-character-conditions] .character-history article+article{border-top:1px solid var(--line)}
 [data-character-conditions] .character-history article p{margin-top:2px}
 
-.character-history article>[data-special-event]{display:block;margin-top:8px}
+.character-history article>[data-special-event]{display:inline-block;margin-top:5px}
 
-[data-special-event]{white-space:nowrap;min-width:max-content}
+[data-special-event]{white-space:nowrap;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+[data-character-endings] .character-endings{min-width:min(620px,70vw)}
 #classes>.class-legend{margin:0 0 24px}
 .class-status-final{color:#c49afa}
+
+/* Keep the game canvas above readable, naturally sized dialogue on phones. */
+@media(max-width:800px){
+ #storyPanel .stage{display:grid;grid-template-columns:minmax(0,1fr);aspect-ratio:auto;background:transparent;overflow:visible}
+ #storyPanel .stage::before{content:"";grid-area:1/1;aspect-ratio:8/5;pointer-events:none}
+ #stage>.scene,#stage>.empty-scene,#stage>.story-map-backdrop{position:absolute;inset:0 0 auto;width:100%;height:auto;aspect-ratio:8/5}
+ #storyPanel .conversation-layer{display:contents}
+ #storyPanel .portrait-row{grid-area:1/1;align-self:end;z-index:4;min-height:0;margin:12px 20px;padding:0}
+ #storyPanel .portrait-row .portrait{width:min(96px,32vw);height:auto;aspect-ratio:3/4}
+ #storyPanel .dialogue,#storyPanel .reward-panel{grid-area:2/1;position:relative;inset:auto;max-height:none;overflow:visible;margin-top:12px;min-width:0}
+ #storyPanel .dialogue .body{height:auto;min-height:0;max-height:none;overflow:visible;overflow-wrap:anywhere}
+ #stage>.interlude,#stage>.story-battle-link{grid-area:3/1;position:relative;inset:auto;transform:none;width:100%;min-width:0;max-width:none;margin:12px 0 0;overflow:visible}
+}
 
 .sprite-0{background-position:0% 0%}
 .sprite-1{background-position:14.2857% 0%}
