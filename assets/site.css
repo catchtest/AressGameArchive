@@ -547,6 +547,7 @@ button.class-sort:hover:not(:disabled){background:transparent;color:var(--accent
  #storyPanel .dialogue .body{height:auto;min-height:0;max-height:none;overflow:visible;overflow-wrap:anywhere}
  #stage>.interlude,#stage>.story-battle-link{grid-area:3/1;position:relative;inset:auto;transform:none;width:100%;min-width:0;max-width:none;margin:12px 0 0;overflow:visible}
 }
+.stat-bar-hp i{background:linear-gradient(90deg,#347dc1,#7bd8ff);box-shadow:0 0 5px #62bfffa8}
 
 .sprite-0{background-position:0% 0%}
 .sprite-1{background-position:14.2857% 0%}

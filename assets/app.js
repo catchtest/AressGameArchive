@@ -187,6 +187,7 @@ function restartEvent(){
 }
 function nextEventId(){
  if(eventId===A.ending_event_id)return null;
+ if(eventId===127)return null;
  const id=eventId===70?A.ending_event_id:eventId===130?0:eventId>=129?0:eventId+1;
  return D.events[id]&&source(id)?id:null;
 }
