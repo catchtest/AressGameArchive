@@ -16,7 +16,7 @@
       if(r.suppress_reader)continue;
       const condition=r.entry_condition_text||'';
       if(condition.includes('戰鬥中死亡'))continue;
-      s.offset=r.offset;s.hex=r.hex;s.condition=condition;s.conditionGroups=r.entry_condition_groups||[];const op=parseInt(r.opcode,16);
+      s.offset=r.offset;s.hex=r.hex;s.condition=condition;s.conditionGroups=r.entry_condition_groups||[];s.specialEvent=r.special_event||'';const op=parseInt(r.opcode,16);
       if(op===0)s.window=true;
       else if(op===1)s.left=r.portrait;
       else if(op===2)s.right=r.portrait;

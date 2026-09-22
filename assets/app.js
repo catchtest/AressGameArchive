@@ -2,6 +2,11 @@
 'use strict';
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cloneTemplate=id=>$(id).content.cloneNode(true);
+function openSpecialEvent(){
+ const dialog=$('sacrificeDialog');
+ document.body.appendChild(dialog);
+ dialog.showModal();
+}
 function renderRewards(host,state){
  if(state.kind==='money'){
   const content=cloneTemplate('moneyTemplate');content.querySelector('p').textContent=Number(state.amount).toLocaleString()+' G';host.replaceChildren(content);return;
@@ -23,7 +28,7 @@ function renderRewards(host,state){
    card.querySelector('button').dataset.openCharacter=id;
    card.querySelector('[data-portrait]').outerHTML=portraitSprite(id);
    label.textContent=D.character_names[id]||`角色 ${id}`;
-   if(classId!==undefined){const detail=cloneTemplate('classUnlockLabelTemplate');detail.querySelector('[data-class-name]').textContent=D.class_names[classId]||`職系 ${classId}`;label.append(detail);}
+   if(classId!==undefined){const detail=cloneTemplate('classUnlockLabelTemplate'),classLabel=detail.querySelector('[data-class-name]');classLabel.append(document.createTextNode(D.class_names[classId]||`職系 ${classId}`));label.append(detail);}
    items.append(card);
   }
  }
@@ -238,7 +243,11 @@ function render(){
  const parsedConditionCount=parsedConditionGroups.reduce((total,group)=>total+group.length,0);
  const conditionGroups=storedConditionGroups.length?storedConditionGroups:(rawCondition.length>180||parsedConditionCount>=4?parsedConditionGroups:[]);
  conditionBanner.classList.toggle('has-groups',conditionGroups.length>0);
- if(conditionGroups.length){
+ if(s.specialEvent==='sacrifice'){
+  conditionBanner.innerHTML='<span>出現條件：</span><a href="#sacrificeDialog" data-special-event="sacrifice">擋刀事件</a>';
+ }else if(s.specialEvent==='no-sacrifice'){
+  conditionBanner.textContent='出現條件：未觸發擋刀事件';
+ }else if(conditionGroups.length){
   const singleGroup=conditionGroups.length===1;
   const summary=singleGroup?`${conditionGroups[0].length} 項條件`:`${conditionGroups.length} 種可能`;
   const list=singleGroup?`<ul>${conditionGroups[0].map(term=>`<li>${esc(term)}</li>`).join('')}</ul>`:`<ol>${conditionGroups.map((group,index)=>`<li><b>可能 ${index+1}</b><ul>${group.map(term=>`<li>${esc(term)}</li>`).join('')}</ul></li>`).join('')}</ol>`;
@@ -310,11 +319,10 @@ async function renderBattle(host,f){
  try{await preloadImage(f.image);}catch{/* Keep the battle controls available even if its image is unavailable. */}
  if(battleRequests.get(host)!==request)return;
  const initial=f.number===1;
- const enemies=f.enemies,allies=f.allies.filter(u=>u.on_map&&(!initial||u.slot<=A.initial_party.length)),units=[...enemies.map(u=>({...u,side:'enemy',prefix:'敵'})),...allies.map(u=>({...u,side:'ally',prefix:'我',name:initial?A.initial_party[u.slot-1].name:`我方 ${u.slot}`,portrait:initial?A.initial_party[u.slot-1].portrait:null}))];
+ const enemies=f.enemy_positions.map(([type,x,y])=>({...A.enemy_types[type],x,y,on_map:true})),allies=f.allies.filter(u=>u.on_map&&(!initial||u.slot<=A.initial_party.length)),units=[...enemies.map(u=>({...u,side:'enemy'})),...allies.map(u=>({...u,side:'ally',name:initial?A.initial_party[u.slot-1].name:`我方 ${u.slot}`}))];
  const nativeWidth=f.width*16,nativeHeight=f.height*16,defaultScale=2;
  const unitMarkup=units.filter(u=>u.on_map).map(u=>{const content=u.sprite?mapUnitSprite(u.sprite,u.name):`<span class="ally-position">${u.slot}</span>`,nativeUnitSize=32,attrs=`class="unit ${u.side}" style="left:${u.x*16/nativeWidth*100}%;top:${u.y*16/nativeHeight*100}%;width:${nativeUnitSize/nativeWidth*100}%;height:${nativeUnitSize/nativeHeight*100}%" title="${esc(u.name)} (${u.x}, ${u.y})" aria-label="${esc(u.name)}，座標 ${u.x}, ${u.y}"`;return u.side==='enemy'?`<button type="button" ${attrs} data-enemy-profile="${u.profile_key}">${content}</button>`:`<span ${attrs}>${content}</span>`;}).join('');
- const groupMap=new Map();enemies.forEach(u=>{const key=u.profile_key,group=groupMap.get(key)||{unit:u,count:0};group.count++;groupMap.set(key,group);});
- const summary=[...groupMap.values()].map(({unit:u,count})=>`<button class="battle-enemy-card" data-enemy-profile="${u.profile_key}">${mapUnitSprite(u.sprite)}<span><strong>${esc(u.name)}</strong><small>HP ${u.hp}</small></span>${count>1?`<b>×${count}</b>`:''}</button>`).join('');
+ const summary=f.enemy_groups.map(([type,count])=>{const u=A.enemy_types[type];return `<button class="battle-enemy-card" data-enemy-profile="${u.profile_key}">${mapUnitSprite(u.sprite)}<span><strong>${esc(u.name)}</strong><small>HP ${u.hp}</small></span>${count>1?`<b>×${count}</b>`:''}</button>`;}).join('');
  const tools=`<div class="battle-tools"><h3>${esc(f.title)}</h3><div class="battle-layer-toggles"><label><input type="checkbox" data-layer="ally" checked>顯示我方</label><label><input type="checkbox" data-layer="enemy" checked>顯示敵方</label></div><label>縮放 <span class="zoom-control"><input type="range" data-zoom min="100" max="300" value="200" step="25" aria-label="地圖縮放"><output data-zoom-label>2×</output></span></label></div>`;
  const related=f.events.length?'<div class="battle-related"><h4>相關劇情</h4>'+f.events.map(i=>`<button data-open-event="${i}">${esc(eventName(i))}</button>`).join('')+'</div>':'';
  host.innerHTML=`<div class="battle-layout"><div class="battle-scroll"><div class="battle-board" style="width:${nativeWidth*defaultScale}px;height:${nativeHeight*defaultScale}px" data-field="${f.file}" data-native-width="${nativeWidth}" data-native-height="${nativeHeight}"><img class="battle-map" src="${f.image}" alt="${esc(f.title)}的戰場" style="width:100%;height:100%"><div class="battle-grid" style="background-size:${16/nativeWidth*100}% ${16/nativeHeight*100}%"></div>${unitMarkup}</div></div><div class="battle-sidebar">${tools}<h4>敵方總覽</h4><div class="battle-enemy-summary">${summary}</div>${related}</div></div><div class="profile-drawer battle-drawer" data-battle-drawer hidden><button class="drawer-scrim" data-close-battle-drawer aria-label="關閉敵方資料"></button><aside class="profile-panel" role="dialog" aria-label="敵方角色資料"><button class="drawer-close battle-drawer-close" data-close-battle-drawer aria-label="關閉敵方資料">✕</button><div data-battle-profile></div></aside></div>`;
@@ -410,12 +418,16 @@ $('toggleSidebar').onclick=()=>setSidebarHidden(!document.body.classList.contain
 $('homeLink').onclick=e=>{e.preventDefault();setSection('home');};
 $('stage').onclick=e=>{if(e.target.closest('#interlude,#storyBattleLink,[data-open-character]'))return;step();};
 $('interlude').onclick=e=>{const choice=e.target.closest('[data-choice-target]');if(!choice)return;e.stopPropagation();step(Number(choice.dataset.choiceTarget));};
-for(const id of ['dialogue','rewardPanel'])$(id).oncontextmenu=e=>{e.preventDefault();previous();};
+document.addEventListener('contextmenu',e=>{
+ if(section!=='story')return;
+ e.preventDefault();
+ if(e.target.closest('#storyWorkspace')&&!document.querySelector('dialog[open]'))previous();
+});
 $('stage').onkeydown=e=>{if(e.key==='Enter'&&!e.target.closest('button')){e.preventDefault();step();}};
 $('settingsFilter').oninput=filterSettings;
 $('shopViewSwitch').onclick=e=>{const shopMode=e.target.closest('[data-shop-view]');if(shopMode)setShopView(shopMode.dataset.shopView);};
 $('settingsContent').onclick=e=>{
- if(e.target.closest('[data-special-event]')){e.preventDefault();e.stopPropagation();$('sacrificeDialog').showModal();return;}
+ if(e.target.closest('[data-special-event]')){e.preventDefault();e.stopPropagation();openSpecialEvent();return;}
  if(e.target.closest('[data-close-special-event]')){$('sacrificeDialog').close();return;}
 
  const flowEvent=e.target.closest('[data-open-event]');if(flowEvent){e.stopPropagation();loadEvent(Number(flowEvent.dataset.openEvent));return;}
@@ -474,6 +486,8 @@ function sortClassColumn(column){
  scheduleTableHeader();
 }
 document.addEventListener('click',e=>{
+ if(e.target.closest('[data-special-event]')){e.preventDefault();openSpecialEvent();return;}
+ if(e.target.closest('[data-close-special-event]')){$('sacrificeDialog').close();return;}
  const sort=e.target.closest('[data-class-sort]');if(sort){sortClassColumn(Number(sort.dataset.classSort));return;}
  const character=e.target.closest('[data-open-character]');if(character){openCharacter(Number(character.dataset.openCharacter));return;}
  const townStore=e.target.closest('[data-open-town-store]');if(townStore){openTownStore(Number(townStore.dataset.openTownStore),Number(townStore.dataset.storeIndex)||0,townStore.dataset.shopSourceView||shopView);return;}
@@ -486,7 +500,7 @@ document.addEventListener('click',e=>{
  const spell=e.target.closest('[data-jump-spell]');if(spell)openSpell(Number(spell.dataset.jumpSpell));
 });
 document.addEventListener('input',e=>{const host=e.target.closest('#storyBattle,#fieldViewer');if(!host)return;const board=host.querySelector('.battle-board');if(e.target.matches('[data-zoom]')){const scale=Number(e.target.value)/100;board.style.width=Number(board.dataset.nativeWidth)*scale+'px';board.style.height=Number(board.dataset.nativeHeight)*scale+'px';const label=host.querySelector('[data-zoom-label]');if(label)label.textContent=Number(scale.toFixed(2))+'×';}if(e.target.matches('[data-layer]'))board.classList.toggle('hide-'+(e.target.dataset.layer==='ally'?'allies':'enemies'),!e.target.checked);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('sacrificeDialog')?.open)return;document.querySelectorAll('[data-profile-drawer],[data-item-drawer],[data-battle-drawer],[data-temple-advice-drawer]').forEach(d=>d.hidden=true);document.querySelectorAll('[data-profile]').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});return;}if(['INPUT','SELECT','TEXTAREA','BUTTON','A','SUMMARY'].includes(document.activeElement.tagName)||section!=='story')return;if(['ArrowRight',' '].includes(e.key)){e.preventDefault();step();}else if(e.key==='ArrowLeft'){e.preventDefault();$('prev').click();}else if(e.key==='Home'){e.preventDefault();restartEvent();}else if(e.key==='End'){e.preventDefault();jumpToEnd();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('sacrificeDialog')?.open)return;document.querySelectorAll('[data-profile-drawer],[data-item-drawer],[data-battle-drawer],[data-temple-advice-drawer]').forEach(d=>d.hidden=true);document.querySelectorAll('[data-profile]').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});return;}if(section!=='story'||document.querySelector('dialog[open]')||e.target.closest('input,select,textarea,[contenteditable="true"]'))return;if(e.key===' '&&e.target.closest('button,a,summary'))return;if(['ArrowRight',' '].includes(e.key)){e.preventDefault();step();}else if(e.key==='ArrowLeft'){e.preventDefault();$('prev').click();}else if(e.key==='Home'){e.preventDefault();restartEvent();}else if(e.key==='End'){e.preventDefault();jumpToEnd();}});
 function applyLocation(){const target=pageFromLocation();if(target.setting)selectSetting(target.setting);setSection(target.section,false);}
 // A horizontal scroll container traps CSS sticky positioning. Share one viewport
 // header across all responsive tables, preserving their measured column widths.
