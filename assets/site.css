@@ -7,7 +7,18 @@
 @media(max-width:1100px){.people-layout{grid-template-columns:minmax(0,1fr) minmax(310px,390px);gap:15px}.profile-panel{padding:16px}.profile-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.site-nav{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:800px){.people-layout{grid-template-columns:1fr}.portrait-picker{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));max-height:320px}.portrait-card :is(img,.sprite-image){width:60px;height:80px}.profile-panel{max-height:none}.profile-stats{grid-template-columns:repeat(3,minmax(0,1fr))}.settings .section-heading{align-items:stretch}.profile-heading>:is(img,.sprite-image){width:72px;height:96px}}
 /* Story navigation stays available independently from the current event. */
-.story-categories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:0 0 4px}.story-categories button{padding:7px 6px}.opening-event{min-height:48px;justify-content:center;text-align:center}.opening-event span{font-size:17px}
+/* Reusable joined group-button: shared by world switch, shop switch, story categories, etc. */
+.btn-group{display:inline-flex;align-items:center;gap:0}
+.btn-group button{position:relative;border-radius:0;white-space:nowrap;padding:7px 16px;min-width:88px}
+.btn-group button:first-child{border-radius:7px 0 0 7px}
+.btn-group button:last-child{border-radius:0 7px 7px 0}
+.btn-group button:not(:first-child){margin-left:-1px}
+.btn-group button.selected{z-index:1}
+.btn-group button:hover:not(:disabled),.btn-group button:focus-visible{z-index:2}
+.story-categories{display:flex;width:100%;margin:0 0 8px}
+.story-categories button{flex:1 1 0;min-width:0;text-align:center}
+.world-half-switch{margin:0}
+.opening-event{min-height:48px;justify-content:center;text-align:center}.opening-event span{font-size:17px}
 /* The original game places portraits over the dialogue text. Keep their native ratio. */
 .story-map-backdrop{position:absolute;inset:0;width:100%;height:100%;max-width:none;border:0;border-radius:0;pointer-events:none}.story-map-backdrop>:is(img,.sprite-image){width:100%;height:100%;object-fit:cover}.story-map-backdrop .map-point{pointer-events:none}.conversation-layer{position:absolute;left:16px;right:16px;bottom:16px;z-index:4;display:flex;flex-direction:column;gap:10px;max-height:calc(100% - 32px);pointer-events:none}.dialogue{position:relative;left:auto;right:auto;bottom:auto;width:100%;display:block;max-height:220px;padding:14px 17px;pointer-events:auto}.portrait-row{display:grid;grid-template-columns:1fr 1fr;align-items:end;min-height:256px;padding:0 18px;pointer-events:none}.portrait-row #leftFace{grid-column:1;grid-row:1;justify-self:start}.portrait-row #rightFace{grid-column:2;grid-row:1;justify-self:end}.portrait-row .portrait{display:block;width:192px;height:256px;max-width:none;max-height:none;object-fit:contain;align-self:auto;flex:none;background:#172326;box-shadow:0 0 0 2px #eee5ca,0 0 0 4px #332c20,0 5px 14px #000a}.speech{width:100%}.speaker{margin-bottom:4px}.body{max-height:155px}.next-hint{display:none}
 @media(max-width:800px){.conversation-layer{left:9px;right:9px;bottom:9px;max-height:calc(100% - 18px)}.dialogue{padding:10px;max-height:205px}.portrait-row{min-height:128px;padding:0 12px}.portrait-row .portrait{width:96px;height:128px;max-width:none}.body{max-height:150px}}
@@ -58,7 +69,7 @@
 
 /* Plain breadcrumb, conventional visit tabs, and stable active hover colours. */
 .source-line{gap:8px}.source-line strong{font-weight:500;color:var(--ink)}.breadcrumb-separator{color:#61726d}.source-line button{border:0;border-bottom:1px solid #766b4d;border-radius:0;padding:0 1px;background:transparent;color:var(--accent)}.source-line button:hover:not(:disabled){border:0;border-bottom:1px solid var(--accent);background:transparent;color:#fff0c7}
-.story-categories button.selected:hover:not(:disabled){background:var(--accent);color:#162326;border-color:var(--accent)}
+
 .story-bottom-bar button.primary:hover:not(:disabled){background:#ead39d;border-color:#f1dca8;color:#162326;box-shadow:inset 0 0 0 1px #fff2cc55}.story-bottom-bar button.primary:active:not(:disabled){background:#c8ad74;border-color:#d9c28e;color:#101a1c;box-shadow:none}.restart-button{min-width:43px;padding-inline:10px;font-family:"Segoe UI Symbol","Noto Sans Symbols 2",sans-serif}
 .top-banner .icon-button{border:1px solid #31474a;border-radius:7px;background:#203033;color:#e5dcc3;box-shadow:none}.top-banner .icon-button:hover:not(:disabled){border-color:#637872;background:#2b403e;color:#fff2cc}.top-banner .icon-button[aria-expanded="true"],.top-banner .icon-button[aria-expanded="true"]:hover:not(:disabled){border-color:#6d8179;background:#304641;color:#fff0c8}
 
@@ -116,13 +127,10 @@ body[data-section="settings"] #eventList{margin-top:4px}
 
 #shops .town-store-list{gap:0}
 #shops .town-store{border:0;border-radius:0;background:transparent;overflow:visible}
-#shops .shop-view-switch{position:sticky;top:56px;z-index:8;display:flex;justify-content:flex-end;gap:7px;padding:12px 0 8px;background:var(--bg)}
-#shops .shop-view-switch button{min-width:88px}
-#shops .shop-view-switch button.selected:hover:not(:disabled){background:var(--accent);color:#162326;border-color:var(--accent)}
 #shops .store-columns{padding:0 0 16px}
 #shops .store-group{scroll-margin-top:116px}
 #shops .store-content{min-width:0}
-@media(max-width:800px){#shops .shop-view-switch{top:50px}#shops .store-group{scroll-margin-top:108px}}
+@media(max-width:800px){#shops .store-group{scroll-margin-top:108px}}
 
 /* Centre the hovered place name inside the coloured inner plate drawn at
    x=463..594 and y=29..55 in the original 640x400 world-map artwork. */
@@ -321,9 +329,7 @@ body[data-section="settings"] #eventList{margin-top:4px}
 #storyPanel .story-bottom-bar .nav button{display:grid;place-items:center;width:44px;height:42px;padding:0;line-height:1}
 #storyPanel .story-bottom-bar .nav .restart-button{width:30px;min-width:30px;background:transparent;border-color:transparent;color:var(--muted);font-size:14px}
 #storyPanel .story-bottom-bar .nav .restart-button:hover:not(:disabled){color:var(--ink);background:#223034}
-.story-button-group{display:flex;gap:0}
-.story-button-group #prev{border-radius:7px 0 0 7px}
-.story-button-group #next{border-radius:0 7px 7px 0;margin-left:-1px}
+.story-button-group{display:flex;gap:0}.story-button-group #prev{border-radius:7px 0 0 7px}.story-button-group #next{border-radius:0 7px 7px 0;margin-left:-1px}
 #storyWorkspace{user-select:none;-webkit-user-select:none}
 .sidebar-hidden #storyPanel .story-bottom-bar{left:0}
 @media(max-width:1250px){#storyPanel .story-bottom-bar{left:280px}}
@@ -443,9 +449,7 @@ button.primary{
 }
 button.selected:hover:not(:disabled),
 button.primary:hover:not(:disabled),
-.story-categories button.selected:hover:not(:disabled),
-.story-bottom-bar button.primary:hover:not(:disabled),
-#shops .shop-view-switch button.selected:hover:not(:disabled){
+.story-bottom-bar button.primary:hover:not(:disabled){
  border-color:var(--primary-hover-border);
  background:var(--primary-hover-bg);
  color:var(--primary-ink);
@@ -453,9 +457,7 @@ button.primary:hover:not(:disabled),
 }
 button.selected:active:not(:disabled),
 button.primary:active:not(:disabled),
-.story-categories button.selected:active:not(:disabled),
-.story-bottom-bar button.primary:active:not(:disabled),
-#shops .shop-view-switch button.selected:active:not(:disabled){
+.story-bottom-bar button.primary:active:not(:disabled){
  border-color:var(--primary-active-border);
  background:var(--primary-active-bg);
  color:#101a1c;
@@ -492,11 +494,9 @@ button.primary:active:not(:disabled),
 .lottery-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:0;border-top:0;padding-right:10px}
 .lottery-heading h5{padding-top:9px}
 .lottery-heading strong{color:var(--accent);font-size:16px;font-weight:500;white-space:nowrap}
-.settings-heading .shop-view-switch{display:flex;flex:0 0 auto;justify-content:flex-end;gap:7px;margin-left:auto}
-.settings-heading .shop-view-switch button{min-width:88px;white-space:nowrap}
-.settings-heading .shop-view-switch button.selected:hover:not(:disabled){background:var(--accent);color:#162326;border-color:var(--accent)}
+.settings-heading .shop-view-switch{display:flex;flex:0 0 auto;justify-content:flex-end;margin-left:auto}
 #shops .store-group{scroll-margin-top:64px}
-@media(max-width:600px){.settings-heading .shop-view-switch{gap:5px}.settings-heading .shop-view-switch button{min-width:70px;padding:6px 9px}}
+@media(max-width:600px){.btn-group button{min-width:0;padding:6px 10px}}
 
 /* Lossless sprite sheets for fixed-size UI icons. */
 .item-icon{display:inline-block}

@@ -27,7 +27,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='565e977f5492';
+const assetVersion='1849d76ed65c';
 const versioned=src=>src+'?v='+assetVersion;
 function buildReferencePages(){
  const templates=[...document.querySelectorAll('template[data-page-template]')].map(template=>({

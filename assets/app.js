@@ -96,8 +96,8 @@ const groupForEvent=id=>id<71||id===130||id===A.ending_event_id?'main':'side';
 function showEvents(){
  $('homeInfo').hidden=section!=='home';
  $('eventList').hidden=section==='home';
- document.querySelectorAll('[data-story-group]').forEach(b=>b.classList.toggle('selected',b.dataset.storyGroup===storyGroup));
- document.querySelectorAll('[data-battle-group]').forEach(b=>b.classList.toggle('selected',b.dataset.battleGroup===battleGroup));
+ document.querySelectorAll('[data-story-group]').forEach(b=>{const on=b.dataset.storyGroup===storyGroup;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',on);});
+ document.querySelectorAll('[data-battle-group]').forEach(b=>{const on=b.dataset.battleGroup===battleGroup;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',on);});
  if(section==='settings'){showSettingsSidebar();return;}
  if(section==='home')return;
  if(section==='battles'){
@@ -308,7 +308,7 @@ function templeServices(point){
 function renderWorld(){
  showEvents();
  $('worldMap').innerHTML=worldArtwork(world,pointId,true);
- document.querySelectorAll('[data-world]').forEach(b=>b.classList.toggle('selected',Number(b.dataset.world)===world));
+ document.querySelectorAll('[data-world]').forEach(b=>{const on=Number(b.dataset.world)===world;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',on);});
  const p=A.points[pointId],ids=[...p.main_events,p.side_event],battles=A.fields.filter(f=>f.events.some(i=>source(i).point_id===p.id)),town=A.shop_towns.find(t=>t.point_id===p.id);
  $('locationInfo').innerHTML=`<h2>${esc(p.name)}</h2>${p.background?`<img class="location-background" src="${p.background}" alt="${esc(p.name)}景色">`:''}<h3>劇情</h3><div class="location-events">`+ids.filter(i=>i<D.events.length&&(i!==p.side_event||hasDialogue(i))).map(i=>`<button data-open-event="${i}">${esc(source(i).title)}</button>`).join('')+`</div>${battles.length?'<h3 class="location-battles">戰鬥</h3><div class="location-events">'+battles.map(f=>`<button data-open-field="${f.file}">${esc(f.title)}</button>`).join('')+'</div>':''}${townServices(town)}${templeServices(p)}`;
 }

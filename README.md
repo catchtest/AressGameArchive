@@ -16,10 +16,4 @@
 
 ## 資料來源
 
-網站內容由遊戲資料與原始執行檔解析產生。無法由程式明確證實的內容會標示為尚未確認，避免將推測寫成遊戲設定。
-
-## 建置程式
-
-本版本庫存放可直接由 GitHub Pages 發布的網站成品。擷取與建置程式位於 [AressGameArchiveBuilder](https://github.com/catchtest/AressGameArchiveBuilder)。
-
-`index.html` 與 `assets/` 由建置程式產生；本 README 會在重新建置時保留。
+網站內容由遊戲資料與原始執行檔解析產生。
