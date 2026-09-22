@@ -27,7 +27,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='6fa9b684d64d';
+const assetVersion='46ec196419fa';
 const versioned=src=>src+'?v='+assetVersion;
 function loadApplication(){
  if(appPromise)return appPromise;

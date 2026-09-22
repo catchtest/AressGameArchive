@@ -90,7 +90,7 @@ function showSettingsSidebar(){
   html+=values.map(value=>`<button class="event sidebar-filter ${value===settingSidebar?'active':''}" data-sidebar-school="${esc(value)}"><span>${esc(value||'全部')}</span></button>`).join('');
  }else if(['characters','enemies'].includes(settingId)){
   const profiles=[...host.querySelectorAll('[data-profile-card]')].filter(b=>!b.hidden),selected=profiles.find(b=>b.classList.contains('selected'));
-  html+=button('列表','data-sidebar-profile=""',!selected)+profiles.map(b=>{
+  html+=button('列表','data-sidebar-profile=""',!selected&&(settingId!=='characters'||host.querySelector('[data-character-conditions]').hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!host.querySelector('[data-character-conditions]').hidden):'')+profiles.map(b=>{
    const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',sourcePortrait=b.querySelector('img');
    let portrait='';
    if(sourcePortrait){
@@ -316,6 +316,7 @@ function selectProfile(section,key){
  section.querySelector('[data-profile-drawer]').hidden=!key;
 }
 function openProfile(section,key){
+ if(section.id==='characters'&&!key)setCharacterConditions(false);
  selectProfile(section,key);showSettingsSidebar();
 }
 function filterSettings(){
@@ -345,6 +346,7 @@ function openItem(id){
  const detail=host.querySelector(`[data-item-detail="${id}"]`),drawer=host.querySelector('[data-item-drawer]');if(drawer)drawer.hidden=!detail;else if(detail)detail.scrollIntoView({block:'start'});
 }
 function openCharacter(id){
+ if($('sacrificeDialog')?.open)$('sacrificeDialog').close();
  $('settingsFilter').value='';selectSetting('characters');setSection('settings');filterSettings();
  const character=$('characters').querySelector(`[data-character-id="${id}"]`);
  if(character)openProfile($('characters'),character.dataset.profile);
@@ -376,18 +378,24 @@ function openTownStore(townId,storeIndex=0,view=shopView){
 }
 $('storyCategories').onclick=e=>{const b=e.target.closest('[data-story-group]');if(b)setStoryGroup(b.dataset.storyGroup);};
 $('battleCategories').onclick=e=>{const b=e.target.closest('[data-battle-group]');if(b)setBattleGroup(b.dataset.battleGroup);};
-$('eventList').onclick=e=>{const category=e.target.closest('[data-sidebar-category]');if(category){settingSidebar=category.dataset.sidebarCategory;filterSettings();return;}const school=e.target.closest('[data-sidebar-school]');if(school){settingSidebar=school.dataset.sidebarSchool;filterSettings();return;}const race=e.target.closest('[data-sidebar-race]');if(race){settingSidebar=race.dataset.sidebarRace;filterSettings();return;}const classView=e.target.closest('[data-sidebar-class]');if(classView){settingSidebar=classView.dataset.sidebarClass;filterSettings();return;}const term=e.target.closest('[data-term-anchor]');if(term){$(term.dataset.termAnchor)?.scrollIntoView({block:'start'});return;}const profile=e.target.closest('[data-sidebar-profile]');if(profile){openProfile($(settingId),profile.dataset.sidebarProfile);return;}const town=e.target.closest('[data-sidebar-town]');if(town){selectTownStore(town.dataset.sidebarTown,0);return;}const row=e.target.closest('[data-sidebar-row]');if(row){$(settingId).querySelectorAll('[data-filter-row]')[Number(row.dataset.sidebarRow)]?.scrollIntoView({block:'center'});return;}const direct=e.target.closest('[data-event]');if(direct){loadEvent(Number(direct.dataset.event));return;}const b=e.target.closest('[data-location]');if(!b)return;pointId=Number(b.dataset.location);world=A.points[pointId].world;if(section==='story')loadEvent(storyGroup==='side'?A.points[pointId].side_event:A.points[pointId].main_events[0]);else setSection('world');};
+function setCharacterConditions(show){
+ const host=$('characters');host.querySelector('[data-character-overview]').hidden=show;host.querySelector('[data-character-conditions]').hidden=!show;
+}
+$('eventList').onclick=e=>{if(e.target.closest('[data-character-conditions-nav]')){selectProfile($('characters'),null);setCharacterConditions(true);showSettingsSidebar();return;}const category=e.target.closest('[data-sidebar-category]');if(category){settingSidebar=category.dataset.sidebarCategory;filterSettings();return;}const school=e.target.closest('[data-sidebar-school]');if(school){settingSidebar=school.dataset.sidebarSchool;filterSettings();return;}const race=e.target.closest('[data-sidebar-race]');if(race){settingSidebar=race.dataset.sidebarRace;filterSettings();return;}const classView=e.target.closest('[data-sidebar-class]');if(classView){settingSidebar=classView.dataset.sidebarClass;filterSettings();return;}const term=e.target.closest('[data-term-anchor]');if(term){$(term.dataset.termAnchor)?.scrollIntoView({block:'start'});return;}const profile=e.target.closest('[data-sidebar-profile]');if(profile){openProfile($(settingId),profile.dataset.sidebarProfile);return;}const town=e.target.closest('[data-sidebar-town]');if(town){selectTownStore(town.dataset.sidebarTown,0);return;}const row=e.target.closest('[data-sidebar-row]');if(row){$(settingId).querySelectorAll('[data-filter-row]')[Number(row.dataset.sidebarRow)]?.scrollIntoView({block:'center'});return;}const direct=e.target.closest('[data-event]');if(direct){loadEvent(Number(direct.dataset.event));return;}const b=e.target.closest('[data-location]');if(!b)return;pointId=Number(b.dataset.location);world=A.points[pointId].world;if(section==='story')loadEvent(storyGroup==='side'?A.points[pointId].side_event:A.points[pointId].main_events[0]);else setSection('world');};
 $('prev').onclick=previous;$('next').onclick=()=>step();$('restart').onclick=e=>{e.preventDefault();restartEvent();};
 $('sourceLine').onclick=e=>{if(e.target.closest('#showLocation')){pointId=source(eventId).point_id;world=A.points[pointId].world;setSection('world');}};
 $('toggleSidebar').onclick=()=>setSidebarHidden(!document.body.classList.contains('sidebar-hidden'));
 $('homeLink').onclick=e=>{e.preventDefault();setSection('home');};
 $('stage').onclick=e=>{if(e.target.closest('#interlude,#storyBattleLink,[data-open-character]'))return;step();};
 $('interlude').onclick=e=>{const choice=e.target.closest('[data-choice-target]');if(choice)step(Number(choice.dataset.choiceTarget));};
-$('dialogue').oncontextmenu=e=>{e.preventDefault();previous();};
+for(const id of ['dialogue','rewardPanel'])$(id).oncontextmenu=e=>{e.preventDefault();previous();};
 $('stage').onkeydown=e=>{if(e.key==='Enter'&&!e.target.closest('button')){e.preventDefault();step();}};
 $('settingsFilter').oninput=filterSettings;
 $('shopViewSwitch').onclick=e=>{const shopMode=e.target.closest('[data-shop-view]');if(shopMode)setShopView(shopMode.dataset.shopView);};
 $('settingsContent').onclick=e=>{
+ if(e.target.closest('[data-special-event]')){e.stopPropagation();$('sacrificeDialog').showModal();return;}
+ if(e.target.closest('[data-close-special-event]')){$('sacrificeDialog').close();return;}
+
  const flowEvent=e.target.closest('[data-open-event]');if(flowEvent){e.stopPropagation();loadEvent(Number(flowEvent.dataset.openEvent));return;}
  const flowField=e.target.closest('[data-open-field]');if(flowField){e.stopPropagation();openField(flowField.dataset.openField);return;}
  const character=e.target.closest('[data-open-character]');if(character){e.stopPropagation();openCharacter(Number(character.dataset.openCharacter));return;}
@@ -456,7 +464,7 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('change',e=>{if(!e.target.matches('[data-roster]'))return;const host=e.target.closest('#storyBattle,#fieldViewer');const f=A.fields.find(f=>f.file===host.querySelector('[data-field]').dataset.field);renderBattle(host,f,e.target.value);});
 document.addEventListener('input',e=>{const host=e.target.closest('#storyBattle,#fieldViewer');if(!host)return;const board=host.querySelector('.battle-board');if(e.target.matches('[data-zoom]')){const scale=Number(e.target.value)/100;board.style.width=Number(board.dataset.nativeWidth)*scale+'px';board.style.height=Number(board.dataset.nativeHeight)*scale+'px';const label=host.querySelector('[data-zoom-label]');if(label)label.textContent=Number(scale.toFixed(2))+'×';}if(e.target.matches('[data-layer]'))board.classList.toggle('hide-'+(e.target.dataset.layer==='ally'?'allies':'enemies'),!e.target.checked);});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('[data-profile-drawer],[data-item-drawer],[data-battle-drawer],[data-temple-advice-drawer]').forEach(d=>d.hidden=true);document.querySelectorAll('[data-profile]').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});return;}if(['INPUT','SELECT','TEXTAREA','BUTTON','A','SUMMARY'].includes(document.activeElement.tagName)||section!=='story')return;if(['ArrowRight',' '].includes(e.key)){e.preventDefault();step();}else if(e.key==='ArrowLeft'){e.preventDefault();$('prev').click();}else if(e.key==='Home'){e.preventDefault();restartEvent();}else if(e.key==='End'){e.preventDefault();jumpToEnd();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if($('sacrificeDialog')?.open)return;document.querySelectorAll('[data-profile-drawer],[data-item-drawer],[data-battle-drawer],[data-temple-advice-drawer]').forEach(d=>d.hidden=true);document.querySelectorAll('[data-profile]').forEach(b=>{b.classList.remove('selected');b.setAttribute('aria-pressed','false');});return;}if(['INPUT','SELECT','TEXTAREA','BUTTON','A','SUMMARY'].includes(document.activeElement.tagName)||section!=='story')return;if(['ArrowRight',' '].includes(e.key)){e.preventDefault();step();}else if(e.key==='ArrowLeft'){e.preventDefault();$('prev').click();}else if(e.key==='Home'){e.preventDefault();restartEvent();}else if(e.key==='End'){e.preventDefault();jumpToEnd();}});
 function applyLocation(){const target=pageFromLocation();if(target.setting)selectSetting(target.setting);setSection(target.section,false);}
 // A horizontal scroll container traps CSS sticky positioning. Share one viewport
 // header across all responsive tables, preserving their measured column widths.

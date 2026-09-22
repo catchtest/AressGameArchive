@@ -32,7 +32,7 @@
 
 .item-name{display:inline-flex;align-items:center;gap:9px}.item-icon{width:32px;height:32px;object-fit:contain;image-rendering:pixelated;flex:none}.profile-equipment{display:flex;gap:8px;flex-wrap:wrap}.profile-equipment button,.profile-equipment>span{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;background:#263835;border:0;border-radius:5px;color:var(--ink)}.profile-equipment .item-icon{width:28px;height:28px}
 .ally-position{display:grid;place-items:center;width:58%;height:58%;border-radius:50%;background:#b6e4fa;color:#10242b;font-weight:700;font-size:clamp(10px,1.2vw,16px);box-shadow:0 0 0 2px #173e4d}.slot-number{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#b6e4fa;color:#10242b}.town-store-list{display:grid;gap:12px}.town-store{border:1px solid var(--line);border-radius:9px;background:#142124;overflow:hidden}.town-store>summary{display:flex;align-items:center;gap:12px;padding:12px 16px;font-size:18px;color:var(--accent);background:#1b2b2e}.town-store>summary img{width:32px;height:32px;image-rendering:pixelated}.store-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:14px}.store-group{min-width:0;border:1px solid #3d4e49;border-radius:8px;overflow:hidden;background:#101b1e}.store-group h4{font-size:17px;font-weight:500;margin:0;padding:10px 12px;color:#f0d9a3}.store-art{height:136px;display:flex;align-items:center;justify-content:center;gap:8px;padding:8px;background:linear-gradient(135deg,#263836,#121c1f)}.store-art img{max-height:100%;object-fit:contain;image-rendering:pixelated}.store-menu-art{width:auto;max-width:12%}.store-list-art{width:auto;max-width:55%}.store-info-art{width:auto;max-width:29%}.store-items{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:10px}.store-item{display:flex;align-items:center;gap:8px;min-width:0;padding:7px 8px;text-align:left;background:#1b292c}.store-item span{overflow-wrap:anywhere}.store-item .item-icon{width:32px;height:32px}
-.reward-panel{pointer-events:auto;max-height:calc(100% - 12px);overflow:auto;padding:14px 17px;border:1px solid #ac9869;border-radius:8px;background:#142326f7;box-shadow:inset 0 0 0 2px #213132,0 5px 18px #0008;scrollbar-width:thin}.reward-panel>h2{margin:0 0 10px;color:var(--accent);font-size:21px}.reward-group{margin-top:12px}.reward-group h3{margin:0 0 7px;color:#d9cfb4;font-size:16px}.reward-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px}.reward-item{display:flex;align-items:center;gap:9px;min-width:0;padding:7px 9px;border-radius:6px;background:#213235}.reward-item img{width:36px;height:36px;object-fit:contain;image-rendering:pixelated;flex:none}.reward-item span{font-size:16px;overflow-wrap:anywhere}
+.reward-panel{pointer-events:auto;max-height:calc(100% - 12px);overflow:auto;padding:14px 17px;border:1px solid #ac9869;border-radius:8px;background:#142326f7;box-shadow:inset 0 0 0 2px #213132,0 5px 18px #0008;scrollbar-width:thin;-webkit-user-select:none;user-select:none}.reward-panel *{-webkit-user-select:none;user-select:none}.reward-panel>h2{margin:0 0 10px;color:var(--accent);font-size:21px}.reward-group{margin-top:12px}.reward-group h3{margin:0 0 7px;color:#d9cfb4;font-size:16px}.reward-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:7px}.reward-item{display:flex;align-items:center;gap:9px;min-width:0;padding:7px 9px;border-radius:6px;background:#213235}.reward-item img{width:36px;height:36px;object-fit:contain;image-rendering:pixelated;flex:none}.reward-item span{font-size:16px;overflow-wrap:anywhere}
 @media(max-width:1100px){.store-columns{grid-template-columns:1fr}.store-art{height:150px}.store-items{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}}@media(max-width:600px){.store-items{grid-template-columns:1fr}.store-art{height:110px}}
 /* Story text is read by clicking, so selection must never consume that click. */
 #storyWorkspace,#storyWorkspace *{-webkit-user-select:none;user-select:none}#storyWorkspace input,#storyWorkspace textarea{-webkit-user-select:text;user-select:text}.interlude{z-index:3}.conversation-layer{z-index:4}
@@ -113,7 +113,7 @@ body[data-section="settings"] #eventList{margin-top:4px}
 /* The shop uses the town sidebar as its location selector.  Keep the content
    switch above the three store cards and leave enough sticky-header clearance
    when a sidebar or world-map shortcut scrolls to a card. */
-.settings.spells-active .settings-heading,.settings.races-active .settings-heading{display:none}
+
 #shops .town-store-list{gap:0}
 #shops .town-store{border:0;border-radius:0;background:transparent;overflow:visible}
 #shops .shop-view-switch{position:sticky;top:56px;z-index:8;display:flex;justify-content:flex-end;gap:7px;padding:12px 0 8px;background:var(--bg)}
@@ -512,6 +512,24 @@ button.primary:active:not(:disabled),
 th[aria-sort="ascending"] .class-sort::after{content:" ↑";color:var(--accent)}
 button.class-sort:hover:not(:disabled){background:transparent;color:var(--accent)}
 .floating-table-header .class-sort{pointer-events:auto}
+
+.special-event-dialog{width:min(760px,94vw);max-height:85dvh;overflow:auto;padding:28px;background:var(--panel)}
+.special-event-dialog h2{padding-right:30px;color:var(--accent)}
+.special-event-close{position:absolute;right:12px;top:12px}
+.special-event-dialog .reward-items{margin-bottom:18px}
+[data-character-conditions] td{white-space:normal;text-align:left;min-width:240px}
+[data-character-conditions] .archive-table thead th,
+[data-character-conditions] .archive-table tbody th{text-align:left}
+[data-character-conditions] .character-history{gap:0}
+[data-character-conditions] .character-history article{padding:7px 0;border-radius:0;background:transparent}
+[data-character-conditions] .character-history article+article{border-top:1px solid var(--line)}
+[data-character-conditions] .character-history article p{margin-top:2px}
+
+.character-history article>[data-special-event]{display:block;margin-top:8px}
+
+[data-special-event]{white-space:nowrap;min-width:max-content}
+#classes>.class-legend{margin:0 0 24px}
+.class-status-final{color:#c49afa}
 
 .sprite-0{background-position:0% 0%}
 .sprite-1{background-position:14.2857% 0%}
