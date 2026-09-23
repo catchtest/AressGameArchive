@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 const byId=id=>document.getElementById(id);
-let appPromise=null,storyPromise=null,appReady=false;
+let appPromise=null,storyPromise=null,battlePromise=null,appReady=false;
 window.addEventListener('error',event=>{
  // Browsers report errors from extensions and other opaque third-party
  // scripts only as "Script error.".  They are unrelated to this reader and
@@ -27,7 +27,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='2da1dce7fb8c';
+const assetVersion='8b0c78db26f3';
 const versioned=src=>src+'?v='+assetVersion;
 function loadStoryData(){
  if(D.events)return Promise.resolve();
@@ -50,6 +50,29 @@ function loadStoryData(){
  return storyPromise;
 }
 window.AressLoadStory=loadStoryData;
+function loadBattleData(){
+ if(A.enemy_types)return Promise.resolve();
+ if(battlePromise)return battlePromise;
+ const status=byId('runtimeStatus');
+ if(appReady){status.hidden=false;status.textContent='正在載入戰場資料…';}
+ battlePromise=loadScript(versioned('assets/battle.js'))
+  .then(()=>{
+   const fields=new Map(BATTLE_DATA.fields.map(field=>[field.file,field]));
+   A.fields.forEach(field=>Object.assign(field,fields.get(field.file)));
+   A.enemy_types=BATTLE_DATA.enemy_types;
+   A.initial_party=BATTLE_DATA.initial_party;
+   if(appReady){status.hidden=true;status.textContent='';}
+  })
+  .catch(error=>{
+   battlePromise=null;
+   status.hidden=false;
+   status.setAttribute('role','alert');
+   status.textContent='戰場資料載入失敗：'+error.message;
+   throw error;
+  });
+ return battlePromise;
+}
+window.AressLoadBattle=loadBattleData;
 function buildReferencePages(){
  const templates=[...document.querySelectorAll('template[data-page-template]')].map(template=>({
   element:template.hasAttribute('data-svg-child')?template.content.firstElementChild.firstElementChild:template.content.firstElementChild,

@@ -171,23 +171,30 @@ function setBattleGroup(next){
  if(current?.battle_type!==next){const first=A.fields.find(f=>f.battle_type===next);if(first){fieldFile=first.file;renderBattle($('fieldViewer'),first);}}
  showEvents();
 }
-function openField(file){const field=A.fields.find(f=>f.file===file);if(!field)return;fieldFile=file;battleGroup=field.battle_type;renderBattle($('fieldViewer'),field);setSection('battles');}
+function openField(file){const field=A.fields.find(f=>f.file===file);if(!field)return;fieldFile=file;battleGroup=field.battle_type;setSection('battles');}
 let sectionRequest=0;
 function setSection(next,updateUrl=true){
  const request=++sectionRequest;
- if(next==='story'&&!D.events){
-  AressLoadStory().then(()=>{
-   if(request===sectionRequest)setSection(next,updateUrl);
-  }).catch(()=>{});
-  return;
- }
+  if(next==='story'&&!D.events){
+   AressLoadStory().then(()=>{
+    if(request===sectionRequest)setSection(next,updateUrl);
+   }).catch(()=>{});
+   return;
+  }
+  if(next==='battles'&&!A.enemy_types){
+   AressLoadBattle().then(()=>{
+    if(request===sectionRequest)setSection(next,updateUrl);
+   }).catch(()=>{});
+   return;
+  }
  if(next==='story'&&!history.length){prepareEvent(eventId);render();}
  section=next;
  document.body.dataset.section=next;
  for(const name of ['home','story','settings','world','battles'])$(name==='story'?'storyWorkspace':name+'Panel').hidden=name!==next;
  document.querySelectorAll('a[data-section],button[data-section]').forEach(b=>b.classList.toggle('selected',b.dataset.section===next&&(next!=='settings'||b.dataset.settingSection===settingId)));
- $('storyCategories').hidden=next!=='story';$('battleCategories').hidden=next!=='battles';showEvents();
- if(next==='world')renderWorld();
+  $('storyCategories').hidden=next!=='story';$('battleCategories').hidden=next!=='battles';showEvents();
+  if(next==='world')renderWorld();
+  if(next==='battles')renderBattle($('fieldViewer'),A.fields.find(field=>field.file===fieldFile));
  if(updateUrl){
   const target=new URL(location.href);target.hash=next==='settings'?settingId:next==='home'?'':next;
   if(location.href!==target.href)window.history.pushState({section:next,setting:next==='settings'?settingId:''},'',target);
@@ -316,13 +323,13 @@ async function renderBattle(host,f){
  try{await preloadImage(f.image);}catch{/* Keep the battle controls available even if its image is unavailable. */}
  if(battleRequests.get(host)!==request)return;
  const initial=f.number===1;
- const enemies=f.enemy_positions.map(([type,x,y])=>({...A.enemy_types[type],x,y})),allies=f.allies.map((position,index)=>position&&(!initial||index<A.initial_party.length)?{slot:index+1,x:position[0],y:position[1]}:null).filter(Boolean),units=[...enemies.map(u=>({...u,side:'enemy'})),...allies.map(u=>({...u,side:'ally',name:initial?A.initial_party[u.slot-1].name:`我方 ${u.slot}`}))];
+  const enemies=f.enemy_positions.map(([type,x,y])=>({...A.enemy_types[type],x,y})),allies=f.allies.map((position,index)=>position&&(!initial||index<A.initial_party.length)?{slot:index+1,x:position[0],y:position[1]}:null).filter(Boolean),units=[...enemies.map(u=>({...u,side:'enemy'})),...allies.map(u=>({...u,side:'ally',name:initial?A.initial_party[u.slot-1].name:`我方 ${u.slot}`}))];
  const nativeWidth=f.width*16,nativeHeight=f.height*16,defaultScale=2;
  const unitMarkup=units.map(u=>{const content=u.sprite?mapUnitSprite(u.sprite,u.name):`<span class="ally-position">${u.slot}</span>`,nativeUnitSize=32,attrs=`class="unit ${u.side}" style="left:${u.x*16/nativeWidth*100}%;top:${u.y*16/nativeHeight*100}%;width:${nativeUnitSize/nativeWidth*100}%;height:${nativeUnitSize/nativeHeight*100}%" title="${esc(u.name)} (${u.x}, ${u.y})" aria-label="${esc(u.name)}，座標 ${u.x}, ${u.y}"`;return u.side==='enemy'?`<button type="button" ${attrs} data-enemy-profile="${u.profile_key}">${content}</button>`:`<span ${attrs}>${content}</span>`;}).join('');
- const summary=f.enemy_groups.map(([type,count])=>{const u=A.enemy_types[type];return `<button class="battle-enemy-card" data-enemy-profile="${u.profile_key}">${mapUnitSprite(u.sprite)}<span><strong>${esc(u.name)}</strong><small>HP ${u.hp}</small></span>${count>1?`<b>×${count}</b>`:''}</button>`;}).join('');
+  const summary=f.enemy_groups.map(([type,count])=>{const u=A.enemy_types[type];return `<button class="battle-enemy-card" data-enemy-profile="${u.profile_key}">${mapUnitSprite(u.sprite)}<span><strong>${esc(u.name)}</strong><small>HP ${u.hp}</small></span>${count>1?`<b>×${count}</b>`:''}</button>`;}).join('');
  const tools=`<div class="battle-tools"><h3>${esc(f.title)}</h3><div class="battle-layer-toggles"><label><input type="checkbox" data-layer="ally" checked>顯示我方</label><label><input type="checkbox" data-layer="enemy" checked>顯示敵方</label></div><label>縮放 <span class="zoom-control"><input type="range" data-zoom min="100" max="300" value="200" step="25" aria-label="地圖縮放"><output data-zoom-label>2×</output></span></label></div>`;
  const related=f.events.length?'<div class="battle-related"><h4>相關劇情</h4>'+f.events.map(i=>`<button data-open-event="${i}">${esc(eventName(i))}</button>`).join('')+'</div>':'';
- host.innerHTML=`<div class="battle-layout"><div class="battle-scroll"><div class="battle-board" style="width:${nativeWidth*defaultScale}px;height:${nativeHeight*defaultScale}px" data-field="${f.file}" data-native-width="${nativeWidth}" data-native-height="${nativeHeight}"><img class="battle-map" src="${f.image}" alt="${esc(f.title)}的戰場" style="width:100%;height:100%"><div class="battle-grid" style="background-size:${16/nativeWidth*100}% ${16/nativeHeight*100}%"></div>${unitMarkup}</div></div><div class="battle-sidebar">${tools}<h4>敵方總覽</h4><div class="battle-enemy-summary">${summary}</div>${related}</div></div><div class="profile-drawer battle-drawer" data-battle-drawer hidden><button class="drawer-scrim" data-close-battle-drawer aria-label="關閉敵方資料"></button><aside class="profile-panel" role="dialog" aria-label="敵方角色資料"><button class="drawer-close battle-drawer-close" data-close-battle-drawer aria-label="關閉敵方資料">✕</button><div data-battle-profile></div></aside></div>`;
+  host.innerHTML=`<div class="battle-layout"><div class="battle-scroll"><div class="battle-board" style="width:${nativeWidth*defaultScale}px;height:${nativeHeight*defaultScale}px" data-field="${f.file}" data-native-width="${nativeWidth}" data-native-height="${nativeHeight}"><img class="battle-map" src="${f.image}" alt="${esc(f.title)}的戰場" style="width:100%;height:100%"><div class="battle-grid" style="background-size:${16/nativeWidth*100}% ${16/nativeHeight*100}%"></div>${unitMarkup}</div></div><div class="battle-sidebar">${tools}<h4>敵方總覽</h4><div class="battle-enemy-summary">${summary}</div>${related}</div></div><div class="profile-drawer battle-drawer" data-battle-drawer hidden><button class="drawer-scrim" data-close-battle-drawer aria-label="關閉敵方資料"></button><aside class="profile-panel" role="dialog" aria-label="敵方角色資料"><button class="drawer-close battle-drawer-close" data-close-battle-drawer aria-label="關閉敵方資料">✕</button><div data-battle-profile></div></aside></div>`;
 }
 function selectSetting(id){
  if(settingId!==id){$('settingsFilter').value='';settingSidebar=id==='races'?'growth':'';}settingId=id;
@@ -438,7 +445,6 @@ $('settingsContent').onclick=e=>{
 };
 $('settingsContent').onkeydown=e=>{const row=e.target.closest('tr[data-item],tr[data-profile-link],tr[data-open-character]');if(row&&['Enter',' '].includes(e.key)){e.preventDefault();row.click();}};
 $('settingsContent').onchange=e=>{const select=e.target.closest('[data-enemy-variant]');if(select)select.closest('[data-profile-detail]').querySelectorAll('[data-variant]').forEach(p=>p.hidden=p.dataset.variant!==select.value);};
-renderBattle($('fieldViewer'),A.fields[0]);
 function updateMapHoverLabel(target){const label=$('worldMap').querySelector('[data-map-label]'),hovered=target?.closest?.('[data-point]'),point=hovered?A.points[Number(hovered.dataset.point)]:A.points[pointId];if(label)label.textContent=point?.name||'';}
 function updateRaceTooltip(point,event){
  const host=$('races'),tip=host.querySelector('[data-race-tooltip]');if(!tip)return;
