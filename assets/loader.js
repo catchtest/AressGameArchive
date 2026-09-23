@@ -27,7 +27,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='1849d76ed65c';
+const assetVersion='d4097dc99e72';
 const versioned=src=>src+'?v='+assetVersion;
 function buildReferencePages(){
  const templates=[...document.querySelectorAll('template[data-page-template]')].map(template=>({
@@ -59,6 +59,7 @@ function loadApplication(){
  appPromise=loadScript(versioned('assets/data.js'))
   .then(()=>loadScript(versioned('assets/engine.js')))
   .then(()=>{
+   AressReader.expandConditions(D);
    buildReferencePages();
    return loadScript(versioned('assets/app.js'));
   })

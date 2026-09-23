@@ -7,6 +7,20 @@
     if(index<0)throw Error('跳轉落點不在已解析指令邊界');
     return index;
   }
+  function expandConditions(data) {
+    // The bundle stores each condition string once; restore the reader's in-memory shape.
+    const texts=data.condition_texts;
+    for(const event of data.events)for(const row of event.instructions){
+      if(row.condition_id!==undefined){
+        row.entry_condition_text=texts[row.condition_id];
+        delete row.condition_id;
+      }
+      if(row.condition_group_ids){
+        row.entry_condition_groups=row.condition_group_ids.map(group=>group.map(id=>texts[id]));
+        delete row.condition_group_ids;
+      }
+    }
+  }
   function advance(event, previous, guided=false, target) {
     const s=JSON.parse(JSON.stringify(previous));s.notes=[];s.body='';s.speaker='';delete s.branch;delete s.battle;delete s.choice;delete s.rewards;delete s.characters;delete s.amount;delete s.classUnlocks;delete s.endingFaceIds;delete s.conditionGroups;
     if(target!==undefined)s.pc=instructionIndex(event,target);
@@ -83,5 +97,5 @@
     }
     throw Error('劇情路徑未能結束');
   }
-  const api={initial,advance,frames};if(typeof module!=='undefined')module.exports=api;else root.AressReader=api;
+  const api={initial,advance,frames,expandConditions};if(typeof module!=='undefined')module.exports=api;else root.AressReader=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

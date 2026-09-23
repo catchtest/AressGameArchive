@@ -54,24 +54,11 @@ const portraitSprite=(id,label='')=>spriteImage('portraits/FACE_SPRITE.png',id,1
 const mapUnitSprite=(path,label='',cls='')=>{const match=String(path).match(/(MIKATA|TEKI)_(\d+)\.png$/);if(!match)return '';const index=Number(match[2])+(match[1]==='TEKI'?95:0);return spriteImage('map_sprites/UNIT_SPRITE.png',index,16,7,label,cls);};
 const source=id=>A.sources[id],eventName=id=>{const row=source(id),title=row.title||'';return !title||['主線劇情','地點劇情',row.name].includes(title)?row.name:`${row.name} · ${title}`;};
 const settingLabels={flow:'流程',equipment:'裝備',items:'道具',characters:'角色',enemies:'敵人',spells:'魔法',classes:'職系',races:'種族',shops:'商店',terms:'用語'};
-const pageFor=(next,setting='')=>PAGE_INFO.find(page=>page.section===next&&(next!=='settings'||page.setting===setting));
 const pageFromLocation=()=>{
  const route=location.hash.slice(1);
  if(settingLabels[route])return {section:'settings',setting:route};
  return {section:['story','world','battles'].includes(route)?route:'home',setting:''};
 };
-function updatePageMetadata(next,setting=''){
- const page=pageFor(next,setting)||PAGE_INFO[0],canonicalNode=$('canonicalLink');
- const canonical=canonicalNode.href;
- document.title=page.title;canonicalNode.href=canonical;
- document.querySelector('meta[name="description"]').content=page.description;
- document.querySelector('meta[property="og:title"]').content=page.title;
- document.querySelector('meta[property="og:description"]').content=page.description;
- document.querySelector('meta[property="og:url"]').content=canonical;
- document.querySelector('meta[name="twitter:title"]').content=page.title;
- document.querySelector('meta[name="twitter:description"]').content=page.description;
- return page;
-}
 const hasDialogue=id=>D.events[id]?.instructions.some(row=>['06','07'].includes(row.opcode)&&String(row.display_body||row.body||row.text||'').trim());
 const compactSidebar=window.matchMedia('(max-width: 1000px)');
 function setSidebarHidden(hidden){document.body.classList.toggle('sidebar-hidden',hidden);$('toggleSidebar').setAttribute('aria-expanded',String(!hidden));$('toggleSidebar').title=hidden?'顯示側欄':'收起側欄';$('toggleSidebar').textContent=hidden?'›':'‹';}
@@ -141,7 +128,7 @@ function showSettingsSidebar(){
   html+=values.map(value=>button(value||'全部',`data-sidebar-race="${esc(value)}"`,value===settingSidebar)).join('');
  }else if(settingId==='classes'){
   const details=[...host.querySelectorAll('[data-class-detail]')];
-  html+=button('列表','data-sidebar-class=""',settingSidebar==='')+details.map(row=>{
+  html+=button('角色轉職表','data-sidebar-class=""',settingSidebar==='')+button('角色升級增加屬性表','data-sidebar-class="growth"',settingSidebar==='growth')+details.map(row=>{
    const active=settingSidebar===row.dataset.classDetail,sprite=row.querySelector('.class-detail-heading .class-walk-sprite')?.outerHTML||'';
    return `<button class="event sidebar-filter sidebar-class ${active?'active':''}" data-sidebar-class="${row.dataset.classDetail}">${sprite}<span>${esc(row.dataset.className)}</span></button>`;
   }).join('');
@@ -168,6 +155,7 @@ function applyRaceFilter(){
 function applyClassFilter(){
  const host=$('classes'),selected=settingSidebar;
  host.querySelector('[data-class-overview]').hidden=selected!=='';
+ host.querySelector('[data-class-growth]').hidden=selected!=='growth';
  host.querySelectorAll('[data-class-detail]').forEach(row=>row.hidden=row.dataset.classDetail!==selected);
 }
 function setStoryGroup(next){
@@ -197,7 +185,6 @@ function setSection(next,updateUrl=true){
   const target=new URL(location.href);target.hash=next==='settings'?settingId:next==='home'?'':next;
   if(location.href!==target.href)window.history.pushState({section:next,setting:next==='settings'?settingId:''},'',target);
  }
- updatePageMetadata(next,next==='settings'?settingId:'');
  scheduleTableHeader();
 }
 function prepareEvent(id,preparedFrames){
@@ -319,9 +306,9 @@ async function renderBattle(host,f){
  try{await preloadImage(f.image);}catch{/* Keep the battle controls available even if its image is unavailable. */}
  if(battleRequests.get(host)!==request)return;
  const initial=f.number===1;
- const enemies=f.enemy_positions.map(([type,x,y])=>({...A.enemy_types[type],x,y,on_map:true})),allies=f.allies.filter(u=>u.on_map&&(!initial||u.slot<=A.initial_party.length)),units=[...enemies.map(u=>({...u,side:'enemy'})),...allies.map(u=>({...u,side:'ally',name:initial?A.initial_party[u.slot-1].name:`我方 ${u.slot}`}))];
+ const enemies=f.enemy_positions.map(([type,x,y])=>({...A.enemy_types[type],x,y})),allies=f.allies.map((position,index)=>position&&(!initial||index<A.initial_party.length)?{slot:index+1,x:position[0],y:position[1]}:null).filter(Boolean),units=[...enemies.map(u=>({...u,side:'enemy'})),...allies.map(u=>({...u,side:'ally',name:initial?A.initial_party[u.slot-1].name:`我方 ${u.slot}`}))];
  const nativeWidth=f.width*16,nativeHeight=f.height*16,defaultScale=2;
- const unitMarkup=units.filter(u=>u.on_map).map(u=>{const content=u.sprite?mapUnitSprite(u.sprite,u.name):`<span class="ally-position">${u.slot}</span>`,nativeUnitSize=32,attrs=`class="unit ${u.side}" style="left:${u.x*16/nativeWidth*100}%;top:${u.y*16/nativeHeight*100}%;width:${nativeUnitSize/nativeWidth*100}%;height:${nativeUnitSize/nativeHeight*100}%" title="${esc(u.name)} (${u.x}, ${u.y})" aria-label="${esc(u.name)}，座標 ${u.x}, ${u.y}"`;return u.side==='enemy'?`<button type="button" ${attrs} data-enemy-profile="${u.profile_key}">${content}</button>`:`<span ${attrs}>${content}</span>`;}).join('');
+ const unitMarkup=units.map(u=>{const content=u.sprite?mapUnitSprite(u.sprite,u.name):`<span class="ally-position">${u.slot}</span>`,nativeUnitSize=32,attrs=`class="unit ${u.side}" style="left:${u.x*16/nativeWidth*100}%;top:${u.y*16/nativeHeight*100}%;width:${nativeUnitSize/nativeWidth*100}%;height:${nativeUnitSize/nativeHeight*100}%" title="${esc(u.name)} (${u.x}, ${u.y})" aria-label="${esc(u.name)}，座標 ${u.x}, ${u.y}"`;return u.side==='enemy'?`<button type="button" ${attrs} data-enemy-profile="${u.profile_key}">${content}</button>`:`<span ${attrs}>${content}</span>`;}).join('');
  const summary=f.enemy_groups.map(([type,count])=>{const u=A.enemy_types[type];return `<button class="battle-enemy-card" data-enemy-profile="${u.profile_key}">${mapUnitSprite(u.sprite)}<span><strong>${esc(u.name)}</strong><small>HP ${u.hp}</small></span>${count>1?`<b>×${count}</b>`:''}</button>`;}).join('');
  const tools=`<div class="battle-tools"><h3>${esc(f.title)}</h3><div class="battle-layer-toggles"><label><input type="checkbox" data-layer="ally" checked>顯示我方</label><label><input type="checkbox" data-layer="enemy" checked>顯示敵方</label></div><label>縮放 <span class="zoom-control"><input type="range" data-zoom min="100" max="300" value="200" step="25" aria-label="地圖縮放"><output data-zoom-label>2×</output></span></label></div>`;
  const related=f.events.length?'<div class="battle-related"><h4>相關劇情</h4>'+f.events.map(i=>`<button data-open-event="${i}">${esc(eventName(i))}</button>`).join('')+'</div>':'';
@@ -485,10 +472,25 @@ function sortClassColumn(column){
  table.querySelectorAll('thead th').forEach((cell,index)=>{if(index===column)cell.setAttribute('aria-sort','ascending');else cell.removeAttribute('aria-sort');});
  scheduleTableHeader();
 }
+function sortGrowthColumn(column){
+ const table=$('classes').querySelector('[data-class-growth] table');
+ const header=table.tHead.rows[0].cells[column];
+ const descending=header.getAttribute('aria-sort')!=='descending';
+ const rows=[...table.tBodies[0].rows];
+ rows.sort((a,b)=>{
+  const difference=Number(b.cells[column].textContent)-Number(a.cells[column].textContent);
+  return (descending?difference:-difference)||Number(a.dataset.growthOrder)-Number(b.dataset.growthOrder);
+ });
+ table.tBodies[0].append(...rows);
+ table.querySelectorAll('thead th').forEach(cell=>cell.removeAttribute('aria-sort'));
+ header.setAttribute('aria-sort',descending?'descending':'ascending');
+ scheduleTableHeader();
+}
 document.addEventListener('click',e=>{
  if(e.target.closest('[data-special-event]')){e.preventDefault();openSpecialEvent();return;}
  if(e.target.closest('[data-close-special-event]')){$('sacrificeDialog').close();return;}
  const sort=e.target.closest('[data-class-sort]');if(sort){sortClassColumn(Number(sort.dataset.classSort));return;}
+ const growthSort=e.target.closest('[data-growth-sort]');if(growthSort){sortGrowthColumn(Number(growthSort.dataset.growthSort));return;}
  const character=e.target.closest('[data-open-character]');if(character){openCharacter(Number(character.dataset.openCharacter));return;}
  const townStore=e.target.closest('[data-open-town-store]');if(townStore){openTownStore(Number(townStore.dataset.openTownStore),Number(townStore.dataset.storeIndex)||0,townStore.dataset.shopSourceView||shopView);return;}
  const battleUnit=e.target.closest('[data-enemy-profile]');if(battleUnit){const host=battleUnit.closest('#storyBattle,#fieldViewer'),drawer=host.querySelector('[data-battle-drawer]'),sourceProfile=$('enemies').querySelector(`[data-profile-detail="${battleUnit.dataset.enemyProfile}"]`),target=drawer.querySelector('[data-battle-profile]');target.replaceChildren();if(sourceProfile){const profile=sourceProfile.cloneNode(true);profile.hidden=false;profile.removeAttribute('data-profile-detail');target.append(profile);}drawer.hidden=!sourceProfile;}
