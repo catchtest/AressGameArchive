@@ -2,8 +2,9 @@
 'use strict';
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const cloneTemplate=id=>$(id).content.cloneNode(true);
-function openSpecialEvent(){
- const dialog=$('sacrificeDialog');
+async function openSpecialEvent(){
+  try{await AressLoadReference('special');}catch{return;}
+  const dialog=$('sacrificeDialog');
  document.body.appendChild(dialog);
  dialog.showModal();
 }
@@ -79,7 +80,7 @@ function setImage(id,name,category){
   }).catch(()=>{if(imageRequests.get(id)===request&&id==='scene')$('mapBackdrop').hidden=false;});
  }else{imageRequests.set(id,(imageRequests.get(id)||0)+1);el.onload=null;el.onerror=null;el.hidden=true;el.removeAttribute('src');el.classList.remove('sprite-image');el.removeAttribute('style');delete el.dataset.pendingSrc;}
 }
-const groupForEvent=id=>id<71||id===130||id===A.ending_event_id?'main':'side';
+ const groupForEvent=id=>id<71||id>=130?'main':'side';
 function showEvents(){
  $('homeInfo').hidden=section!=='home';
  $('eventList').hidden=section==='home';
@@ -175,8 +176,14 @@ function openField(file){const field=A.fields.find(f=>f.file===file);if(!field)r
 let sectionRequest=0;
 function setSection(next,updateUrl=true){
  const request=++sectionRequest;
-  if(next==='story'&&!D.events){
-   AressLoadStory().then(()=>{
+  if(next==='story'&&!D.events?.[eventId]){
+   AressLoadStory(eventId).then(()=>{
+    if(request===sectionRequest)setSection(next,updateUrl);
+   }).catch(()=>{});
+   return;
+  }
+  if(next==='settings'&&!AressReferenceLoaded(settingId)){
+   AressLoadReference(settingId).then(()=>{
     if(request===sectionRequest)setSection(next,updateUrl);
    }).catch(()=>{});
    return;
@@ -208,7 +215,7 @@ function prepareEvent(id,preparedFrames){
 let eventLoadRequest=0;
 async function loadEvent(id){
  const request=++eventLoadRequest,navigationRequest=sectionRequest;
- try{await AressLoadStory();}catch{return;}
+  try{await AressLoadStory(id);}catch{return;}
  if(request!==eventLoadRequest||navigationRequest!==sectionRequest)return;
  const frames=AressReader.frames(D.events[id],AressReader.initial(),guided),first=frames[0],origin=source(id),point=origin.point_id===null?null:A.points[origin.point_id];
  const firstVisual=first?.scene?imagePath(first.scene,'scenes'):point?.background||'';
@@ -332,7 +339,11 @@ async function renderBattle(host,f){
   host.innerHTML=`<div class="battle-layout"><div class="battle-scroll"><div class="battle-board" style="width:${nativeWidth*defaultScale}px;height:${nativeHeight*defaultScale}px" data-field="${f.file}" data-native-width="${nativeWidth}" data-native-height="${nativeHeight}"><img class="battle-map" src="${f.image}" alt="${esc(f.title)}的戰場" style="width:100%;height:100%"><div class="battle-grid" style="background-size:${16/nativeWidth*100}% ${16/nativeHeight*100}%"></div>${unitMarkup}</div></div><div class="battle-sidebar">${tools}<h4>敵方總覽</h4><div class="battle-enemy-summary">${summary}</div>${related}</div></div><div class="profile-drawer battle-drawer" data-battle-drawer hidden><button class="drawer-scrim" data-close-battle-drawer aria-label="關閉敵方資料"></button><aside class="profile-panel" role="dialog" aria-label="敵方角色資料"><button class="drawer-close battle-drawer-close" data-close-battle-drawer aria-label="關閉敵方資料">✕</button><div data-battle-profile></div></aside></div>`;
 }
 function selectSetting(id){
- if(settingId!==id){$('settingsFilter').value='';settingSidebar=id==='races'?'growth':'';}settingId=id;
+  if(settingId!==id){$('settingsFilter').value='';settingSidebar=id==='races'?'growth':'';}settingId=id;
+  if(!AressReferenceLoaded(id)){
+   AressLoadReference(id).then(()=>{if(settingId===id)selectSetting(id);}).catch(()=>{});
+   return;
+  }
  $('settingsTitle').textContent=settingLabels[id]||'';
  $('settingsFilter').hidden=['shops','terms'].includes(id);
  $('shopViewSwitch').hidden=id!=='shops';
@@ -354,6 +365,7 @@ function openProfile(section,key){
  selectProfile(section,key);showSettingsSidebar();
 }
 function filterSettings(){
+  if(!AressReferenceLoaded(settingId))return;
  const q=$('settingsFilter').value.trim().toLowerCase();
  $('settingsContent').querySelectorAll('[data-filter-row]').forEach(r=>{r.hidden=!(r.dataset.search||r.textContent).toLowerCase().includes(q);});
  for(const id of ['equipment','items']){
@@ -373,20 +385,23 @@ function filterSettings(){
  }
  if(section==='settings')showSettingsSidebar();
 }
-function openItem(id){
- const targetSection=id<256?'equipment':'items';
+async function openItem(id){
+  const targetSection=id<256?'equipment':'items';
+  try{await AressLoadReference(targetSection);}catch{return;}
  $('settingsFilter').value='';selectSetting(targetSection);setSection('settings');
  const host=$(targetSection);settingSidebar='';filterSettings();
  host.querySelectorAll('[data-item-detail]').forEach(p=>p.hidden=p.dataset.itemDetail!==String(id));
  const detail=host.querySelector(`[data-item-detail="${id}"]`),drawer=host.querySelector('[data-item-drawer]');if(drawer)drawer.hidden=!detail;else if(detail)detail.scrollIntoView({block:'start'});
 }
-function openCharacter(id){
- if($('sacrificeDialog')?.open)$('sacrificeDialog').close();
+async function openCharacter(id){
+  if($('sacrificeDialog')?.open)$('sacrificeDialog').close();
+  try{await AressLoadReference('characters');}catch{return;}
  $('settingsFilter').value='';selectSetting('characters');setSection('settings');filterSettings();
  const character=$('characters').querySelector(`[data-character-id="${id}"]`);
  if(character)openProfile($('characters'),character.dataset.profile);
 }
-function openSpell(id){
+async function openSpell(id){
+  try{await AressLoadReference('spells');}catch{return;}
  $('settingsFilter').value='';selectSetting('spells');setSection('settings');
  const host=$('spells'),target=host.querySelector(`[data-spell-id="${id}"]`);
  settingSidebar='';filterSettings();
@@ -406,10 +421,21 @@ function selectTownStore(townId,storeIndex=0){
  requestAnimationFrame(()=>{(group||target)?.scrollIntoView({block:'start'});});
  showSettingsSidebar();
 }
-function openTownStore(townId,storeIndex=0,view=shopView){
+async function openTownStore(townId,storeIndex=0,view=shopView){
+  try{await AressLoadReference('shops');}catch{return;}
  $('settingsFilter').value='';selectSetting('shops');setSection('settings');
  setShopView(view);
  selectTownStore(townId,storeIndex);
+}
+async function openBattleEnemyProfile(battleUnit){
+ const host=battleUnit.closest('#storyBattle,#fieldViewer'),key=battleUnit.dataset.enemyProfile;
+ if(!host)return;
+ try{await AressLoadReference('enemies');}catch{return;}
+ if(!host.isConnected||!host.querySelector(`[data-enemy-profile="${key}"]`))return;
+ const drawer=host.querySelector('[data-battle-drawer]'),sourceProfile=$('enemies').querySelector(`[data-profile-detail="${key}"]`),target=drawer.querySelector('[data-battle-profile]');
+ target.replaceChildren();
+ if(sourceProfile){const profile=sourceProfile.cloneNode(true);profile.hidden=false;profile.removeAttribute('data-profile-detail');target.append(profile);}
+ drawer.hidden=!sourceProfile;
 }
 $('storyCategories').onclick=e=>{const b=e.target.closest('[data-story-group]');if(b)setStoryGroup(b.dataset.storyGroup);};
 $('battleCategories').onclick=e=>{const b=e.target.closest('[data-battle-group]');if(b)setBattleGroup(b.dataset.battleGroup);};
@@ -509,10 +535,10 @@ document.addEventListener('click',e=>{
  const growthSort=e.target.closest('[data-growth-sort]');if(growthSort){sortGrowthColumn(Number(growthSort.dataset.growthSort));return;}
  const character=e.target.closest('[data-open-character]');if(character){openCharacter(Number(character.dataset.openCharacter));return;}
  const townStore=e.target.closest('[data-open-town-store]');if(townStore){openTownStore(Number(townStore.dataset.openTownStore),Number(townStore.dataset.storeIndex)||0,townStore.dataset.shopSourceView||shopView);return;}
- const battleUnit=e.target.closest('[data-enemy-profile]');if(battleUnit){const host=battleUnit.closest('#storyBattle,#fieldViewer'),drawer=host.querySelector('[data-battle-drawer]'),sourceProfile=$('enemies').querySelector(`[data-profile-detail="${battleUnit.dataset.enemyProfile}"]`),target=drawer.querySelector('[data-battle-profile]');target.replaceChildren();if(sourceProfile){const profile=sourceProfile.cloneNode(true);profile.hidden=false;profile.removeAttribute('data-profile-detail');target.append(profile);}drawer.hidden=!sourceProfile;}
+ const battleUnit=e.target.closest('[data-enemy-profile]');if(battleUnit){openBattleEnemyProfile(battleUnit);return;}
  const closeBattle=e.target.closest('[data-close-battle-drawer]');if(closeBattle)closeBattle.closest('[data-battle-drawer]').hidden=true;
  const field=e.target.closest('[data-open-field]');if(field)openField(field.dataset.openField);
- const nav=e.target.closest('a[data-section],button[data-section]');if(nav){e.preventDefault();if(nav.dataset.settingSection){selectSetting(nav.dataset.settingSection);if(nav.dataset.settingView){settingSidebar=nav.dataset.settingView;filterSettings();}}setSection(nav.dataset.section);}
+ const nav=e.target.closest('a[data-section],button[data-section]');if(nav){e.preventDefault();if(nav.dataset.settingSection){selectSetting(nav.dataset.settingSection);if(nav.dataset.settingView){settingSidebar=nav.dataset.settingView;if(AressReferenceLoaded(settingId))filterSettings();}}setSection(nav.dataset.section);}
  const open=e.target.closest('[data-open-event]');if(open)loadEvent(Number(open.dataset.openEvent));
  const item=e.target.closest('[data-jump-item]');if(item)openItem(Number(item.dataset.jumpItem));
  const spell=e.target.closest('[data-jump-spell]');if(spell)openSpell(Number(spell.dataset.jumpSpell));
@@ -551,7 +577,7 @@ window.addEventListener('resize',scheduleTableHeader);
 new ResizeObserver(scheduleTableHeader).observe($('settingsContent'));
 window.addEventListener('hashchange',applyLocation);
 window.addEventListener('popstate',applyLocation);
-const initialPage=pageFromLocation();selectSetting(initialPage.setting||'equipment');setSection(initialPage.section,false);
+ const initialPage=pageFromLocation();if(initialPage.setting)selectSetting(initialPage.setting);setSection(initialPage.section,false);
 window.history.replaceState({section:initialPage.section,setting:initialPage.setting||''},'',location.href);
 setSidebarHidden(compactSidebar.matches);
 compactSidebar.addEventListener('change',event=>setSidebarHidden(event.matches));
