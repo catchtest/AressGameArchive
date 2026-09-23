@@ -110,7 +110,7 @@ function showSettingsSidebar(){
  }else if(['characters','enemies'].includes(settingId)){
   const profiles=[...host.querySelectorAll('[data-profile-card]')].filter(b=>!b.hidden),selected=profiles.find(b=>b.classList.contains('selected'));
   const characterConditions=settingId==='characters'?host.querySelector('[data-character-conditions]'):null,characterEndings=settingId==='characters'?host.querySelector('[data-character-endings]'):null;
-  html+=button('列表','data-sidebar-profile=""',!selected&&(!characterConditions||characterConditions.hidden&&characterEndings.hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!characterConditions.hidden)+button('結局','data-character-endings-nav',!characterEndings.hidden):'')+profiles.map(b=>{
+  html+=button(settingId==='characters'?'角色一覽':'敵人一覽','data-sidebar-profile=""',!selected&&(!characterConditions||characterConditions.hidden&&characterEndings.hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!characterConditions.hidden)+button('結局','data-character-endings-nav',!characterEndings.hidden):'')+profiles.map(b=>{
    const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',sourcePortrait=b.querySelector('.sprite-image,img');
    let portrait='';
    if(sourcePortrait){
@@ -124,11 +124,11 @@ function showSettingsSidebar(){
  }else if(settingId==='shops'){
   html+=[...host.querySelectorAll('.town-store')].map(d=>{const label=d.dataset.townLabel||'',point=d.dataset.townPoint;return `<button class="event sidebar-filter sidebar-town ${d.hidden?'':'active'}" data-sidebar-town="${d.dataset.townId}">${point!==undefined?pointSprite(Number(point)):''}<span>${esc(label)}</span></button>`;}).join('');
  }else if(settingId==='races'){
-  const values=['',...[...host.querySelectorAll('[data-race-series]')].map(row=>row.dataset.raceSeries)];
-  html+=values.map(value=>button(value||'全部',`data-sidebar-race="${esc(value)}"`,value===settingSidebar)).join('');
+  const values=[['growth','升級屬性加成'],['experience','升級經驗'],['members','可加入角色']];
+  html+=values.map(([value,label])=>button(label,`data-sidebar-race="${esc(value)}"`,value===settingSidebar)).join('');
  }else if(settingId==='classes'){
   const details=[...host.querySelectorAll('[data-class-detail]')];
-  html+=button('角色轉職表','data-sidebar-class=""',settingSidebar==='')+button('角色升級增加屬性表','data-sidebar-class="growth"',settingSidebar==='growth')+details.map(row=>{
+  html+=button('角色轉職列表','data-sidebar-class=""',settingSidebar==='')+button('角色升級增加屬性表','data-sidebar-class="growth"',settingSidebar==='growth')+details.map(row=>{
    const active=settingSidebar===row.dataset.classDetail,sprite=row.querySelector('.class-detail-heading .class-walk-sprite')?.outerHTML||'';
    return `<button class="event sidebar-filter sidebar-class ${active?'active':''}" data-sidebar-class="${row.dataset.classDetail}">${sprite}<span>${esc(row.dataset.className)}</span></button>`;
   }).join('');
@@ -146,11 +146,9 @@ function showSettingsSidebar(){
 }
 function applyRaceFilter(){
  const host=$('races'),selected=settingSidebar;
- host.querySelectorAll('[data-race-series]').forEach(row=>row.classList.toggle('race-series-hidden',!!selected&&row.dataset.raceSeries!==selected));
- host.querySelectorAll('[data-race-legend]').forEach(row=>row.hidden=!!selected&&row.dataset.raceLegend!==selected);
- host.querySelectorAll('[data-race-members]').forEach(row=>row.hidden=!selected||row.dataset.raceMembers!==selected);
- const panel=host.querySelector('[data-race-members-panel]');if(panel)panel.hidden=!selected;
- const label=host.querySelector('[data-race-selection]');if(label)label.textContent=selected?selected+' · ':'';
+ host.querySelector('[data-race-bonus]').hidden=selected!=='growth';
+ host.querySelector('[data-race-chart]').hidden=selected!=='experience';
+ host.querySelector('[data-race-members-panel]').hidden=selected!=='members';
 }
 function applyClassFilter(){
  const host=$('classes'),selected=settingSidebar;
@@ -315,7 +313,7 @@ async function renderBattle(host,f){
  host.innerHTML=`<div class="battle-layout"><div class="battle-scroll"><div class="battle-board" style="width:${nativeWidth*defaultScale}px;height:${nativeHeight*defaultScale}px" data-field="${f.file}" data-native-width="${nativeWidth}" data-native-height="${nativeHeight}"><img class="battle-map" src="${f.image}" alt="${esc(f.title)}的戰場" style="width:100%;height:100%"><div class="battle-grid" style="background-size:${16/nativeWidth*100}% ${16/nativeHeight*100}%"></div>${unitMarkup}</div></div><div class="battle-sidebar">${tools}<h4>敵方總覽</h4><div class="battle-enemy-summary">${summary}</div>${related}</div></div><div class="profile-drawer battle-drawer" data-battle-drawer hidden><button class="drawer-scrim" data-close-battle-drawer aria-label="關閉敵方資料"></button><aside class="profile-panel" role="dialog" aria-label="敵方角色資料"><button class="drawer-close battle-drawer-close" data-close-battle-drawer aria-label="關閉敵方資料">✕</button><div data-battle-profile></div></aside></div>`;
 }
 function selectSetting(id){
- if(settingId!==id){$('settingsFilter').value='';settingSidebar='';}settingId=id;
+ if(settingId!==id){$('settingsFilter').value='';settingSidebar=id==='races'?'growth':'';}settingId=id;
  $('settingsTitle').textContent=settingLabels[id]||'';
  $('settingsFilter').hidden=['shops','terms'].includes(id);
  $('shopViewSwitch').hidden=id!=='shops';
@@ -348,6 +346,7 @@ function filterSettings(){
  if(settingId==='classes')applyClassFilter();
  $('settingsContent').querySelectorAll('[data-item-section]').forEach(s=>{s.querySelector('[data-items-empty]').hidden=!!s.querySelector('[data-item-category]:not([hidden])');s.querySelectorAll('[data-item-detail]').forEach(p=>p.hidden=true);const drawer=s.querySelector('[data-item-drawer]');if(drawer)drawer.hidden=true;});
  for(const id of ['characters','enemies']){
+  if(id!==settingId)continue;
   const section=$(id),cards=[...section.querySelectorAll('[data-profile-card]')];cards.forEach(b=>b.hidden=!b.dataset.search.toLowerCase().includes(q));
   section.querySelectorAll('[data-profile-overview-row]').forEach(row=>row.hidden=!(row.dataset.search||'').toLowerCase().includes(q));
   const visible=cards.filter(b=>!b.hidden);section.querySelector('.empty-results').hidden=!!visible.length;
@@ -448,7 +447,6 @@ $('races').onpointermove=e=>{const point=e.target.closest?.('[data-race-point]')
 $('races').onpointerout=e=>{const point=e.target.closest?.('[data-race-point]');if(point&&!e.relatedTarget?.closest?.('[data-race-point]'))updateRaceTooltip(null);};
 $('races').onfocusin=e=>{const point=e.target.closest?.('[data-race-point]');if(point)updateRaceTooltip(point);};
 $('races').onfocusout=e=>{if(e.target.closest?.('[data-race-point]'))updateRaceTooltip(null);};
-$('races').onclick=e=>{const legend=e.target.closest('[data-race-select]');if(legend){settingSidebar=legend.dataset.raceSelect;filterSettings();}};
 $('worldPanel').onclick=e=>{
  const target=e.target.closest('button');
  if(!target)return;
@@ -496,7 +494,7 @@ document.addEventListener('click',e=>{
  const battleUnit=e.target.closest('[data-enemy-profile]');if(battleUnit){const host=battleUnit.closest('#storyBattle,#fieldViewer'),drawer=host.querySelector('[data-battle-drawer]'),sourceProfile=$('enemies').querySelector(`[data-profile-detail="${battleUnit.dataset.enemyProfile}"]`),target=drawer.querySelector('[data-battle-profile]');target.replaceChildren();if(sourceProfile){const profile=sourceProfile.cloneNode(true);profile.hidden=false;profile.removeAttribute('data-profile-detail');target.append(profile);}drawer.hidden=!sourceProfile;}
  const closeBattle=e.target.closest('[data-close-battle-drawer]');if(closeBattle)closeBattle.closest('[data-battle-drawer]').hidden=true;
  const field=e.target.closest('[data-open-field]');if(field)openField(field.dataset.openField);
- const nav=e.target.closest('a[data-section],button[data-section]');if(nav){e.preventDefault();if(nav.dataset.settingSection)selectSetting(nav.dataset.settingSection);setSection(nav.dataset.section);}
+ const nav=e.target.closest('a[data-section],button[data-section]');if(nav){e.preventDefault();if(nav.dataset.settingSection){selectSetting(nav.dataset.settingSection);if(nav.dataset.settingView){settingSidebar=nav.dataset.settingView;filterSettings();}}setSection(nav.dataset.section);}
  const open=e.target.closest('[data-open-event]');if(open)loadEvent(Number(open.dataset.openEvent));
  const item=e.target.closest('[data-jump-item]');if(item)openItem(Number(item.dataset.jumpItem));
  const spell=e.target.closest('[data-jump-spell]');if(spell)openSpell(Number(spell.dataset.jumpSpell));
