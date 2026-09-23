@@ -20,7 +20,7 @@
   <meta name="twitter:image" content="https://catchtest.github.io/AressGameArchive/assets/scenes/SEEN59.png">
   <title>亞里斯王物語 遊戲資料站</title>
   <script id="structuredData" type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"亞里斯王物語 遊戲資料站","description":"《亞里斯王物語》遊戲資料站，整理劇情、地圖、戰鬥、角色、敵人、裝備、道具、魔法、職系、種族與原始程式公式。","url":"https://catchtest.github.io/AressGameArchive/","inLanguage":"zh-Hant"}</script>
-  <link rel="stylesheet" href="assets/site.css?v=d396371b6b2b">
+  <link rel="stylesheet" href="assets/site.css?v=121e748efc2f">
 </head>
 <body data-page-section="home" data-page-setting=""><div class="app"><aside id="sidebar"><button id="toggleSidebar" class="sidebar-toggle" aria-controls="sidebar" aria-expanded="true" title="收起側欄">‹</button><a id="homeLink" class="brand" href="#home" aria-label="返回首頁"><span class="brand-english">The Story of<br><strong>King Aress</strong></span></a><div class="subtitle">亞里斯王物語 遊戲資料站</div><nav id="storyCategories" class="story-categories btn-group" aria-label="劇情分類" hidden><button data-story-group="main" class="selected" aria-pressed="true">主線劇情</button><button data-story-group="side" aria-pressed="false">地點劇情</button></nav><nav id="battleCategories" class="story-categories btn-group" aria-label="戰鬥分類" hidden><button data-battle-group="main" class="selected" aria-pressed="true">主線戰鬥</button><button data-battle-group="repeat" aria-pressed="false">重複戰鬥</button></nav><dl id="homeInfo" class="home-sidebar-info">
  <div><dt>遊戲原名</dt><dd>アレス王の物語</dd></div>
@@ -193,8 +193,8 @@
 <template data-page-template data-attrs="[&quot;data-spell-id&quot;]"><tr class="spell-row" data-filter-row></tr></template>
 <template data-page-template data-attrs="[&quot;data-spell-id&quot;]"><tr class="spell-row spell-support" data-filter-row></tr></template>
 <template data-page-template data-attrs="[]"><div class="spell-school-learners"></div></template>
-<template data-page-template data-attrs="[]"><div class="spell-learners"></div></template>
-<template data-page-template data-attrs="[&quot;data-open-character&quot;]"><button class="spell-learner"></button></template>
+<template data-page-template data-attrs="[]"><div class="character-portrait-list"></div></template>
+<template data-page-template data-attrs="[&quot;data-open-character&quot;]"><button class="character-portrait-card"></button></template>
 <template data-page-template data-attrs="[]"><div data-class-overview></div></template>
 <template data-page-template data-attrs="[]"><div class="class-legend"></div></template>
 <template data-page-template data-attrs="[]"><b class="class-status class-status-initial"></b></template>
@@ -230,9 +230,9 @@
 <template data-page-template data-attrs="[]"><div class="enemy-battle-frames class-battle-frames"></div></template>
 <template data-page-template data-attrs="[]"><div class="class-member-heading"></div></template>
 <template data-page-template data-attrs="[]"><div class="class-member-grid"></div></template>
-<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;]"><button class="race-member class-member" data-filter-row></button></template>
+<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;]"><button class="class-member" data-filter-row></button></template>
 <template data-page-template data-attrs="[&quot;aria-label&quot;]"><b class="class-status class-status-initial"></b></template>
-<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;,&quot;title&quot;]"><button class="race-member class-member" data-filter-row></button></template>
+<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;,&quot;title&quot;]"><button class="class-member" data-filter-row></button></template>
 <template data-page-template data-attrs="[&quot;aria-label&quot;]"><b class="class-status class-status-unlocked"></b></template>
 <template data-page-template data-attrs="[]"><div class="class-growth-stat growth-high"></div></template>
 <template data-page-template data-attrs="[&quot;aria-label&quot;]"><b class="class-status class-status-unlocked class-status-final"></b></template>
@@ -259,8 +259,7 @@
 <template data-page-template data-attrs="[]"><span class="race-legend-item"></span></template>
 <template data-page-template data-attrs="[]"><section class="race-members-panel" data-race-members-panel hidden></section></template>
 <template data-page-template data-attrs="[]"><section class="race-member-section"></section></template>
-<template data-page-template data-attrs="[]"><div class="race-member-group"></div></template>
-<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;]"><button class="race-member" data-filter-row></button></template>
+<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;]"><button class="character-portrait-card" data-filter-row></button></template>
 <template data-page-template data-attrs="[&quot;id&quot;]"><section class="terms-page"></section></template>
 <template data-page-template data-attrs="[&quot;id&quot;,&quot;data-term-label&quot;]"><section class="term-section" data-term-section></section></template>
 <template data-page-template data-attrs="[]"><div class="term-card-grid"></div></template>
@@ -298,4 +297,4 @@
 <template id="classUnlockLabelTemplate"><small data-class-name>可轉職為<br></small></template>
 <template id="moneyTemplate"><h2>獲得金錢</h2><p class="money-change"></p></template>
 <template id="choiceTemplate"><h2>請選擇</h2><div class="choices"><button class="primary"></button><button></button></div></template>
-<script src="assets/loader.js?v=d396371b6b2b"></script></body></html>
+<script src="assets/loader.js?v=121e748efc2f"></script></body></html>

@@ -59,7 +59,7 @@ const pageFromLocation=()=>{
  if(settingLabels[route])return {section:'settings',setting:route};
  return {section:['story','world','battles'].includes(route)?route:'home',setting:''};
 };
-const hasDialogue=id=>D.events[id]?.instructions.some(row=>['06','07'].includes(row.opcode)&&String(row.display_body||row.body||row.text||'').trim());
+const hasDialogue=id=>!!D.event_has_dialogue[id];
 const compactSidebar=window.matchMedia('(max-width: 1000px)');
 function setSidebarHidden(hidden){document.body.classList.toggle('sidebar-hidden',hidden);$('toggleSidebar').setAttribute('aria-expanded',String(!hidden));$('toggleSidebar').title=hidden?'顯示側欄':'收起側欄';$('toggleSidebar').textContent=hidden?'›':'‹';}
 function setImage(id,name,category){
@@ -110,7 +110,7 @@ function showSettingsSidebar(){
  }else if(['characters','enemies'].includes(settingId)){
   const profiles=[...host.querySelectorAll('[data-profile-card]')].filter(b=>!b.hidden),selected=profiles.find(b=>b.classList.contains('selected'));
   const characterConditions=settingId==='characters'?host.querySelector('[data-character-conditions]'):null,characterEndings=settingId==='characters'?host.querySelector('[data-character-endings]'):null;
-  html+=button(settingId==='characters'?'角色一覽':'敵人一覽','data-sidebar-profile=""',!selected&&(!characterConditions||characterConditions.hidden&&characterEndings.hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!characterConditions.hidden)+button('結局','data-character-endings-nav',!characterEndings.hidden):'')+profiles.map(b=>{
+  html+=button(settingId==='characters'?'角色一覽':'敵人一覽','data-sidebar-profile=""',!selected&&(!characterConditions||characterConditions.hidden&&characterEndings.hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!characterConditions.hidden)+button('結局描述','data-character-endings-nav',!characterEndings.hidden):'')+profiles.map(b=>{
    const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',sourcePortrait=b.querySelector('.sprite-image,img');
    let portrait='';
    if(sourcePortrait){
@@ -128,7 +128,7 @@ function showSettingsSidebar(){
   html+=values.map(([value,label])=>button(label,`data-sidebar-race="${esc(value)}"`,value===settingSidebar)).join('');
  }else if(settingId==='classes'){
   const details=[...host.querySelectorAll('[data-class-detail]')];
-  html+=button('角色轉職列表','data-sidebar-class=""',settingSidebar==='')+button('角色升級增加屬性表','data-sidebar-class="growth"',settingSidebar==='growth')+details.map(row=>{
+  html+=button('角色轉職','data-sidebar-class=""',settingSidebar==='')+button('角色升級增加屬性','data-sidebar-class="growth"',settingSidebar==='growth')+details.map(row=>{
    const active=settingSidebar===row.dataset.classDetail,sprite=row.querySelector('.class-detail-heading .class-walk-sprite')?.outerHTML||'';
    return `<button class="event sidebar-filter sidebar-class ${active?'active':''}" data-sidebar-class="${row.dataset.classDetail}">${sprite}<span>${esc(row.dataset.className)}</span></button>`;
   }).join('');
@@ -172,7 +172,16 @@ function setBattleGroup(next){
  showEvents();
 }
 function openField(file){const field=A.fields.find(f=>f.file===file);if(!field)return;fieldFile=file;battleGroup=field.battle_type;renderBattle($('fieldViewer'),field);setSection('battles');}
+let sectionRequest=0;
 function setSection(next,updateUrl=true){
+ const request=++sectionRequest;
+ if(next==='story'&&!D.events){
+  AressLoadStory().then(()=>{
+   if(request===sectionRequest)setSection(next,updateUrl);
+  }).catch(()=>{});
+  return;
+ }
+ if(next==='story'&&!history.length){prepareEvent(eventId);render();}
  section=next;
  document.body.dataset.section=next;
  for(const name of ['home','story','settings','world','battles'])$(name==='story'?'storyWorkspace':name+'Panel').hidden=name!==next;
@@ -191,10 +200,13 @@ function prepareEvent(id,preparedFrames){
 }
 let eventLoadRequest=0;
 async function loadEvent(id){
- const request=++eventLoadRequest,frames=AressReader.frames(D.events[id],AressReader.initial(),guided),first=frames[0],origin=source(id),point=origin.point_id===null?null:A.points[origin.point_id];
+ const request=++eventLoadRequest,navigationRequest=sectionRequest;
+ try{await AressLoadStory();}catch{return;}
+ if(request!==eventLoadRequest||navigationRequest!==sectionRequest)return;
+ const frames=AressReader.frames(D.events[id],AressReader.initial(),guided),first=frames[0],origin=source(id),point=origin.point_id===null?null:A.points[origin.point_id];
  const firstVisual=first?.scene?imagePath(first.scene,'scenes'):point?.background||'';
  try{await preloadImage(firstVisual);}catch{/* The normal fallback is rendered below. */}
- if(request!==eventLoadRequest)return;
+ if(request!==eventLoadRequest||navigationRequest!==sectionRequest)return;
  prepareEvent(id,frames);
  render();setSection('story');
 }
@@ -295,7 +307,7 @@ function renderWorld(){
  $('worldMap').innerHTML=worldArtwork(world,pointId,true);
  document.querySelectorAll('[data-world]').forEach(b=>{const on=Number(b.dataset.world)===world;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',on);});
  const p=A.points[pointId],ids=[...p.main_events,p.side_event],battles=A.fields.filter(f=>f.events.some(i=>source(i).point_id===p.id)),town=A.shop_towns.find(t=>t.point_id===p.id);
- $('locationInfo').innerHTML=`<h2>${esc(p.name)}</h2>${p.background?`<img class="location-background" src="${p.background}" alt="${esc(p.name)}景色">`:''}<h3>劇情</h3><div class="location-events">`+ids.filter(i=>i<D.events.length&&(i!==p.side_event||hasDialogue(i))).map(i=>`<button data-open-event="${i}">${esc(source(i).title)}</button>`).join('')+`</div>${battles.length?'<h3 class="location-battles">戰鬥</h3><div class="location-events">'+battles.map(f=>`<button data-open-field="${f.file}">${esc(f.title)}</button>`).join('')+'</div>':''}${townServices(town)}${templeServices(p)}`;
+ $('locationInfo').innerHTML=`<h2>${esc(p.name)}</h2>${p.background?`<img class="location-background" src="${p.background}" alt="${esc(p.name)}景色">`:''}<h3>劇情</h3><div class="location-events">`+ids.filter(i=>i<D.event_has_dialogue.length&&(i!==p.side_event||hasDialogue(i))).map(i=>`<button data-open-event="${i}">${esc(source(i).title)}</button>`).join('')+`</div>${battles.length?'<h3 class="location-battles">戰鬥</h3><div class="location-events">'+battles.map(f=>`<button data-open-field="${f.file}">${esc(f.title)}</button>`).join('')+'</div>':''}${townServices(town)}${templeServices(p)}`;
 }
 const battleRequests=new WeakMap();
 async function renderBattle(host,f){
@@ -533,7 +545,7 @@ window.addEventListener('resize',scheduleTableHeader);
 new ResizeObserver(scheduleTableHeader).observe($('settingsContent'));
 window.addEventListener('hashchange',applyLocation);
 window.addEventListener('popstate',applyLocation);
-const initialPage=pageFromLocation();prepareEvent(130);render();selectSetting(initialPage.setting||'equipment');setSection(initialPage.section,false);
+const initialPage=pageFromLocation();selectSetting(initialPage.setting||'equipment');setSection(initialPage.section,false);
 window.history.replaceState({section:initialPage.section,setting:initialPage.setting||''},'',location.href);
 setSidebarHidden(compactSidebar.matches);
 compactSidebar.addEventListener('change',event=>setSidebarHidden(event.matches));

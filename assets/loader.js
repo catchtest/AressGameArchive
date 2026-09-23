@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 const byId=id=>document.getElementById(id);
-let appPromise=null,appReady=false;
+let appPromise=null,storyPromise=null,appReady=false;
 window.addEventListener('error',event=>{
  // Browsers report errors from extensions and other opaque third-party
  // scripts only as "Script error.".  They are unrelated to this reader and
@@ -27,8 +27,29 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='d396371b6b2b';
+const assetVersion='121e748efc2f';
 const versioned=src=>src+'?v='+assetVersion;
+function loadStoryData(){
+ if(D.events)return Promise.resolve();
+ if(storyPromise)return storyPromise;
+ const status=byId('runtimeStatus');
+ if(appReady){status.hidden=false;status.textContent='正在載入劇情資料…';}
+ storyPromise=loadScript(versioned('assets/story.js'))
+  .then(()=>{
+   AressReader.expandConditions(STORY_DATA);
+   D.events=STORY_DATA.events;
+   if(appReady){status.hidden=true;status.textContent='';}
+  })
+  .catch(error=>{
+   storyPromise=null;
+   status.hidden=false;
+   status.setAttribute('role','alert');
+   status.textContent='劇情資料載入失敗：'+error.message;
+   throw error;
+  });
+ return storyPromise;
+}
+window.AressLoadStory=loadStoryData;
 function buildReferencePages(){
  const templates=[...document.querySelectorAll('template[data-page-template]')].map(template=>({
   element:template.hasAttribute('data-svg-child')?template.content.firstElementChild.firstElementChild:template.content.firstElementChild,
@@ -59,11 +80,11 @@ function loadApplication(){
  appPromise=loadScript(versioned('assets/data.js'))
   .then(()=>loadScript(versioned('assets/engine.js')))
   .then(()=>{
-   AressReader.expandConditions(D);
    buildReferencePages();
    return loadScript(versioned('assets/app.js'));
   })
-  .then(()=>{
+  .then(async()=>{
+   if(location.hash.slice(1)==='story'||document.body.dataset.pageSection==='story')await loadStoryData();
    appReady=true;
    status.hidden=true;
    status.textContent='';
