@@ -129,7 +129,7 @@ function showSettingsSidebar(){
   html+=values.map(([value,label])=>button(label,`data-sidebar-race="${esc(value)}"`,value===settingSidebar)).join('');
  }else if(settingId==='classes'){
   const details=[...host.querySelectorAll('[data-class-detail]')];
-  html+=button('角色轉職','data-sidebar-class=""',settingSidebar==='')+button('角色升級增加屬性','data-sidebar-class="growth"',settingSidebar==='growth')+details.map(row=>{
+  html+=button('角色轉職','data-sidebar-class=""',settingSidebar==='')+button('升級增加屬性','data-sidebar-class="growth"',settingSidebar==='growth')+button('移動力','data-sidebar-class="movement"',settingSidebar==='movement')+details.map(row=>{
    const active=settingSidebar===row.dataset.classDetail,sprite=row.querySelector('.class-detail-heading .class-walk-sprite')?.outerHTML||'';
    return `<button class="event sidebar-filter sidebar-class ${active?'active':''}" data-sidebar-class="${row.dataset.classDetail}">${sprite}<span>${esc(row.dataset.className)}</span></button>`;
   }).join('');
@@ -155,6 +155,7 @@ function applyClassFilter(){
  const host=$('classes'),selected=settingSidebar;
  host.querySelector('[data-class-overview]').hidden=selected!=='';
  host.querySelector('[data-class-growth]').hidden=selected!=='growth';
+ host.querySelector('[data-class-movement]').hidden=selected!=='movement';
  host.querySelectorAll('[data-class-detail]').forEach(row=>row.hidden=row.dataset.classDetail!==selected);
 }
 function setStoryGroup(next){
@@ -336,7 +337,7 @@ async function renderBattle(host,f){
   const summary=f.enemy_groups.map(([type,count])=>{const u=A.enemy_types[type];return `<button class="battle-enemy-card" data-enemy-profile="${u.profile_key}">${mapUnitSprite(u.sprite)}<span><strong>${esc(u.name)}</strong><small>HP ${u.hp}</small></span>${count>1?`<b>×${count}</b>`:''}</button>`;}).join('');
  const tools=`<div class="battle-tools"><h3>${esc(f.title)}</h3><div class="battle-layer-toggles"><label><input type="checkbox" data-layer="ally" checked>顯示我方</label><label><input type="checkbox" data-layer="enemy" checked>顯示敵方</label></div><label>縮放 <span class="zoom-control"><input type="range" data-zoom min="100" max="300" value="200" step="25" aria-label="地圖縮放"><output data-zoom-label>2×</output></span></label></div>`;
  const related=f.events.length?'<div class="battle-related"><h4>相關劇情</h4>'+f.events.map(i=>`<button data-open-event="${i}">${esc(eventName(i))}</button>`).join('')+'</div>':'';
-  host.innerHTML=`<div class="battle-layout"><div class="battle-scroll"><div class="battle-board" style="width:${nativeWidth*defaultScale}px;height:${nativeHeight*defaultScale}px" data-field="${f.file}" data-native-width="${nativeWidth}" data-native-height="${nativeHeight}"><img class="battle-map" src="${f.image}" alt="${esc(f.title)}的戰場" style="width:100%;height:100%"><div class="battle-grid" style="background-size:${16/nativeWidth*100}% ${16/nativeHeight*100}%"></div>${unitMarkup}</div></div><div class="battle-sidebar">${tools}<h4>敵方總覽</h4><div class="battle-enemy-summary">${summary}</div>${related}</div></div><div class="profile-drawer battle-drawer" data-battle-drawer hidden><button class="drawer-scrim" data-close-battle-drawer aria-label="關閉敵方資料"></button><aside class="profile-panel" role="dialog" aria-label="敵方角色資料"><button class="drawer-close battle-drawer-close" data-close-battle-drawer aria-label="關閉敵方資料">✕</button><div data-battle-profile></div></aside></div>`;
+  host.innerHTML=`<div class="battle-layout"><div class="battle-scroll"><div class="battle-board" style="width:${nativeWidth*defaultScale}px;height:${nativeHeight*defaultScale}px" data-field="${f.file}" data-native-width="${nativeWidth}" data-native-height="${nativeHeight}"><img class="battle-map" src="${f.image}" alt="${esc(f.title)}的戰場" style="width:100%;height:100%"><div class="battle-grid" style="background-size:${16/nativeWidth*100}% ${16/nativeHeight*100}%"></div>${unitMarkup}</div></div><div class="battle-sidebar">${tools}<div class="battle-victory"><h4>勝利條件</h4><p>${esc(f.victory_condition)}</p></div><h4>敵方總覽</h4><div class="battle-enemy-summary">${summary}</div>${related}</div></div><div class="profile-drawer battle-drawer" data-battle-drawer hidden><button class="drawer-scrim" data-close-battle-drawer aria-label="關閉敵方資料"></button><aside class="profile-panel" role="dialog" aria-label="敵方角色資料"><button class="drawer-close battle-drawer-close" data-close-battle-drawer aria-label="關閉敵方資料">✕</button><div data-battle-profile></div></aside></div>`;
 }
 function selectSetting(id){
   if(settingId!==id){$('settingsFilter').value='';settingSidebar=id==='races'?'growth':'';}settingId=id;

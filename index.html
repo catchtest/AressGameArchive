@@ -20,7 +20,7 @@
   <meta name="twitter:image" content="https://catchtest.github.io/AressGameArchive/assets/scenes/SEEN59.png">
   <title>亞里斯王物語 遊戲資料站</title>
   <script id="structuredData" type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"亞里斯王物語 遊戲資料站","description":"《亞里斯王物語》遊戲資料站，整理劇情、地圖、戰鬥、角色、敵人、裝備、道具、魔法、職系、種族與原始程式公式。","url":"https://catchtest.github.io/AressGameArchive/","inLanguage":"zh-Hant"}</script>
-  <link rel="stylesheet" href="assets/site.css?v=99ffb01d55a4">
+  <link rel="stylesheet" href="assets/site.css?v=acc2d21c91b5">
 </head>
 <body data-page-section="home" data-page-setting=""><div class="app"><aside id="sidebar"><button id="toggleSidebar" class="sidebar-toggle" aria-controls="sidebar" aria-expanded="true" title="收起側欄">‹</button><a id="homeLink" class="brand" href="#home" aria-label="返回首頁"><span class="brand-english">The Story of<br><strong>King Aress</strong></span></a><div class="subtitle">亞里斯王物語 遊戲資料站</div><nav id="storyCategories" class="story-categories btn-group" aria-label="劇情分類" hidden><button data-story-group="main" class="selected" aria-pressed="true">主線劇情</button><button data-story-group="side" aria-pressed="false">地點劇情</button></nav><nav id="battleCategories" class="story-categories btn-group" aria-label="戰鬥分類" hidden><button data-battle-group="main" class="selected" aria-pressed="true">主線戰鬥</button><button data-battle-group="repeat" aria-pressed="false">重複戰鬥</button></nav><dl id="homeInfo" class="home-sidebar-info">
  <div><dt>遊戲原名</dt><dd>アレス王の物語</dd></div>
@@ -167,6 +167,7 @@
 <template data-page-template data-attrs="[]"><div class="character-history character-death-dialogues"></div></template>
 <template data-page-template data-attrs="[]"><strong class="character-death-speaker"></strong></template>
 <template data-page-template data-attrs="[]"><p class="profile-empty"></p></template>
+<template data-page-template data-attrs="[]"><span class="class-status-none"></span></template>
 <template data-page-template data-attrs="[&quot;data-profile&quot;,&quot;data-sidebar-label&quot;,&quot;data-search&quot;,&quot;aria-pressed&quot;]"><button class="portrait-card" data-profile-card></button></template>
 <template data-page-template data-attrs="[&quot;data-profile-detail&quot;]"><article class="person-profile battle-unit-detail" hidden></article></template>
 <template data-page-template data-attrs="[]"><div class="battle-profile-heading enemy-profile-heading"></div></template>
@@ -174,6 +175,7 @@
 <template data-page-template data-attrs="[]"><span class="battle-portrait-frame"></span></template>
 <template data-page-template data-attrs="[&quot;+class&quot;,&quot;role&quot;,&quot;aria-label&quot;]"><i class="sprite-image enemy-walk-image"></i></template>
 <template data-page-template data-attrs="[]"><div class="character-attributes enemy-battle-settings"></div></template>
+<template data-page-template data-attrs="[]"><div class="character-attributes enemy-attack-mode"></div></template>
 <template data-page-template data-attrs="[]"><div class="enemy-appearances"></div></template>
 <template data-page-template data-attrs="[&quot;data-open-field&quot;]"><button></button></template>
 <template data-page-template data-attrs="[&quot;aria-label&quot;]"><section class="enemy-battle-gallery"></section></template>
@@ -211,7 +213,19 @@
 <template data-page-template data-attrs="[&quot;data-growth-order&quot;]"><tr></tr></template>
 <template data-page-template data-attrs="[]"><td class="growth-high"></td></template>
 <template data-page-template data-attrs="[]"><td class="growth-low"></td></template>
-<template data-page-template data-attrs="[&quot;data-class-detail&quot;,&quot;data-class-name&quot;]"><div class="class-detail" hidden></div></template>
+<template data-page-template data-attrs="[]"><div class="class-movement-table" data-class-movement hidden></div></template>
+<template data-page-template data-attrs="[&quot;aria-label&quot;]"><div class="class-legend class-movement-legend"></div></template>
+<template data-page-template data-attrs="[&quot;aria-hidden&quot;]"><i class="movement-tier-1"></i></template>
+<template data-page-template data-attrs="[&quot;aria-hidden&quot;]"><i class="movement-tier-2"></i></template>
+<template data-page-template data-attrs="[&quot;aria-hidden&quot;]"><i class="movement-tier-3"></i></template>
+<template data-page-template data-attrs="[&quot;aria-hidden&quot;]"><i class="movement-tier-4"></i></template>
+<template data-page-template data-attrs="[&quot;aria-hidden&quot;]"><i class="movement-tier-5"></i></template>
+<template data-page-template data-attrs="[&quot;aria-label&quot;]"><td class="movement-tier-1"></td></template>
+<template data-page-template data-attrs="[&quot;aria-label&quot;]"><td class="movement-tier-2"></td></template>
+<template data-page-template data-attrs="[&quot;aria-label&quot;]"><td class="movement-tier-3"></td></template>
+<template data-page-template data-attrs="[&quot;aria-label&quot;]"><td class="movement-tier-4"></td></template>
+<template data-page-template data-attrs="[&quot;aria-label&quot;]"><td class="movement-tier-5"></td></template>
+<template data-page-template data-attrs="[&quot;data-class-detail&quot;,&quot;data-class-name&quot;]"><div hidden></div></template>
 <template data-page-template data-attrs="[]"><div class="class-detail-heading"></div></template>
 <template data-page-template data-attrs="[&quot;+class&quot;,&quot;role&quot;,&quot;aria-label&quot;]"><i class="sprite-image class-walk-sprite"></i></template>
 <template data-page-template data-attrs="[]"><div class="class-detail-section character-attributes class-growth-detail"></div></template>
@@ -229,10 +243,8 @@
 <template data-page-template data-attrs="[]"><div class="class-detail-section class-art-showcase"></div></template>
 <template data-page-template data-attrs="[]"><div class="enemy-battle-frames class-battle-frames"></div></template>
 <template data-page-template data-attrs="[]"><div class="class-member-heading"></div></template>
-<template data-page-template data-attrs="[]"><div class="class-member-grid"></div></template>
-<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;]"><button class="class-member" data-filter-row></button></template>
+<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;]"><button class="character-portrait-card class-member-card" data-filter-row></button></template>
 <template data-page-template data-attrs="[&quot;aria-label&quot;]"><b class="class-status class-status-initial"></b></template>
-<template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;,&quot;title&quot;]"><button class="class-member" data-filter-row></button></template>
 <template data-page-template data-attrs="[&quot;aria-label&quot;]"><b class="class-status class-status-unlocked"></b></template>
 <template data-page-template data-attrs="[]"><div class="class-growth-stat growth-high"></div></template>
 <template data-page-template data-attrs="[&quot;aria-label&quot;]"><b class="class-status class-status-unlocked class-status-final"></b></template>
@@ -260,20 +272,21 @@
 <template data-page-template data-attrs="[]"><section class="race-members-panel" data-race-members-panel hidden></section></template>
 <template data-page-template data-attrs="[]"><section class="race-member-section"></section></template>
 <template data-page-template data-attrs="[&quot;data-search&quot;,&quot;data-open-character&quot;]"><button class="character-portrait-card" data-filter-row></button></template>
-<template data-page-template data-attrs="[&quot;id&quot;]"><section class="terms-page"></section></template>
 <template data-page-template data-attrs="[&quot;id&quot;,&quot;data-term-label&quot;]"><section class="term-section" data-term-section></section></template>
 <template data-page-template data-attrs="[]"><div class="term-card-grid"></div></template>
 <template data-page-template data-attrs="[]"><article class="term-card"></article></template>
+<template data-page-template data-attrs="[]"><div class="term-card-formula"></div></template>
 <template data-page-template data-attrs="[]"><code></code></template>
-<template data-page-template data-attrs="[]"><div class="term-card-grid term-ability-grid"></div></template>
-<template data-page-template data-attrs="[]"><div class="table-responsive term-table"></div></template>
 <template data-page-template data-attrs="[]"><p class="term-note"></p></template>
+<template data-page-template data-attrs="[]"><div class="term-card-grid term-ability-grid"></div></template>
 <template data-page-template data-attrs="[]"><div class="formula-block"></div></template>
 <template data-page-template data-attrs="[]"><p class="term-related-links"></p></template>
 <template data-page-template data-attrs="[&quot;href&quot;,&quot;data-section&quot;,&quot;data-setting-section&quot;,&quot;data-setting-view&quot;]"><a></a></template>
+<template data-page-template data-attrs="[]"><div class="table-responsive term-table term-damage-table"></div></template>
+<template data-page-template data-attrs="[]"><h3 class="term-effect-heading"></h3></template>
+<template data-page-template data-attrs="[]"><div class="table-responsive term-table term-effect-table"></div></template>
 <template data-page-template data-attrs="[]"><ul></ul></template>
 <template data-page-template data-attrs="[]"><li></li></template>
-<template data-page-template data-attrs="[]"><ol class="battle-formula-steps"></ol></template>
 <template data-page-template data-attrs="[]"><div class="town-store-list"></div></template>
 <template data-page-template data-attrs="[&quot;data-town-id&quot;,&quot;data-town-label&quot;,&quot;data-town-point&quot;]"><section class="town-store"></section></template>
 <template data-page-template data-attrs="[]"><div class="store-columns"></div></template>
@@ -287,6 +300,7 @@
 <template data-page-template data-attrs="[]"><div class="store-items lottery-items"></div></template>
 <template data-page-template data-attrs="[&quot;data-jump-item&quot;]"><button class="store-item lottery-prize"></button></template>
 <template data-page-template data-attrs="[]"><b class="lottery-rank"></b></template>
+<template data-page-template data-attrs="[&quot;data-shop-panel&quot;]"><section class="lottery-mechanics" hidden></section></template>
 <template data-page-template data-attrs="[&quot;data-town-id&quot;,&quot;data-town-label&quot;,&quot;data-town-point&quot;]"><section class="town-store" hidden></section></template></section>
 <section id="worldPanel" hidden><div class="section-heading"><h1>地圖</h1><nav class="world-half-switch btn-group" role="group" aria-label="切換世界地圖"><button data-world="1" class="selected" aria-pressed="true">前半世界</button><button data-world="2" aria-pressed="false">後半世界</button></nav></div><div class="world-layout"><div class="world-map" id="worldMap"></div><div id="locationInfo" class="location-info"></div></div></section>
 <section id="battlesPanel" hidden><div id="fieldViewer"></div></section>
@@ -297,4 +311,4 @@
 <template id="classUnlockLabelTemplate"><small data-class-name>可轉職為<br></small></template>
 <template id="moneyTemplate"><h2>獲得金錢</h2><p class="money-change"></p></template>
 <template id="choiceTemplate"><h2>請選擇</h2><div class="choices"><button class="primary"></button><button></button></div></template>
-<script src="assets/loader.js?v=99ffb01d55a4"></script></body></html>
+<script src="assets/loader.js?v=acc2d21c91b5"></script></body></html>
