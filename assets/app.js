@@ -57,7 +57,8 @@ const source=id=>A.sources[id],eventName=id=>{const row=source(id),title=row.tit
 const settingLabels={flow:'流程',equipment:'裝備',items:'道具',characters:'角色',enemies:'敵人',spells:'魔法',classes:'職系',races:'種族',shops:'商店',terms:'公式'};
 const pageFromLocation=()=>{
  const route=location.hash.slice(1);
- if(settingLabels[route])return {section:'settings',setting:route};
+ const setting=route==='formula'?'terms':route;
+ if(settingLabels[setting])return {section:'settings',setting};
  return {section:['story','world','battles'].includes(route)?route:'home',setting:''};
 };
 const hasDialogue=id=>!!D.event_has_dialogue[id];
@@ -204,7 +205,7 @@ function setSection(next,updateUrl=true){
   if(next==='world')renderWorld();
   if(next==='battles')renderBattle($('fieldViewer'),A.fields.find(field=>field.file===fieldFile));
  if(updateUrl){
-  const target=new URL(location.href);target.hash=next==='settings'?settingId:next==='home'?'':next;
+  const target=new URL(location.href);target.hash=next==='settings'?(settingId==='terms'?'formula':settingId):next==='home'?'':next;
   if(location.href!==target.href)window.history.pushState({section:next,setting:next==='settings'?settingId:''},'',target);
  }
  scheduleTableHeader();
