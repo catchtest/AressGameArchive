@@ -54,11 +54,10 @@ const spriteImage=(path,index,columns,rows,label='',cls='')=>`<i class="sprite-i
 const portraitSprite=(id,label='')=>spriteImage('portraits/FACE_SPRITE.png',id,16,13,label);
 const mapUnitSprite=(path,label='',cls='')=>{const match=String(path).match(/(MIKATA|TEKI)_(\d+)\.png$/);if(!match)return '';const index=Number(match[2])+(match[1]==='TEKI'?95:0);return spriteImage('map_sprites/UNIT_SPRITE.png',index,16,7,label,cls);};
 const source=id=>A.sources[id],eventName=id=>{const row=source(id),title=row.title||'';return !title||['主線劇情','地點劇情',row.name].includes(title)?row.name:`${row.name} · ${title}`;};
-const settingLabels={flow:'流程',equipment:'裝備',items:'道具',characters:'角色',enemies:'敵人',spells:'魔法',classes:'職系',races:'種族',shops:'商店',terms:'公式'};
+const settingLabels={flow:'流程',equipment:'裝備',items:'道具',characters:'角色',enemies:'敵人',spells:'魔法',classes:'職系',races:'種族',shops:'商店',formula:'公式'};
 const pageFromLocation=()=>{
  const route=location.hash.slice(1);
- const setting=route==='formula'?'terms':route;
- if(settingLabels[setting])return {section:'settings',setting};
+ if(settingLabels[route])return {section:'settings',setting:route};
  return {section:['story','world','battles'].includes(route)?route:'home',setting:''};
 };
 const hasDialogue=id=>!!D.event_has_dialogue[id];
@@ -112,7 +111,7 @@ function showSettingsSidebar(){
  }else if(['characters','enemies'].includes(settingId)){
   const profiles=[...host.querySelectorAll('[data-profile-card]')].filter(b=>!b.hidden),selected=profiles.find(b=>b.classList.contains('selected'));
   const characterConditions=settingId==='characters'?host.querySelector('[data-character-conditions]'):null,characterEndings=settingId==='characters'?host.querySelector('[data-character-endings]'):null;
-  html+=button(settingId==='characters'?'角色一覽':'敵人一覽','data-sidebar-profile=""',!selected&&(!characterConditions||characterConditions.hidden&&characterEndings.hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!characterConditions.hidden)+button('結局描述','data-character-endings-nav',!characterEndings.hidden):'')+profiles.map(b=>{
+  html+=button(settingId==='characters'?'角色一覽':'敵人一覽','data-sidebar-profile=""',!selected&&(!characterConditions||characterConditions.hidden&&characterEndings.hidden))+(settingId==='characters'?button('加入／離隊條件','data-character-conditions-nav',!characterConditions.hidden)+button('後日談','data-character-endings-nav',!characterEndings.hidden):'')+profiles.map(b=>{
    const label=b.dataset.sidebarLabel||b.querySelector('.profile-card-name')?.textContent||'',context=b.querySelector('.profile-card-context')?.textContent||'',sourcePortrait=b.querySelector('.sprite-image,img');
    let portrait='';
    if(sourcePortrait){
@@ -139,8 +138,8 @@ function showSettingsSidebar(){
    const point=row.dataset.sidebarPoint,number=row.dataset.sidebarIndex;
    return `<button class="event sidebar-filter sidebar-flow" data-sidebar-row="${index}">${point!==''?pointSprite(Number(point)):''}<span><b class="sidebar-flow-number">${esc(number)}</b> ${esc(row.dataset.sidebarLabel||'')}</span></button>`;
   }).join('');
- }else if(settingId==='terms'){
-  html+=[...host.querySelectorAll('[data-term-section]')].map(row=>button(row.dataset.termLabel,`data-term-anchor="${row.id}"`)).join('');
+ }else if(settingId==='formula'){
+  html+=[...host.querySelectorAll('[data-formula-section]')].map(row=>button(row.dataset.formulaLabel,`data-formula-anchor="${row.id}"`)).join('');
  }else{
   html+=[...host.querySelectorAll('[data-filter-row]')].map((r,i)=>button(r.dataset.sidebarLabel||r.querySelector('th,td,h3')?.textContent||'',`data-sidebar-row="${i}"`)).join('');
  }
@@ -205,7 +204,7 @@ function setSection(next,updateUrl=true){
   if(next==='world')renderWorld();
   if(next==='battles')renderBattle($('fieldViewer'),A.fields.find(field=>field.file===fieldFile));
  if(updateUrl){
-  const target=new URL(location.href);target.hash=next==='settings'?(settingId==='terms'?'formula':settingId):next==='home'?'':next;
+  const target=new URL(location.href);target.hash=next==='settings'?settingId:next==='home'?'':next;
   if(location.href!==target.href)window.history.pushState({section:next,setting:next==='settings'?settingId:''},'',target);
  }
  scheduleTableHeader();
@@ -347,7 +346,7 @@ function selectSetting(id){
    return;
   }
  $('settingsTitle').textContent=settingLabels[id]||'';
- $('settingsFilter').hidden=['shops','terms'].includes(id);
+ $('settingsFilter').hidden=['shops','formula'].includes(id);
  $('shopViewSwitch').hidden=id!=='shops';
  $('settingsPanel').classList.toggle('shops-active',id==='shops');
  $('settingsPanel').classList.toggle('spells-active',id==='spells');
@@ -444,7 +443,7 @@ $('battleCategories').onclick=e=>{const b=e.target.closest('[data-battle-group]'
 function setCharacterView(view){
  const host=$('characters');host.querySelector('[data-character-overview]').hidden=view!=='overview';host.querySelector('[data-character-conditions]').hidden=view!=='conditions';host.querySelector('[data-character-endings]').hidden=view!=='endings';
 }
-$('eventList').onclick=e=>{if(e.target.closest('[data-character-conditions-nav]')){selectProfile($('characters'),null);setCharacterView('conditions');showSettingsSidebar();return;}if(e.target.closest('[data-character-endings-nav]')){selectProfile($('characters'),null);setCharacterView('endings');showSettingsSidebar();return;}const category=e.target.closest('[data-sidebar-category]');if(category){settingSidebar=category.dataset.sidebarCategory;filterSettings();return;}const school=e.target.closest('[data-sidebar-school]');if(school){settingSidebar=school.dataset.sidebarSchool;filterSettings();return;}const race=e.target.closest('[data-sidebar-race]');if(race){settingSidebar=race.dataset.sidebarRace;filterSettings();return;}const classView=e.target.closest('[data-sidebar-class]');if(classView){settingSidebar=classView.dataset.sidebarClass;filterSettings();return;}const term=e.target.closest('[data-term-anchor]');if(term){$(term.dataset.termAnchor)?.scrollIntoView({block:'start'});return;}const profile=e.target.closest('[data-sidebar-profile]');if(profile){openProfile($(settingId),profile.dataset.sidebarProfile);return;}const town=e.target.closest('[data-sidebar-town]');if(town){selectTownStore(town.dataset.sidebarTown,0);return;}const row=e.target.closest('[data-sidebar-row]');if(row){$(settingId).querySelectorAll('[data-filter-row]')[Number(row.dataset.sidebarRow)]?.scrollIntoView({block:'center'});return;}const direct=e.target.closest('[data-event]');if(direct){loadEvent(Number(direct.dataset.event));return;}const b=e.target.closest('[data-location]');if(!b)return;pointId=Number(b.dataset.location);world=A.points[pointId].world;if(section==='story')loadEvent(storyGroup==='side'?A.points[pointId].side_event:A.points[pointId].main_events[0]);else setSection('world');};
+$('eventList').onclick=e=>{if(e.target.closest('[data-character-conditions-nav]')){selectProfile($('characters'),null);setCharacterView('conditions');showSettingsSidebar();return;}if(e.target.closest('[data-character-endings-nav]')){selectProfile($('characters'),null);setCharacterView('endings');showSettingsSidebar();return;}const category=e.target.closest('[data-sidebar-category]');if(category){settingSidebar=category.dataset.sidebarCategory;filterSettings();return;}const school=e.target.closest('[data-sidebar-school]');if(school){settingSidebar=school.dataset.sidebarSchool;filterSettings();return;}const race=e.target.closest('[data-sidebar-race]');if(race){settingSidebar=race.dataset.sidebarRace;filterSettings();return;}const classView=e.target.closest('[data-sidebar-class]');if(classView){settingSidebar=classView.dataset.sidebarClass;filterSettings();return;}const formulaLink=e.target.closest('[data-formula-anchor]');if(formulaLink){$(formulaLink.dataset.formulaAnchor)?.scrollIntoView({block:'start'});return;}const profile=e.target.closest('[data-sidebar-profile]');if(profile){openProfile($(settingId),profile.dataset.sidebarProfile);return;}const town=e.target.closest('[data-sidebar-town]');if(town){selectTownStore(town.dataset.sidebarTown,0);return;}const row=e.target.closest('[data-sidebar-row]');if(row){$(settingId).querySelectorAll('[data-filter-row]')[Number(row.dataset.sidebarRow)]?.scrollIntoView({block:'center'});return;}const direct=e.target.closest('[data-event]');if(direct){loadEvent(Number(direct.dataset.event));return;}const b=e.target.closest('[data-location]');if(!b)return;pointId=Number(b.dataset.location);world=A.points[pointId].world;if(section==='story')loadEvent(storyGroup==='side'?A.points[pointId].side_event:A.points[pointId].main_events[0]);else setSection('world');};
 $('prev').onclick=previous;$('next').onclick=()=>step();$('restart').onclick=e=>{e.preventDefault();restartEvent();};
 $('sourceLine').onclick=e=>{if(e.target.closest('#showLocation')){pointId=source(eventId).point_id;world=A.points[pointId].world;setSection('world');}};
 $('toggleSidebar').onclick=()=>setSidebarHidden(!document.body.classList.contains('sidebar-hidden'));

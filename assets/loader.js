@@ -3,7 +3,7 @@
 const byId=id=>document.getElementById(id);
 let appPromise=null,battlePromise=null,appReady=false;
 const storyPromises=new Map(),referencePromises=new Map();
-const referenceIds=['flow','equipment','items','characters','enemies','spells','classes','races','shops','terms'];
+const referenceIds=['flow','equipment','items','characters','enemies','spells','classes','races','shops','formula'];
 window.addEventListener('error',event=>{
  // Browsers report errors from extensions and other opaque third-party
  // scripts only as "Script error.".  They are unrelated to this reader and
@@ -29,7 +29,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='6413ee76f2cb';
+const assetVersion='23082a893b08';
 const versioned=src=>src+'?v='+assetVersion;
 function loadStoryData(id=130){
  if(D.events?.[id])return Promise.resolve();
