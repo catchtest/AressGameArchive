@@ -29,7 +29,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='5c5452c758f7';
+const assetVersion='2e548f3b65c2';
 const versioned=src=>src+'?v='+assetVersion;
 function loadStoryData(id=130){
  if(D.events?.[id])return Promise.resolve();
