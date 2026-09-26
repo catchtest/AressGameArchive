@@ -19,8 +19,8 @@
   <meta name="twitter:image" content="https://catchtest.github.io/AressGameArchive/assets/scenes/SEEN59.png">
   <title>公式｜亞里斯王物語 遊戲資料站</title>
 
-  <link rel="stylesheet" href="assets/site.css?v=fc2b3fc656de">
-<link rel="stylesheet" href="assets/seo.css?v=fc2b3fc656de"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"公式｜亞里斯王物語 遊戲資料站","description":"《亞里斯王物語》公式。畫面能力值、基礎能力、升級加成、命中、會心、物理與魔法傷害、遠程攻擊、經驗與金錢的計算公式。","url":"https://catchtest.github.io/AressGameArchive/formula/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"亞里斯王物語 遊戲資料站","url":"https://catchtest.github.io/AressGameArchive/"}}</script></head>
+  <link rel="stylesheet" href="assets/site.css?v=6896daae36d9">
+<link rel="stylesheet" href="assets/seo.css?v=6896daae36d9"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"公式｜亞里斯王物語 遊戲資料站","description":"《亞里斯王物語》公式。畫面能力值、基礎能力、升級加成、命中、會心、物理與魔法傷害、遠程攻擊、經驗與金錢的計算公式。","url":"https://catchtest.github.io/AressGameArchive/formula/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"亞里斯王物語 遊戲資料站","url":"https://catchtest.github.io/AressGameArchive/"}}</script></head>
 <body data-page-section="settings" data-page-setting="formula" class="" data-section="settings" data-seo-route="{&quot;path&quot;:&quot;formula/&quot;,&quot;label&quot;:&quot;公式&quot;,&quot;section&quot;:&quot;settings&quot;,&quot;setting&quot;:&quot;formula&quot;,&quot;page&quot;:&quot;formula/&quot;,&quot;url&quot;:&quot;formula/&quot;}"><div class="app"><aside id="sidebar"><button id="toggleSidebar" class="sidebar-toggle" aria-controls="sidebar" aria-expanded="true" title="收起側欄">‹</button><a id="homeLink" class="brand" href="./" aria-label="返回首頁" data-seo-link=""><span class="brand-english">The Story of<br><strong>King Aress</strong></span></a><div class="subtitle">亞里斯王物語 遊戲資料站</div><nav id="storyCategories" class="story-categories btn-group" aria-label="劇情分類" hidden=""><a data-story-group="main" class="selected seo-link" aria-pressed="true" href="story/" data-seo-link="">主線劇情</a><a data-story-group="side" aria-pressed="false" class="seo-link" href="story/?event=71&amp;group=side" data-seo-link="">地點劇情</a></nav><nav id="battleCategories" class="story-categories btn-group" aria-label="戰鬥分類" hidden=""><a data-battle-group="main" class="selected seo-link" aria-pressed="true" href="battles/" data-seo-link="">主線戰鬥</a><a data-battle-group="repeat" aria-pressed="false" class="seo-link" href="battles/?field=FLD044.DAT" data-seo-link="">重複戰鬥</a></nav><dl id="homeInfo" class="home-sidebar-info" hidden="">
  <div><dt>遊戲原名</dt><dd>アレス王の物語</dd></div>
  <div><dt>開發公司</dt><dd>Gust（ガスト）</dd></div>
@@ -79,11 +79,12 @@
 <tr><th scope="row">未破防傷害</th><td><code>傷害 = ⌊攻擊值 ÷ 16⌋</code><p>約 30.52% 造成微量傷害，其餘約 69.48% 攻擊無效。</p></td><td><code>傷害 = ⌊法術消耗生命力 ÷ 8⌋ × 2</code></td><td><code>傷害 = ⌊法術消耗生命力 ÷ 16⌋</code><p>使用法術資料中的消耗數值，攻方不會因此扣血。</p></td></tr>
 <tr><th scope="row">會心</th><td><code>平均會心率 ≈ 攻方幸運 × 0.19455%</code><p>造成傷害加倍。</p></td><td>不會造成會心一擊</td><td>不會造成會心一擊</td></tr>
 <tr><th scope="row">攻擊範圍</th><td>單一目標；距離 1 格。弓依武器射程。</td><td>依法術設定，可同時影響多個目標。</td><td>單一目標；距離 2 格以上，最遠為武器射程。</td></tr>
-<tr><th scope="row">消耗生命力</th><td>不消耗</td><td>施法前扣一次，每次攻擊目標後再扣一次。<br><code>未受其他效果影響時：最終生命力 = (原生命力 − (對象數 + 1) × 法術消耗量) mod 65536</code><p>扣到 0 以下會發生 16 位元回繞。例如原生命力 70、消耗 30、影響 2 人，結果會變成 65516。</p></td><td>不消耗</td></tr>
+<tr><th scope="row">消耗生命力</th><td>不消耗</td><td>依法術設定扣除，詳見下方「消耗生命力」。</td><td>不消耗</td></tr>
 <tr><th scope="row">反擊</th><td>最多攻擊 5 發；每發後，守方若仍存活且攻方在其射程內，就會反擊。</td><td>每次施法只打一發；守方若仍存活且施法者在其射程內，會反擊一次。</td><td>最多攻擊 5 發；每發後，守方若仍存活且攻方在其射程內，就會反擊。</td></tr>
 </tbody></table></div>
 <h3 class="formula-effect-heading">其他魔法效果</h3>
 <div class="table-responsive formula-table formula-effect-table"><table><thead><tr><th scope="col">項目</th><th scope="col">效果與計算</th></tr></thead><tbody>
+<tr><th scope="row">消耗生命力</th><td>施法前扣一次，每次攻擊目標後再扣一次。<br><code>未受其他效果影響時：最終生命力 = (原生命力 − (對象數 + 1) × 法術消耗量) mod 65536</code><p>扣到 0 以下會發生 16 位元回繞。例如原生命力 70、消耗 30、影響 2 人，結果會變成 65516。</p></td></tr>
 <tr><th scope="row">回復</th><td><code>回復量 = 法術威力 × 288 + ⌊施法者魔法力 ÷ 4⌋ + (861～1116)</code><p>適用於休息、治療、回復、治癒、恩惠等法術；回復後不超過最大生命力。</p></td></tr>
 <tr><th scope="row">能力變化<br><small>攻擊力／防禦力<br>魔法力／抗魔力</small></th><td><code>變化量 = ⌊(法術威力 × 32 + ⌊施法者魔法力 ÷ 4⌋ + (109～620)) ÷ 4⌋</code></td></tr>
 <tr><th scope="row">能力變化<br><small>敏捷／幸運</small></th><td><code>變化量 = 法術威力 + ⌊施法者魔法力 ÷ 512⌋ + (6～21)</code><p>上升不超過能力上限；下降至少保留 1 點。</p></td></tr>
@@ -372,4 +373,4 @@
 <template id="moneyTemplate"><h2>獲得金錢</h2><p class="money-change"></p></template>
 <template id="choiceTemplate"><h2>請選擇</h2><div class="choices"><button class="primary"></button><button></button></div></template>
 
-<script src="assets/seo-templates.js?v=fc2b3fc656de"></script><script src="assets/seo-routes.js?v=fc2b3fc656de"></script><script src="assets/seo.js?v=fc2b3fc656de"></script><script src="assets/loader.js?v=fc2b3fc656de"></script></body></html>
+<script src="assets/seo-templates.js?v=6896daae36d9"></script><script src="assets/seo-routes.js?v=6896daae36d9"></script><script src="assets/seo.js?v=6896daae36d9"></script><script src="assets/loader.js?v=6896daae36d9"></script></body></html>
