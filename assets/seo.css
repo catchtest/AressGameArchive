@@ -1,25 +1,6 @@
 :where(a.seo-link){display:inline-block;text-decoration:none;font:inherit;color:var(--ink);cursor:pointer;text-align:center}
 .seo-row-link{color:inherit;text-decoration:none}
-.seo-directory,.seo-transcript{margin:24px 0;padding:18px;border:1px solid var(--line);border-radius:7px;background:var(--panel)}
-.seo-directory h2,.seo-transcript summary{font-size:18px;color:var(--accent)}
-.seo-directory ul{display:flex;flex-wrap:wrap;gap:10px 22px;padding:0;list-style:none}
-.seo-transcript article{padding:14px 0;border-top:1px solid var(--line)}
-.seo-transcript article h3{font-size:13px;color:var(--muted);margin:0 0 8px}
-.seo-transcript .body{white-space:pre-wrap;max-height:none;overflow:visible}
-.seo-transcript img{max-width:100%;height:auto;image-rendering:pixelated}
-.seo-transcript .condition-banner{margin-top:10px}
-.seo-transcript .story-battle-link{position:static}
-.seo-data-table{margin:20px 0}
-body[data-section="battles"] .seo-directory{margin:20px}
 .seo-page-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-#seoSupplement{position:fixed;left:272px;top:104px;z-index:70;max-width:calc(100vw - 36px);border-radius:6px;font-size:13px}
-#seoSupplement>summary{list-style:none;padding:0 5px;cursor:pointer;color:var(--muted)}
-#seoSupplement>summary::-webkit-details-marker{display:none}
-body.sidebar-hidden #seoSupplement{display:none}
-#seoSupplement[open]{left:18px;top:140px;width:960px;max-height:75vh;overflow:auto;padding:8px 16px;background:var(--panel);border:1px solid var(--line);font-size:16px;box-shadow:0 5px 24px #0008}
-#seoSupplement[open]>summary{position:sticky;top:0;background:var(--panel);font-size:13px}
-.seo-print-only{display:none}
 .archive-table td:has(.equipment-class-tags){text-align:center;vertical-align:middle}
 .equipment-class-tags{align-items:center;justify-content:center}
 #spells .archive-table tbody tr:nth-child(even){background:transparent}
-@media print{.seo-directory{display:none}.seo-transcript{display:block}.seo-print-only{display:block}}

@@ -86,8 +86,6 @@ function reflect(next){
   for(const selector of ['link[rel=canonical]','meta[name=description]','meta[property="og:title"]','meta[property="og:description"]','meta[property="og:url"]','meta[name="twitter:title"]','meta[name="twitter:description"]','script[type="application/ld+json"]']){
    const incoming=page.querySelector(selector),current=document.querySelector(selector);if(incoming&&current)current.replaceWith(incoming);
   }
-  const incoming=page.getElementById('seoSupplement'),current=document.getElementById('seoSupplement');
-  if(incoming&&current)current.replaceWith(incoming);
  }).catch(error=>console.error('SEO page metadata: '+error.message));
 }
 function syncRoute(){

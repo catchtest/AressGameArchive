@@ -1,5 +1,0 @@
-# Repository documentation is visible on GitHub, but is not published by Pages.
-exclude:
-  - README.md
-  - "**/README.md"
-  - .aress-seo-build.json
