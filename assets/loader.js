@@ -29,7 +29,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='23082a893b08';
+const assetVersion='d59965147c07';
 const versioned=src=>src+'?v='+assetVersion;
 function loadStoryData(id=130){
  if(D.events?.[id])return Promise.resolve();
@@ -83,7 +83,7 @@ window.AressLoadBattle=loadBattleData;
 function initializeReferencePages(){
  const content=document.createDocumentFragment();
  for(const id of referenceIds){const section=document.createElement('section');section.id=id;section.hidden=true;content.append(section);}
- byId('settingsContent').replaceChildren(content);
+ if(!document.body.dataset.seoRoute)byId('settingsContent').replaceChildren(content);
 }
 let referenceTemplates;
 function buildReferencePage(id){
@@ -145,7 +145,7 @@ function loadApplication(){
   .then(()=>loadScript(versioned('assets/engine.js')))
   .then(()=>{
    initializeReferencePages();
-   const setting=location.hash.slice(1);
+   const setting=location.hash.slice(1)||document.body.dataset.pageSetting;
    return referenceIds.includes(setting)?loadReferenceData(setting):undefined;
   })
   .then(()=>loadScript(versioned('assets/app.js')))

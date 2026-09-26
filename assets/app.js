@@ -35,7 +35,7 @@ function renderRewards(host,state){
  }
  host.replaceChildren(content);
 }
-let eventId=130,history=[],position=0,guided=false,section='home',storyGroup='main',battleGroup='main',settingId='equipment',settingSidebar='',shopView='products',world=1,pointId=0,fieldFile=A.fields[0].file;
+let eventId=JSON.parse(document.body.dataset.seoRoute||'{}').event??130,history=[],position=0,guided=false,section='home',storyGroup='main',battleGroup='main',settingId='equipment',settingSidebar='',shopView='products',world=1,pointId=0,fieldFile=A.fields[0].file;
 const imagePath=(name,category)=>`assets/${category}/${name.replace(/\.[^.]+$/,'.png')}`;
 const spritePosition=(id,columns,rows)=>`${columns>1?id%columns/(columns-1)*100:0}% ${rows>1?Math.floor(id/columns)/(rows-1)*100:0}%`;
 const pointSprite=id=>`<span class="point-sprite" style="background-position:${spritePosition(id,8,8)}" aria-hidden="true"></span>`;
@@ -56,6 +56,8 @@ const mapUnitSprite=(path,label='',cls='')=>{const match=String(path).match(/(MI
 const source=id=>A.sources[id],eventName=id=>{const row=source(id),title=row.title||'';return !title||['主線劇情','地點劇情',row.name].includes(title)?row.name:`${row.name} · ${title}`;};
 const settingLabels={flow:'流程',equipment:'裝備',items:'道具',characters:'角色',enemies:'敵人',spells:'魔法',classes:'職系',races:'種族',shops:'商店',formula:'公式'};
 const pageFromLocation=()=>{
+ const seo=JSON.parse(document.body.dataset.seoRoute||'null');
+ if(seo)return {section:seo.section,setting:seo.setting||''};
  const route=location.hash.slice(1);
  if(settingLabels[route])return {section:'settings',setting:route};
  return {section:['story','world','battles'].includes(route)?route:'home',setting:''};
@@ -176,6 +178,7 @@ function setBattleGroup(next){
 function openField(file){const field=A.fields.find(f=>f.file===file);if(!field)return;fieldFile=file;battleGroup=field.battle_type;setSection('battles');}
 let sectionRequest=0;
 function setSection(next,updateUrl=true){
+ if(document.body.dataset.seoRoute)updateUrl=false;
  const request=++sectionRequest;
   if(next==='story'&&!D.events?.[eventId]){
    AressLoadStory(eventId).then(()=>{
@@ -436,7 +439,7 @@ async function openBattleEnemyProfile(battleUnit){
  const drawer=host.querySelector('[data-battle-drawer]'),sourceProfile=$('enemies').querySelector(`[data-profile-detail="${key}"]`),target=drawer.querySelector('[data-battle-profile]');
  target.replaceChildren();
  if(sourceProfile){const profile=sourceProfile.cloneNode(true);profile.hidden=false;profile.removeAttribute('data-profile-detail');target.append(profile);}
- drawer.hidden=!sourceProfile;
+ drawer.dataset.seoProfile=key;drawer.hidden=!sourceProfile;
 }
 $('storyCategories').onclick=e=>{const b=e.target.closest('[data-story-group]');if(b)setStoryGroup(b.dataset.storyGroup);};
 $('battleCategories').onclick=e=>{const b=e.target.closest('[data-battle-group]');if(b)setBattleGroup(b.dataset.battleGroup);};
@@ -455,7 +458,7 @@ document.addEventListener('contextmenu',e=>{
  e.preventDefault();
  if(e.target.closest('#storyWorkspace')&&!document.querySelector('dialog[open]'))previous();
 });
-$('stage').onkeydown=e=>{if(e.key==='Enter'&&!e.target.closest('button')){e.preventDefault();step();}};
+$('stage').onkeydown=e=>{if(e.key==='Enter'&&!e.target.closest('button,a.seo-link')){e.preventDefault();step();}};
 $('settingsFilter').oninput=filterSettings;
 $('shopViewSwitch').onclick=e=>{const shopMode=e.target.closest('[data-shop-view]');if(shopMode)setShopView(shopMode.dataset.shopView);};
 $('settingsContent').onclick=e=>{
@@ -493,7 +496,7 @@ $('races').onpointerout=e=>{const point=e.target.closest?.('[data-race-point]');
 $('races').onfocusin=e=>{const point=e.target.closest?.('[data-race-point]');if(point)updateRaceTooltip(point);};
 $('races').onfocusout=e=>{if(e.target.closest?.('[data-race-point]'))updateRaceTooltip(null);};
 $('worldPanel').onclick=e=>{
- const target=e.target.closest('button');
+ const target=e.target.closest('button,a.seo-link');
  if(!target)return;
  e.preventDefault();e.stopPropagation();
  if(target.matches('[data-close-temple-advice]')){target.closest('[data-temple-advice-drawer]').hidden=true;return;}
@@ -582,5 +585,158 @@ window.addEventListener('popstate',applyLocation);
 window.history.replaceState({section:initialPage.section,setting:initialPage.setting||''},'',location.href);
 setSidebarHidden(compactSidebar.matches);
 compactSidebar.addEventListener('change',event=>setSidebarHidden(event.matches));
-$('eventList').addEventListener('click',event=>{if(compactSidebar.matches&&event.target.closest('button'))requestAnimationFrame(()=>setSidebarHidden(true));});
+$('eventList').addEventListener('click',event=>{if(compactSidebar.matches&&event.target.closest('button,a.seo-link'))requestAnimationFrame(()=>setSidebarHidden(true));});
+// Injected only into the isolated SEO build, inside the original app closure.
+// Every view and story frame uses the existing renderer and extracted data.
+const seoReferences = Object.keys(settingLabels);
+const seoTick = () => new Promise(resolve => requestAnimationFrame(resolve));
+async function seoRoutes() {
+ await Promise.all(seoReferences.map(id => AressLoadReference(id)));
+ await Promise.all([AressLoadStory(0), AressLoadStory(71), AressLoadBattle()]);
+ const routes = [{path:'', label:'首頁', section:'home'}];
+ const add = (path,label,options) => routes.push({path,label,...options});
+ for (const [id,label] of Object.entries(settingLabels)) add(id+'/',label,{section:'settings',setting:id});
+ for (const id of ['characters','enemies']) {
+  for (const card of $(id).querySelectorAll('[data-profile-card]')) {
+   const key=card.dataset.profile,label=card.dataset.sidebarLabel;
+   add(`${id}/${key}/`,label,{section:'settings',setting:id,profile:key});
+   const profile=$(id).querySelector(`[data-profile-detail="${key}"]`);
+   for (const option of profile.querySelectorAll('[data-enemy-variant] option')) {
+    add(`${id}/${key}/variant-${option.value}/`,`${label} · ${option.textContent.trim()}`,{section:'settings',setting:id,profile:key,variant:option.value});
+   }
+  }
+ }
+ for (const view of ['conditions','endings']) add(`characters/${view}/`,view==='conditions'?'加入／離隊條件':'後日談',{section:'settings',setting:'characters',view});
+ for (const id of ['equipment','items']) {
+  for (const detail of $(id).querySelectorAll('[data-item-detail]')) {
+   const item=Number(detail.dataset.itemDetail);
+   add(`${id}/${item}/`,D.item_names[item],{section:'settings',setting:id,item});
+  }
+  [...$(id).querySelectorAll('[data-item-category]')].forEach((group,index)=>add(`${id}/category-${index}/`,group.dataset.itemCategory,{section:'settings',setting:id,filter:group.dataset.itemCategory}));
+ }
+ [...$('spells').querySelectorAll('[data-school]')].forEach((school,index)=>add(`spells/school-${index}/`,school.dataset.school,{section:'settings',setting:'spells',filter:school.dataset.school,spells:[...school.querySelectorAll('[data-spell-id]')].map(row=>Number(row.dataset.spellId))}));
+ for (const [filter,label] of [['growth','升級增加屬性'],['movement','移動力'],...[...$('classes').querySelectorAll('[data-class-detail]')].map(row=>[row.dataset.classDetail,row.dataset.className])]) add(`classes/${filter}/`,label,{section:'settings',setting:'classes',filter});
+ for (const [filter,label] of [['experience','升級經驗'],['members','可加入角色']]) add(`races/${filter}/`,label,{section:'settings',setting:'races',filter});
+ for (const town of A.shop_towns) for (const shop of ['products','lottery']) add(`shops/${town.id}/${shop}/`,`${town.name} · ${shop==='lottery'?'抽獎':'商品'}`,{section:'settings',setting:'shops',town:town.id,shop});
+ add('story/','劇情',{section:'story',event:130});
+ add('story/side/','地點劇情',{section:'story',event:A.points.find(p=>hasDialogue(p.side_event)).side_event,group:'side'});
+ for (const event of D.events.filter(Boolean)) {
+  if (!A.sources[event.id] || !AressReader.frames(event).length) continue;
+  add(`story/${event.id}/`,eventName(event.id),{section:'story',event:event.id});
+ }
+ add('world/','地圖',{section:'world',point:0});
+ for (const point of A.points) add(`world/${point.id}/`,point.name,{section:'world',point:point.id});
+ add('battles/','戰鬥',{section:'battles',field:A.fields[0].file});
+ const repeat=A.fields.find(f=>f.battle_type==='repeat');
+ if(repeat)add('battles/repeat/','重複戰鬥',{section:'battles',field:repeat.file});
+ for (const field of A.fields) add(`battles/${field.file.replace(/\.[^.]+$/,'').toLowerCase()}/`,field.title,{section:'battles',field:field.file});
+ add('sacrifice/','擋刀事件',{section:'settings',setting:'characters',special:true});
+ return routes;
+}
+async function seoApply(route,options={}) {
+ $('settingsFilter').value='';
+ document.querySelectorAll('[data-profile-drawer],[data-item-drawer],[data-temple-advice-drawer],[data-battle-drawer]').forEach(node=>node.hidden=true);
+ document.querySelectorAll('[data-profile]').forEach(node=>node.classList.remove('selected'));
+ if($('sacrificeDialog')?.open)$('sacrificeDialog').close();
+ if(route.section==='settings') {
+  await AressLoadReference(route.setting);
+  selectSetting(route.setting);
+  settingSidebar=route.filter??(route.setting==='races'?'growth':'');
+  filterSettings();
+  if(route.setting==='characters')setCharacterView(route.view||'overview');
+  setSection('settings',false);
+  if(route.profile)openProfile($(route.setting),route.profile);
+  if(route.variant!==undefined){
+   const profile=$(route.setting).querySelector(`[data-profile-detail="${route.profile}"]`);
+   const select=profile.querySelector('[data-enemy-variant]');select.value=route.variant;
+   profile.querySelectorAll('[data-variant]').forEach(node=>node.hidden=node.dataset.variant!==route.variant);
+  }
+  if(route.item!==undefined)await openItem(route.item);
+  if(route.setting==='shops'){
+   setShopView(route.shop||'products');
+   selectTownStore(route.town??A.shop_towns[0].id);
+  }
+  if(route.special)await openSpecialEvent();
+ }else if(route.section==='story'){
+  await AressLoadStory(route.event);await loadEvent(route.event);
+ }else if(route.section==='world'){
+  pointId=route.point;world=A.points[pointId].world;setSection('world',false);
+ }else if(route.section==='battles'){
+  await AressLoadBattle();fieldFile=route.field;
+  const field=A.fields.find(f=>f.file===fieldFile);battleGroup=field.battle_type;
+  setSection('battles',false);await renderBattle($('fieldViewer'),field);
+ }else setSection('home',false);
+ await seoTick();await seoTick();
+ await Promise.all([...document.querySelectorAll('.app img')].filter(image=>image.getClientRects().length&&image.src).map(image=>image.decode().catch(()=>{})));
+ if(!options.preserveScroll)window.scrollTo(0,0);
+}
+function seoTranscript(route) {
+ if(route.section!=='story')return {html:'',frames:0,dialogues:0};
+ const savedPosition=position,article=document.createElement('details');
+ article.className='seo-transcript';
+ const summary=document.createElement('summary');summary.textContent='完整劇情文字';article.append(summary);
+ let dialogues=0;
+ for(position=0;position<history.length;position++) {
+  render();const state=history[position],part=document.createElement('article');
+  part.id=`frame-${position+1}`;part.dataset.frame=String(position+1);
+  const heading=document.createElement('h3');heading.textContent=String(position+1);part.append(heading);
+  const copy=id=>{const node=$(id);if(!node.hidden&&node.textContent.trim()){const cloned=node.cloneNode(true);cloned.removeAttribute('id');cloned.querySelectorAll('[id]').forEach(child=>child.removeAttribute('id'));part.append(cloned);}};
+  if(state.kind==='dialogue'){copy('speaker');copy('body');dialogues++;}
+  if(['reward','item-loss','party','money','class-unlock'].includes(state.kind))copy('rewardPanel');
+  if(state.kind==='choice')copy('interlude');
+  if(state.kind==='scene'&&state.scene){const image=document.createElement('img');image.src=imagePath(state.scene,'scenes');image.alt=route.label;image.loading='lazy';part.append(image);}
+  copy('conditionBanner');
+  if(state.kind==='battle'||position===history.length-1)copy('storyBattleLink');
+  article.append(part);
+ }
+ position=savedPosition;render();
+ return {html:article.outerHTML,frames:history.length,dialogues};
+}
+function seoDecorate(route){
+ for(const node of document.querySelectorAll('.equipment-class-tags')){
+  const classes=new Set([...node.querySelectorAll('.equipment-class-tag')].map(tag=>tag.title));
+  if(classes.size===15&&!classes.has(''))node.replaceChildren('全職系可用');
+ }
+ for(const node of document.querySelectorAll('[data-location]')){
+  const point=A.points[Number(node.dataset.location)];
+  const id=storyGroup==='side'?point.side_event:point.main_events[0];
+  if(id!==undefined)node.dataset.seoEvent=String(id);
+ }
+ for(const node of document.querySelectorAll('[data-spell-id]'))node.id='spell-'+node.dataset.spellId;
+}
+function seoMatches(route){
+ if(section!==route.section)return false;
+ if(route.section==='settings'){
+  if(settingId!==route.setting)return false;
+  if(route.profile){const node=$(settingId).querySelector(`[data-profile-detail="${route.profile}"]`);if(!node||node.hidden||node.closest('[data-profile-drawer]').hidden)return false;}
+  if(route.item!==undefined){const node=$(settingId).querySelector(`[data-item-detail="${route.item}"]`);if(!node||node.hidden)return false;}
+  if(route.filter!==undefined&&settingSidebar!==route.filter)return false;
+  if(route.town!==undefined&&$(settingId).querySelector('.town-store:not([hidden])')?.dataset.townId!==String(route.town))return false;
+  if(route.shop&&shopView!==route.shop)return false;
+  if(route.view&&$(settingId).querySelector(`[data-character-${route.view}]`)?.hidden)return false;
+ }
+ // Category navigation preserves the original app's last selected view.
+ if(route.path.split('/').filter(Boolean).length<=1)return true;
+ if(route.section==='story'&&route.event!==undefined&&eventId!==route.event)return false;
+ if(route.section==='world'&&pointId!==route.point)return false;
+ if(route.section==='battles'&&fieldFile!==route.field)return false;
+ return true;
+}
+function seoDetail() {
+ if($('sacrificeDialog')?.open)return 'sacrifice/';
+ if(section==='settings'){
+  const host=$(settingId);
+  const profile=host.querySelector('[data-profile-drawer]:not([hidden]) [data-profile-detail]:not([hidden])');
+  if(profile)return `${settingId}/${profile.dataset.profileDetail}/`;
+  const item=host.querySelector('[data-item-drawer]:not([hidden]) [data-item-detail]:not([hidden])');
+  if(item)return `${settingId}/${item.dataset.itemDetail}/`;
+ }
+ const host=section==='battles'?$('fieldViewer'):section==='story'?$('storyBattle'):null;
+ const drawer=host?.querySelector('[data-battle-drawer]:not([hidden])');
+ if(drawer?.dataset.seoProfile)return `enemies/${drawer.dataset.seoProfile}/`;
+ return null;
+}
+window.AressSEO={routes:seoRoutes,apply:seoApply,transcript:seoTranscript,decorate:seoDecorate,matches:seoMatches,detail:seoDetail,event:()=>section==='story'?eventId:null,point:()=>section==='world'?pointId:null};
+window.dispatchEvent(new Event('aress-seo-ready'));
+
 })();

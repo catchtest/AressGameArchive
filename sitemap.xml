@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://catchtest.github.io/AressGameArchive/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/flow/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/equipment/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/items/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/characters/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/enemies/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/spells/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/classes/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/races/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/shops/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/formula/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/story/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/world/</loc></url>
+<url><loc>https://catchtest.github.io/AressGameArchive/battles/</loc></url>
 </urlset>

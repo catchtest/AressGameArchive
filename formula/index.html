@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="zh-Hant"><head><base href="../">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="《亞里斯王物語》公式。畫面能力值、基礎能力、升級加成、命中、會心、物理與魔法傷害、遠程攻擊、經驗與金錢的計算公式。">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link id="canonicalLink" rel="canonical" href="https://catchtest.github.io/AressGameArchive/formula/">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="亞里斯王物語 遊戲資料站">
+  <meta property="og:title" content="公式｜亞里斯王物語 遊戲資料站">
+  <meta property="og:description" content="《亞里斯王物語》公式。畫面能力值、基礎能力、升級加成、命中、會心、物理與魔法傷害、遠程攻擊、經驗與金錢的計算公式。">
+  <meta property="og:url" content="https://catchtest.github.io/AressGameArchive/formula/">
+  <meta property="og:image" content="https://catchtest.github.io/AressGameArchive/assets/scenes/SEEN59.png">
+  <meta property="og:image:alt" content="亞里斯王物語主要角色">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="公式｜亞里斯王物語 遊戲資料站">
+  <meta name="twitter:description" content="《亞里斯王物語》公式。畫面能力值、基礎能力、升級加成、命中、會心、物理與魔法傷害、遠程攻擊、經驗與金錢的計算公式。">
+  <meta name="twitter:image" content="https://catchtest.github.io/AressGameArchive/assets/scenes/SEEN59.png">
+  <title>公式｜亞里斯王物語 遊戲資料站</title>
+
+  <link rel="stylesheet" href="assets/site.css?v=d59965147c07">
+<link rel="stylesheet" href="assets/seo.css?v=d59965147c07"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"公式｜亞里斯王物語 遊戲資料站","description":"《亞里斯王物語》公式。畫面能力值、基礎能力、升級加成、命中、會心、物理與魔法傷害、遠程攻擊、經驗與金錢的計算公式。","url":"https://catchtest.github.io/AressGameArchive/formula/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"亞里斯王物語 遊戲資料站","url":"https://catchtest.github.io/AressGameArchive/"}}</script></head>
+<body data-page-section="settings" data-page-setting="formula" class="" data-section="settings" data-seo-route="{&quot;path&quot;:&quot;formula/&quot;,&quot;label&quot;:&quot;公式&quot;,&quot;section&quot;:&quot;settings&quot;,&quot;setting&quot;:&quot;formula&quot;,&quot;page&quot;:&quot;formula/&quot;,&quot;url&quot;:&quot;formula/&quot;}"><div class="app"><aside id="sidebar"><button id="toggleSidebar" class="sidebar-toggle" aria-controls="sidebar" aria-expanded="true" title="收起側欄">‹</button><a id="homeLink" class="brand" href="./" aria-label="返回首頁" data-seo-link=""><span class="brand-english">The Story of<br><strong>King Aress</strong></span></a><div class="subtitle">亞里斯王物語 遊戲資料站</div><nav id="storyCategories" class="story-categories btn-group" aria-label="劇情分類" hidden=""><a data-story-group="main" class="selected seo-link" aria-pressed="true" href="story/" data-seo-link="">主線劇情</a><a data-story-group="side" aria-pressed="false" class="seo-link" href="story/?event=71&amp;group=side" data-seo-link="">地點劇情</a></nav><nav id="battleCategories" class="story-categories btn-group" aria-label="戰鬥分類" hidden=""><a data-battle-group="main" class="selected seo-link" aria-pressed="true" href="battles/" data-seo-link="">主線戰鬥</a><a data-battle-group="repeat" aria-pressed="false" class="seo-link" href="battles/?field=FLD044.DAT" data-seo-link="">重複戰鬥</a></nav><dl id="homeInfo" class="home-sidebar-info" hidden="">
+ <div><dt>遊戲原名</dt><dd>アレス王の物語</dd></div>
+ <div><dt>開發公司</dt><dd>Gust（ガスト）</dd></div>
+ <div><dt>發行時間</dt><dd>1994 年 3 月 18 日</dd></div>
+ <div><dt>原版平台</dt><dd>NEC PC-9801</dd></div>
+ <div><dt>遊戲類型</dt><dd>回合制策略角色扮演</dd></div>
+ <div><dt>繁體中文版</dt><dd>1996 年 · DOS</dd></div>
+ <div><dt>中文代理發行</dt><dd>松崗電腦</dd></div>
+ <div><dt>網站製作</dt><dd>蕭雲</dd></div>
+</dl><div id="eventList" aria-label="劇情與地點列表"><a class="event sidebar-filter seo-link" data-formula-anchor="formula-display" href="formula/#formula-display" data-seo-link=""><span>畫面能力值</span></a><a class="event sidebar-filter seo-link" data-formula-anchor="formula-abilities" href="formula/#formula-abilities" data-seo-link=""><span>基礎能力</span></a><a class="event sidebar-filter seo-link" data-formula-anchor="formula-leveling" href="formula/#formula-leveling" data-seo-link=""><span>升級時的能力增加</span></a><a class="event sidebar-filter seo-link" data-formula-anchor="formula-damage" href="formula/#formula-damage" data-seo-link=""><span>戰鬥傷害計算</span></a><a class="event sidebar-filter seo-link" data-formula-anchor="formula-experience" href="formula/#formula-experience" data-seo-link=""><span>經驗與金錢</span></a></div></aside>
+<main><header class="top-banner"><nav id="mainNav" class="site-nav" aria-label="所有功能"><a href="flow/" data-section="settings" data-setting-section="flow" class="" data-seo-link="">流程</a><a href="story/" data-section="story" data-seo-link="">劇情</a><a href="world/" data-section="world" data-seo-link="">地圖</a><a href="shops/" data-section="settings" data-setting-section="shops" class="" data-seo-link="">商店</a><a href="battles/" data-section="battles" data-seo-link="">戰鬥</a><a href="equipment/" data-section="settings" data-setting-section="equipment" class="" data-seo-link="">裝備</a><a href="items/" data-section="settings" data-setting-section="items" class="" data-seo-link="">道具</a><a href="characters/" data-section="settings" data-setting-section="characters" class="" data-seo-link="">角色</a><a href="enemies/" data-section="settings" data-setting-section="enemies" class="" data-seo-link="">敵人</a><a href="spells/" data-section="settings" data-setting-section="spells" class="" data-seo-link="">魔法</a><a href="classes/" data-section="settings" data-setting-section="classes" class="" data-seo-link="">職系</a><a href="races/" data-section="settings" data-setting-section="races" class="" data-seo-link="">種族</a><a href="formula/" data-section="settings" data-setting-section="formula" class="selected" data-seo-link="">公式</a></nav></header><div id="runtimeStatus" role="status" class="dialogue" hidden=""></div>
+<section id="homePanel" class="home-panel" hidden=""><div class="home-hero"><img class="home-scene" src="assets/scenes/SEEN59.png" alt="亞里斯王物語主要角色" fetchpriority="high" decoding="async"><img class="home-title-zh" src="assets/title/TITL_ZH.png" alt="亞里斯王物語"><img class="home-title-en" src="assets/title/TITL_006.png" alt="The Story of King Aress"></div></section>
+<div id="storyWorkspace" hidden=""><div class="reading-width"><div class="story-meta" hidden=""><div class="source-line" id="sourceLine"></div></div>
+<section id="storyPanel"><div class="stage" id="stage" tabindex="0" aria-label="劇情畫面，點擊或按空白鍵繼續"><div class="empty-scene" id="emptyScene"><span>The Story of<br><b>King Aress</b></span></div><img id="scene" class="scene" alt="劇情背景" hidden=""><div id="mapBackdrop" class="world-map story-map-backdrop" aria-label="地圖背景" hidden=""></div><div id="conversationLayer" class="conversation-layer"><div id="portraitRow" class="portrait-row" hidden=""><i id="leftFace" class="portrait sprite-image" role="img" aria-label="左側頭像" hidden=""></i><i id="rightFace" class="portrait sprite-image" role="img" aria-label="右側頭像" hidden=""></i></div><div id="dialogue" class="dialogue" role="button" tabindex="0" aria-label="左鍵繼續下一段，右鍵返回上一段" hidden=""><div class="speech"><div id="speaker" class="speaker"></div><div id="body" class="body" aria-live="polite"></div></div></div><div id="rewardPanel" class="reward-panel" hidden=""></div></div><div id="interlude" class="interlude" hidden=""></div><div id="storyBattleLink" class="story-battle-link" hidden=""></div></div><div id="storyBattle" hidden=""></div><div class="story-bottom-bar"><span id="storyProgress" class="story-progress-accessible" role="progressbar" aria-label="本段劇情進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span><div class="nav"><button id="restart" class="restart-button" title="回到本段開頭（Home 鍵）" aria-label="回到本段開頭">⏮</button><div class="story-button-group" role="group" aria-label="劇情翻頁"><button id="prev" title="上一段（←鍵；也可在對話框按右鍵）" aria-label="上一段">◀</button><button id="next" title="下一段（→鍵、空白鍵或點擊畫面；End 鍵跳到本段結尾）" aria-label="下一段">▶</button></div></div><div class="story-bottom-status"><div class="condition-banner" id="conditionBanner" role="status"></div></div></div></section></div></div>
+<section id="settingsPanel" class="settings"><div class="section-heading settings-heading"><h1 id="settingsTitle">公式</h1><input id="settingsFilter" type="search" placeholder="搜尋目前分類" aria-label="搜尋目前分類" hidden=""><div id="shopViewSwitch" class="shop-view-switch btn-group" role="group" aria-label="商店內容" hidden=""><a class="selected seo-link" data-shop-view="products" aria-pressed="true" href="shops/?town=0&amp;shop=products" data-seo-link="">商品</a><a data-shop-view="lottery" aria-pressed="false" class="seo-link" href="shops/?town=0&amp;shop=lottery" data-seo-link="">抽獎</a></div></div><div id="settingsContent"><section id="flow" hidden=""></section><section id="equipment" hidden=""></section><section id="items" hidden=""></section><section id="characters" hidden=""></section><section id="enemies" hidden=""></section><section id="spells" hidden=""></section><section id="classes" hidden=""></section><section id="races" hidden=""></section><section id="shops" hidden=""></section><section id="formula">
+<section class="formula-section" data-formula-section="" id="formula-display" data-formula-label="畫面能力值">
+<h2>畫面能力值</h2>
+<div class="formula-card-grid">
+<article class="formula-card"><h3>生命力 <small>HP</small></h3><p>目前可承受的傷害。降到 0 時無法繼續戰鬥。</p><div class="formula-card-equation"><code>體力 × 257</code></div></article>
+<article class="formula-card"><h3>攻擊力 <small>ATK</small></h3><p>物理攻擊的基礎值，由力量、武器與固定基礎值組成。</p><div class="formula-card-equation"><code>19 + 力量 × 16 + 裝備攻擊力</code></div></article>
+<article class="formula-card"><h3>防禦力 <small>DEF</small></h3><p>抵銷物理攻擊的能力，由防護、鎧甲、盾與固定基礎值組成。</p><div class="formula-card-equation"><code>59 + 防護 × 8 + 裝備防禦力</code></div></article>
+<article class="formula-card"><h3>魔法力 <small>MTK</small></h3><p>施展魔法時使用的能力，由智力、魔法與裝備加成共同決定。</p><div class="formula-card-equation"><code>15 + ⌊智力 × 魔法 ÷ 16⌋ + 裝備魔法力</code></div></article>
+<article class="formula-card"><h3>抗魔力 <small>MDF</small></h3><p>抵抗魔法效果時使用的能力，由智力、抗魔與裝備加成共同決定。</p><div class="formula-card-equation"><code>15 + ⌊智力 × 抗魔 ÷ 32⌋ + 裝備抗魔力</code></div></article>
+<article class="formula-card"><h3>移動 <small>MOV</small></h3><p>僅根據職系等級決定固定值。使用曼哈頓距離（Manhattan distance）計算，斜向一格等於移動兩格。</p></article>
+<article class="formula-card"><h3>射程 <small>REN</small></h3><p>僅根據武器射程決定。使用切比雪夫距離（Chebyshev distance）計算，直向、橫向與斜向距離相同。</p></article>
+</div>
+<p class="formula-note">⌊x⌋ 表示無條件捨去小數。</p>
+</section>
+<section class="formula-section" data-formula-section="" id="formula-abilities" data-formula-label="基礎能力">
+<h2>基礎能力</h2>
+<div class="formula-card-grid formula-ability-grid">
+<article class="formula-card"><h3>體力 <small>PHY</small></h3><p>決定生命力。</p></article>
+<article class="formula-card"><h3>力量 <small>STR</small></h3><p>決定攻擊力。</p></article>
+<article class="formula-card"><h3>防護 <small>PRO</small></h3><p>決定防禦力。</p></article>
+<article class="formula-card"><h3>智力 <small>INT</small></h3><p>影響魔法力與抗魔力。</p></article>
+<article class="formula-card"><h3>敏捷 <small>DIC</small></h3><p>物理攻擊時，攻守雙方的差值會影響未命中率。</p></article>
+<article class="formula-card"><h3>魅力 <small>CAR</small></h3><p>決定敵人的仇恨值，部分敵人會優先攻擊魅力最低的角色。</p></article>
+<article class="formula-card"><h3>幸運 <small>LUK</small></h3><p>決定物理攻擊發生會心一擊的機率。</p></article>
+<article class="formula-card"><h3>魔法 <small>MAG</small></h3><p>與智力共同決定魔法力。</p></article>
+<article class="formula-card"><h3>抗魔 <small>AMA</small></h3><p>與智力共同決定抗魔力。</p></article>
+</div></section>
+<section class="formula-section" data-formula-section="" id="formula-leveling" data-formula-label="升級時的能力增加">
+<h2>升級時的能力增加</h2>
+<div class="formula-block"><h3>九項基礎能力</h3><p>每項升級時各自判定一次職系與種族加成。</p><p><code>增加值 = 職系固定成長值 + 種族加成</code></p><p>負加成不會使能力下降；體力上限為 255，其餘八項上限為 206。</p></div>
+<div class="formula-block"><h3>職系與種族</h3><p>職系決定每項能力的固定成長值；種族則從低、中、高三檔中抽出一個數值，與固定成長值相加。幸運原本預期提高抽到高加成的機率，但因 Bug 使得機率各佔三分之一。</p><p class="formula-related-links"><a href="classes/?filter=growth" data-section="settings" data-setting-section="classes" data-setting-view="growth" class="" data-seo-link="">查看職系升級增加屬性 →</a><a href="#races" data-section="settings" data-setting-section="races" data-setting-view="growth" class="">查看種族升級屬性加成 →</a></p></div>
+</section>
+<section class="formula-section" data-formula-section="" id="formula-damage" data-formula-label="戰鬥傷害計算">
+<h2>戰鬥傷害計算</h2>
+<p class="formula-note">使用武器攻擊時，相鄰 1 格用一般攻擊；距離 2 格以上時，弓兵仍用一般攻擊，其餘可遠攻的武器借用指定法術的威力，但不會施放完整法術。「隨機法術」在裝備列表列出可能法術的最低與最高威力。</p>
+<div class="table-responsive formula-table formula-damage-table"><table><thead><tr><th scope="col">項目</th><th scope="col">物理攻擊（含弓兵）</th><th scope="col">魔法</th><th scope="col">遠程攻擊（弓兵除外）</th></tr></thead><tbody>
+<tr><th scope="row">命中</th><td><code>攻方敏捷 ≥ 守方敏捷：命中率 = 96.19%</code><br><code>攻方敏捷 &lt; 守方敏捷：未命中門檻 = 2500 + 256 × (守方敏捷 − 攻方敏捷)</code><br><code>命中率 = (65536 − 未命中門檻) ÷ 65536 × 100%</code><p>每落後 1 點降低 0.39%。未命中時不計傷害。</p></td><td>必定命中</td><td>必定命中</td></tr>
+<tr><th scope="row">攻擊值</th><td><code>攻擊值 = 攻方攻擊力 + ⌊⌊攻方攻擊力 ÷ 8⌋ × (3～5) ÷ 4⌋</code></td><td><code>魔法攻擊值 = 法術威力 × 32 + ⌊攻方魔法力 ÷ 4⌋ + (109～620)</code></td><td><code>遠攻攻擊值 = 武器指定法術威力 × 32 + ⌊攻方魔法力 ÷ 4⌋ + (109～620)</code></td></tr>
+<tr><th scope="row">屬性修正</th><td>武器屬性命中弱點時，目標防禦力減半；命中抗性時，目標防禦力加倍。</td><td>法術屬性命中弱點時，目標抗魔力減半；命中抗性時，目標抗魔力加倍。</td><td>使用武器的攻擊屬性；命中弱點時，目標抗魔力減半；命中抗性時，目標抗魔力加倍。</td></tr>
+<tr><th scope="row">破防條件</th><td><code>攻擊值 &gt; 目標防禦力</code></td><td><code>魔法攻擊值 &gt; 目標抗魔力</code></td><td><code>遠攻攻擊值 &gt; 目標抗魔力</code></td></tr>
+<tr><th scope="row">破防傷害</th><td><code>傷害 = 攻擊值 − 目標防禦力</code></td><td><code>傷害 = (魔法攻擊值 − 目標抗魔力) × 2</code></td><td><code>傷害 = ⌊(遠攻攻擊值 − 目標抗魔力) ÷ 2⌋</code></td></tr>
+<tr><th scope="row">未破防傷害</th><td><code>傷害 = ⌊攻擊值 ÷ 16⌋</code><p>約 30.52% 造成微量傷害，其餘約 69.48% 攻擊無效。</p></td><td><code>傷害 = ⌊法術消耗生命力 ÷ 8⌋ × 2</code></td><td><code>傷害 = ⌊法術消耗生命力 ÷ 16⌋</code><p>使用法術資料中的消耗數值，攻方不會因此扣血。</p></td></tr>
+<tr><th scope="row">會心</th><td><code>平均會心率 ≈ 攻方幸運 × 0.19455%</code><p>造成傷害加倍。</p></td><td>不會造成會心一擊</td><td>不會造成會心一擊</td></tr>
+<tr><th scope="row">攻擊範圍</th><td>單一目標；距離 1 格。弓依武器射程。</td><td>依法術設定，可同時影響多個目標。</td><td>單一目標；距離 2 格以上，最遠為武器射程。</td></tr>
+<tr><th scope="row">消耗生命力</th><td>不消耗</td><td>施法前扣一次，每次攻擊目標後再扣一次。<br><code>未受其他效果影響時：最終生命力 = (原生命力 − (對象數 + 1) × 法術消耗量) mod 65536</code><p>扣到 0 以下會發生 16 位元回繞。例如原生命力 70、消耗 30、影響 2 人，結果會變成 65516。</p></td><td>不消耗</td></tr>
+<tr><th scope="row">反擊</th><td>最多攻擊 5 發；每發後，守方若仍存活且攻方在其射程內，就會反擊。</td><td>每次施法只打一發；守方若仍存活且施法者在其射程內，會反擊一次。</td><td>最多攻擊 5 發；每發後，守方若仍存活且攻方在其射程內，就會反擊。</td></tr>
+</tbody></table></div>
+<h3 class="formula-effect-heading">其他魔法效果</h3>
+<div class="table-responsive formula-table formula-effect-table"><table><thead><tr><th scope="col">項目</th><th scope="col">效果與計算</th></tr></thead><tbody>
+<tr><th scope="row">回復</th><td><code>回復量 = 法術威力 × 288 + ⌊施法者魔法力 ÷ 4⌋ + (861～1116)</code><p>適用於休息、治療、回復、治癒、恩惠等法術；回復後不超過最大生命力。</p></td></tr>
+<tr><th scope="row">能力變化<br><small>攻擊力／防禦力<br>魔法力／抗魔力</small></th><td><code>變化量 = ⌊(法術威力 × 32 + ⌊施法者魔法力 ÷ 4⌋ + (109～620)) ÷ 4⌋</code></td></tr>
+<tr><th scope="row">能力變化<br><small>敏捷／幸運</small></th><td><code>變化量 = 法術威力 + ⌊施法者魔法力 ÷ 512⌋ + (6～21)</code><p>上升不超過能力上限；下降至少保留 1 點。</p></td></tr>
+</tbody></table></div>
+<p class="formula-note">公式中括號內的數值範圍表示每次隨機取一個整數。</p>
+</section>
+<section class="formula-section" data-formula-section="" id="formula-experience" data-formula-label="經驗與金錢">
+<h2>經驗與金錢</h2>
+<div class="formula-block"><h3>經驗</h3><ul><li>每次交鋒：增加 <code>⌊該敵人經驗 ÷ 32⌋</code>。</li><li>施展魔法：增加該法術的「威力」數值。</li><li>擊破敵人：再增加該敵人的完整擊破經驗。</li></ul><p>戰後經驗加入參戰角色目前的職系。達到升級所需經驗即可升級，多餘經驗保留。</p></div>
+<div class="formula-block"><h3>金錢</h3><p>擊破敵人可獲得金錢，金額見敵人列表。</p></div>
+</section>
+</section></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+<section id="worldPanel" hidden=""><div class="section-heading"><h1>地圖</h1><nav class="world-half-switch btn-group" role="group" aria-label="切換世界地圖"><button data-world="1" class="selected" aria-pressed="true">前半世界</button><button data-world="2" aria-pressed="false">後半世界</button></nav></div><div class="world-layout"><div class="world-map" id="worldMap"></div><div id="locationInfo" class="location-info"></div></div></section>
+<section id="battlesPanel" hidden=""><div id="fieldViewer"></div></section>
+<noscript><p>完整內容與頁面連結可直接閱讀；劇情播放、搜尋、排序及地圖操作需要 JavaScript。</p></noscript></main></div>
+<template id="rewardTemplate"><h2></h2><div class="reward-items"></div></template>
+<template id="rewardItemTemplate"><article class="reward-item"><span class="item-icon item-sprite" role="img"></span><span data-label=""></span></article></template>
+<template id="partyMemberTemplate"><button class="reward-item party-member"><span data-portrait=""></span><span data-label=""></span></button></template>
+<template id="classUnlockLabelTemplate"><small data-class-name="">可轉職為<br></small></template>
+<template id="moneyTemplate"><h2>獲得金錢</h2><p class="money-change"></p></template>
+<template id="choiceTemplate"><h2>請選擇</h2><div class="choices"><button class="primary"></button><button></button></div></template>
+
+<details id="seoSupplement"><summary title="完整文字與頁面索引" aria-label="完整文字與頁面索引">⋯</summary><details class="seo-directory" data-seo-extra="" aria-label="相關頁面"><summary>相關頁面</summary><ul><li><a href="formula/" data-seo-link="">公式</a></li></ul></details></details><script src="assets/seo-templates.js?v=d59965147c07"></script><script src="assets/seo-routes.js?v=d59965147c07"></script><script src="assets/seo.js?v=d59965147c07"></script><script src="assets/loader.js?v=d59965147c07"></script></body></html>
