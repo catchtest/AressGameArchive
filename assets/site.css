@@ -576,6 +576,8 @@ th[aria-sort="descending"] .class-sort::after{content:" ↓";color:var(--accent)
 .equipment-class-tags{display:inline-flex;flex-wrap:wrap;gap:4px;max-width:190px;vertical-align:middle}
 .equipment-class-tag{display:inline-flex;align-items:center;justify-content:center;min-width:24px;padding:1px 4px;border:1px solid var(--line);border-radius:4px;background:var(--panel);color:var(--ink);font-size:14px;line-height:1.5;font-weight:400}
 
+.spell-attribute-note{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:0 0 20px;padding:10px 14px;background:var(--panel);border-left:3px solid #82c7b0;border-radius:4px;font-size:14px}.spell-attribute-note strong{color:var(--muted);font-weight:400}.spell-attribute-note span{color:var(--accent)}.spell-attribute-note small{color:var(--muted);font-size:14px}
+
 .sprite-0{background-position:0% 0%}
 .sprite-1{--sprite-image:url("portraits/FACE_SPRITE.png");--sprite-size:1600% 1300%;--sprite-position:0.000000% 0.000000%}
 .sprite-2{--sprite-image:url("portraits/FACE_SPRITE.png");--sprite-size:1600% 1300%;--sprite-position:6.666667% 0.000000%}

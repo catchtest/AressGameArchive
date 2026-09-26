@@ -2,6 +2,7 @@
 (function(){
 'use strict';
 const routes=window.AressSEORoutes||[];
+const localFile=location.protocol==='file:';
 const byPath=new Map(routes.map(route=>[route.path,route]));
 const key=value=>{const url=new URL(value,document.baseURI);url.searchParams.sort();return url.pathname+'?'+url.searchParams.toString();};
 const byURL=new Map(routes.map(route=>[key(route.url||route.path||'./'),route]));
@@ -72,11 +73,14 @@ if(route.section==='home')document.body.dataset.seoReady='true';
 function reflect(next){
  route=next;document.body.dataset.seoRoute=JSON.stringify(route);
  const url=new URL(route.url||route.path||'./',document.baseURI);
- if(location.pathname!==url.pathname||location.search!==url.search){
+ if(!localFile&&(location.pathname!==url.pathname||location.search!==url.search)){
   if(history.state?.seo)history.replaceState({...history.state,scroll:[scrollX,scrollY]},'');
   history.pushState({seo:true,scroll:[scrollX,scrollY]},'',url);
  }
  const request=++reflectRequest;
+ // Local files cannot change paths with pushState or fetch other HTML pages.
+ // Keep rendering and decorating the current document without these HTTP steps.
+ if(localFile)return;
  const metadataURL=new URL(route.page??route.path??'./',document.baseURI);
  if(!metadataCache.has(metadataURL.href))metadataCache.set(metadataURL.href,fetch(metadataURL).then(response=>{if(!response.ok)throw Error('HTTP '+response.status);return response.text();}));
  metadataCache.get(metadataURL.href).then(markup=>{

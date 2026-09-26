@@ -92,7 +92,7 @@ function showEvents(){
  if(section==='home')return;
  if(section==='battles'){
   const fields=A.fields.filter(f=>f.battle_type===battleGroup);
-  $('eventList').innerHTML=fields.map(f=>{const origin=f.events.length?source(f.events[0]):null,point=origin?.point_id!==null&&origin?.point_id!==undefined?A.points[origin.point_id]:A.points.find(p=>p.name===f.location);return `<button class="event ${f.file===fieldFile?'active':''}" data-open-field="${f.file}">${point?pointSprite(point.id):''}<span>${esc(f.title)}</span></button>`;}).join('');
+  $('eventList').innerHTML=fields.map(f=>{const point=A.points[f.point];return `<button class="event ${f.file===fieldFile?'active':''}" data-open-field="${f.file}">${point?pointSprite(point.id):''}<span>${esc(f.title)}</span></button>`;}).join('');
   return;
  }
  const selected=section==='world'?pointId:source(eventId).point_id;
@@ -324,7 +324,7 @@ function renderWorld(){
  showEvents();
  $('worldMap').innerHTML=worldArtwork(world,pointId,true);
  document.querySelectorAll('[data-world]').forEach(b=>{const on=Number(b.dataset.world)===world;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',on);});
- const p=A.points[pointId],ids=[...p.main_events,p.side_event],battles=A.fields.filter(f=>f.events.some(i=>source(i).point_id===p.id)),town=A.shop_towns.find(t=>t.point_id===p.id);
+ const p=A.points[pointId],ids=[...p.main_events,p.side_event],battles=(p.fields||[]).map(index=>A.fields[index]),town=A.shop_towns[p.town];
  $('locationInfo').innerHTML=`<h2>${esc(p.name)}</h2>${p.background?`<img class="location-background" src="${p.background}" alt="${esc(p.name)}景色">`:''}<h3>劇情</h3><div class="location-events">`+ids.filter(i=>i<D.event_has_dialogue.length&&(i!==p.side_event||hasDialogue(i))).map(i=>`<button data-open-event="${i}">${esc(source(i).title)}</button>`).join('')+`</div>${battles.length?'<h3 class="location-battles">戰鬥</h3><div class="location-events">'+battles.map(f=>`<button data-open-field="${f.file}">${esc(f.title)}</button>`).join('')+'</div>':''}${townServices(town)}${templeServices(p)}`;
 }
 const battleRequests=new WeakMap();
@@ -364,7 +364,10 @@ function selectProfile(section,key){
  section.querySelector('.profile-empty').hidden=!!key;
  section.querySelector('[data-profile-drawer]').hidden=!key;
 }
-function openProfile(section,key){
+async function openProfile(section,key){
+ if(key&&!section.querySelector(`[data-profile-detail="${key}"]`)){
+  try{await AressLoadReference(section.id,true);}catch{return;}
+ }
  if(section.id==='characters'&&!key)setCharacterView('overview');
  selectProfile(section,key);showSettingsSidebar();
 }
@@ -391,7 +394,7 @@ function filterSettings(){
 }
 async function openItem(id){
   const targetSection=id<256?'equipment':'items';
-  try{await AressLoadReference(targetSection);}catch{return;}
+  try{await AressLoadReference(targetSection,true);}catch{return;}
  $('settingsFilter').value='';selectSetting(targetSection);setSection('settings');
  const host=$(targetSection);settingSidebar='';filterSettings();
  host.querySelectorAll('[data-item-detail]').forEach(p=>p.hidden=p.dataset.itemDetail!==String(id));
@@ -399,7 +402,7 @@ async function openItem(id){
 }
 async function openCharacter(id){
   if($('sacrificeDialog')?.open)$('sacrificeDialog').close();
-  try{await AressLoadReference('characters');}catch{return;}
+  try{await AressLoadReference('characters',true);}catch{return;}
  $('settingsFilter').value='';selectSetting('characters');setSection('settings');filterSettings();
  const character=$('characters').querySelector(`[data-character-id="${id}"]`);
  if(character)openProfile($('characters'),character.dataset.profile);
@@ -434,7 +437,7 @@ async function openTownStore(townId,storeIndex=0,view=shopView){
 async function openBattleEnemyProfile(battleUnit){
  const host=battleUnit.closest('#storyBattle,#fieldViewer'),key=battleUnit.dataset.enemyProfile;
  if(!host)return;
- try{await AressLoadReference('enemies');}catch{return;}
+ try{await AressLoadReference('enemies',true);}catch{return;}
  if(!host.isConnected||!host.querySelector(`[data-enemy-profile="${key}"]`))return;
  const drawer=host.querySelector('[data-battle-drawer]'),sourceProfile=$('enemies').querySelector(`[data-profile-detail="${key}"]`),target=drawer.querySelector('[data-battle-profile]');
  target.replaceChildren();
@@ -470,7 +473,7 @@ $('settingsContent').onclick=e=>{
  const character=e.target.closest('[data-open-character]');if(character){e.stopPropagation();openCharacter(Number(character.dataset.openCharacter));return;}
  const profile=e.target.closest('[data-profile],[data-profile-link]');if(profile)openProfile(profile.closest('section'),profile.dataset.profile||profile.dataset.profileLink);
  const closeProfile=e.target.closest('[data-close-profile]');if(closeProfile){selectProfile(closeProfile.closest('section'),null);showSettingsSidebar();}
- const item=e.target.closest('[data-item]');if(item){const itemSection=item.closest('[data-item-section]'),detail=itemSection.querySelector(`[data-item-detail="${item.dataset.item}"]`),drawer=itemSection.querySelector('[data-item-drawer]');itemSection.querySelectorAll('[data-item-detail]').forEach(p=>p.hidden=p!==detail);if(drawer)drawer.hidden=!detail;else detail?.scrollIntoView({block:'nearest'});}
+ const item=e.target.closest('[data-item]');if(item){const itemSection=item.closest('[data-item-section]'),detail=itemSection.querySelector(`[data-item-detail="${item.dataset.item}"]`),drawer=itemSection.querySelector('[data-item-drawer]');if(!detail){openItem(Number(item.dataset.item));return;}itemSection.querySelectorAll('[data-item-detail]').forEach(p=>p.hidden=p!==detail);if(drawer)drawer.hidden=!detail;else detail?.scrollIntoView({block:'nearest'});}
  const closeItem=e.target.closest('[data-close-item]');if(closeItem){const itemSection=closeItem.closest('[data-item-section]');itemSection.querySelectorAll('[data-item-detail]').forEach(p=>p.hidden=true);const drawer=itemSection.querySelector('[data-item-drawer]');if(drawer)drawer.hidden=true;}
 };
 $('settingsContent').onkeydown=e=>{const row=e.target.closest('tr[data-item],tr[data-profile-link],tr[data-open-character]');if(row&&['Enter',' '].includes(e.key)){e.preventDefault();row.click();}};
@@ -645,7 +648,7 @@ async function seoApply(route,options={}) {
   filterSettings();
   if(route.setting==='characters')setCharacterView(route.view||'overview');
   setSection('settings',false);
-  if(route.profile)openProfile($(route.setting),route.profile);
+  if(route.profile)await openProfile($(route.setting),route.profile);
   if(route.variant!==undefined){
    const profile=$(route.setting).querySelector(`[data-profile-detail="${route.profile}"]`);
    const select=profile.querySelector('[data-enemy-variant]');select.value=route.variant;
@@ -693,10 +696,6 @@ function seoTranscript(route) {
  return {html:article.outerHTML,frames:history.length,dialogues};
 }
 function seoDecorate(route){
- for(const node of document.querySelectorAll('.equipment-class-tags')){
-  const classes=new Set([...node.querySelectorAll('.equipment-class-tag')].map(tag=>tag.title));
-  if(classes.size===15&&!classes.has(''))node.replaceChildren('全職系可用');
- }
  for(const node of document.querySelectorAll('[data-location]')){
   const point=A.points[Number(node.dataset.location)];
   const id=storyGroup==='side'?point.side_event:point.main_events[0];

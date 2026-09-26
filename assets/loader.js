@@ -29,7 +29,7 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='6896daae36d9';
+const assetVersion='5c5452c758f7';
 const versioned=src=>src+'?v='+assetVersion;
 function loadStoryData(id=130){
  if(D.events?.[id])return Promise.resolve();
@@ -109,14 +109,32 @@ function buildReferencePage(id){
   return;
  }
  const host=byId(id);
+ if(host.dataset.referenceLoaded==='true'){
+  // Keep existing lists, filters and scroll position; append only omitted drawers.
+  for(const selector of ['[data-profile-detail]','[data-item-detail]']){
+   const attribute=selector.slice(1,-1);
+   const existing=new Set([...host.querySelectorAll(selector)].map(node=>node.getAttribute(attribute)));
+   for(const node of built.querySelectorAll(selector)){
+    if(existing.has(node.getAttribute(attribute)))continue;
+    const parent=host.querySelector(selector)?.parentElement||
+     host.querySelector(selector==='[data-profile-detail]'?'[data-profile-drawer] .profile-panel':'[data-item-drawer] .item-details');
+    if(!parent)throw Error('找不到詳細資料容器：'+id);
+    parent.append(node);
+   }
+  }
+  host.dataset.referenceComplete='true';
+  delete window.AressReferencePages[id];
+  return;
+ }
  for(const name of built.getAttributeNames())if(name!=='id'&&name!=='hidden')host.setAttribute(name,built.getAttribute(name));
  host.replaceChildren(...built.childNodes);
  host.dataset.referenceLoaded='true';
+ host.dataset.referenceComplete='true';
  delete window.AressReferencePages[id];
 }
 window.AressReferenceLoaded=id=>id==='special'?!!byId('sacrificeDialog'):byId(id)?.dataset.referenceLoaded==='true';
-function loadReferenceData(id){
- if(window.AressReferenceLoaded(id))return Promise.resolve();
+function loadReferenceData(id,requireComplete=false){
+ if(window.AressReferenceLoaded(id)&&(!requireComplete||byId(id)?.dataset.referenceComplete==='true'))return Promise.resolve();
  if(referencePromises.has(id))return referencePromises.get(id);
  const status=byId('runtimeStatus');
  if(appReady){status.hidden=false;status.textContent='正在載入資料…';}
@@ -138,9 +156,10 @@ function loadApplication(){
  const status=byId('runtimeStatus');
  status.classList.add('dialogue');
  status.setAttribute('role','status');
- status.hidden=false;
- status.textContent='正在載入遊戲資料…';
- document.body.classList.add('app-loading');
+ const prerendered=!!document.body.dataset.seoRoute;
+ status.hidden=prerendered;
+ status.textContent=prerendered?'':'正在載入遊戲資料…';
+ if(!prerendered)document.body.classList.add('app-loading');
  appPromise=loadScript(versioned('assets/data.js'))
   .then(()=>loadScript(versioned('assets/engine.js')))
   .then(()=>{
