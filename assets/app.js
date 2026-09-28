@@ -54,6 +54,7 @@ const spriteImage=(path,index,columns,rows,label='',cls='')=>`<i class="sprite-i
 const portraitSprite=(id,label='')=>spriteImage('portraits/FACE_SPRITE.png',id,16,13,label);
 const mapUnitSprite=(path,label='',cls='')=>{const match=String(path).match(/(MIKATA|TEKI)_(\d+)\.png$/);if(!match)return '';const index=Number(match[2])+(match[1]==='TEKI'?95:0);return spriteImage('map_sprites/UNIT_SPRITE.png',index,16,7,label,cls);};
 const source=id=>A.sources[id],eventName=id=>{const row=source(id),title=row.title||'';return !title||['主線劇情','地點劇情',row.name].includes(title)?row.name:`${row.name} · ${title}`;};
+const endingSpeakerTitle=frame=>{const owner=frame?.endingFaceIds?.[0];return owner===undefined?'':`結局—${D.character_names[owner]||`角色 ${owner}`}`;};
 const settingLabels={flow:'流程',equipment:'裝備',items:'道具',characters:'角色',enemies:'敵人',spells:'魔法',classes:'職系',races:'種族',shops:'商店',formula:'公式'};
 const pageFromLocation=()=>{
  const seo=JSON.parse(document.body.dataset.seoRoute||'null');
@@ -250,7 +251,7 @@ function render(){
  const narration=s.kind==='dialogue'&&(!s.speaker||s.speaker==='旁白'),endingFaces=s.endingFaceIds||[],showEndingFaces=s.kind==='dialogue'&&endingFaces.length>0,showFaces=s.kind==='dialogue'&&(!narration||showEndingFaces);
  const leftPortrait=showEndingFaces?`FACE${String(endingFaces[0]).padStart(3,'0')}.png`:s.left,rightPortrait=showEndingFaces?(endingFaces.length>1?`FACE${String(endingFaces[1]).padStart(3,'0')}.png`:null):s.right;
  setImage('leftFace',showFaces?leftPortrait:null,'portraits');setImage('rightFace',showFaces?rightPortrait:null,'portraits');$('portraitRow').hidden=!showFaces||(!leftPortrait&&!rightPortrait);
- $('dialogue').hidden=s.kind!=='dialogue';$('speaker').hidden=false;$('speaker').textContent=narration?'':s.speaker;$('body').textContent=s.body;$('body').classList.toggle('red',!!s.color);$('body').scrollTop=0;
+ $('dialogue').hidden=s.kind!=='dialogue';$('speaker').hidden=false;$('speaker').textContent=eventId===A.ending_event_id&&showEndingFaces?endingSpeakerTitle(s):narration?'':s.speaker;$('body').textContent=s.body;$('body').classList.toggle('red',!!s.color);$('body').scrollTop=0;
  const rewardPanel=$('rewardPanel'),statusKinds=['reward','item-loss','party','money','class-unlock'];rewardPanel.hidden=!statusKinds.includes(s.kind);
  if(statusKinds.includes(s.kind))renderRewards(rewardPanel,s);
  const conditionBanner=$('conditionBanner'),rawCondition=s.condition&&s.condition!=='不需額外條件'?s.condition:'',storedConditionGroups=s.conditionGroups||[];
