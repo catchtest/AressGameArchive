@@ -1,0 +1,3148 @@
+<!doctype html>
+<html lang="zh-Hant"><head><base href="../">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="《亞里斯王物語》存檔編輯器。線上讀取與編輯遊戲存檔，支援全角色能力、職系、裝備與持有金錢修改。">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link id="canonicalLink" rel="canonical" href="https://catchtest.github.io/AressGameArchive/save/">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="亞里斯王物語（アレス王の物語）遊戲資料站">
+  <meta property="og:title" content="存檔編輯器｜亞里斯王物語（アレス王の物語）遊戲資料站">
+  <meta property="og:description" content="《亞里斯王物語》存檔編輯器。線上讀取與編輯遊戲存檔，支援全角色能力、職系、裝備與持有金錢修改。">
+  <meta property="og:url" content="https://catchtest.github.io/AressGameArchive/save/">
+  <meta property="og:image" content="https://catchtest.github.io/AressGameArchive/assets/scenes/SEEN59.png">
+  <meta property="og:image:alt" content="亞里斯王物語主要角色">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="存檔編輯器｜亞里斯王物語（アレス王の物語）遊戲資料站">
+  <meta name="twitter:description" content="《亞里斯王物語》存檔編輯器。線上讀取與編輯遊戲存檔，支援全角色能力、職系、裝備與持有金錢修改。">
+  <meta name="twitter:image" content="https://catchtest.github.io/AressGameArchive/assets/scenes/SEEN59.png">
+  <title>存檔編輯器｜亞里斯王物語（アレス王の物語）遊戲資料站</title>
+
+  <link rel="stylesheet" href="assets/site.css?v=59c788e9e38b">
+  <link rel="stylesheet" href="assets/save-editor.css?v=59c788e9e38b">
+<link rel="stylesheet" href="assets/seo.css?v=59c788e9e38b"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"存檔編輯器｜亞里斯王物語（アレス王の物語）遊戲資料站","description":"《亞里斯王物語》存檔編輯器。線上讀取與編輯遊戲存檔，支援全角色能力、職系、裝備與持有金錢修改。","url":"https://catchtest.github.io/AressGameArchive/save/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"亞里斯王物語（アレス王の物語）遊戲資料站","url":"https://catchtest.github.io/AressGameArchive/"}}</script></head>
+<body data-page-section="save" data-page-setting="" class="" data-section="save" data-seo-route="{&quot;path&quot;:&quot;save/&quot;,&quot;label&quot;:&quot;存檔編輯器&quot;,&quot;section&quot;:&quot;save&quot;,&quot;page&quot;:&quot;save/&quot;,&quot;url&quot;:&quot;save/&quot;}"><div class="app"><aside id="sidebar"><button id="toggleSidebar" class="sidebar-toggle" aria-controls="sidebar" aria-expanded="true" title="收起側欄">‹</button><a id="homeLink" class="brand" href="./" aria-label="返回首頁" data-seo-link=""><span class="brand-english">The Story of<br><strong>King Aress</strong></span></a><div class="subtitle">亞里斯王物語 遊戲資料站</div><nav id="storyCategories" class="story-categories btn-group" aria-label="劇情分類" hidden=""><a data-story-group="main" class="selected seo-link" aria-pressed="true" href="story/" data-seo-link="">主線劇情</a><a data-story-group="side" aria-pressed="false" class="seo-link" href="story/?event=71&amp;group=side" data-seo-link="">地點劇情</a></nav><nav id="battleCategories" class="story-categories btn-group" aria-label="戰鬥分類" hidden=""><a data-battle-group="main" class="selected seo-link" aria-pressed="true" href="battles/" data-seo-link="">主線戰鬥</a><a data-battle-group="repeat" aria-pressed="false" class="seo-link" href="battles/?field=FLD044.DAT" data-seo-link="">重複戰鬥</a></nav><dl id="homeInfo" class="home-sidebar-info" hidden="">
+ <div><dt>遊戲原名</dt><dd>アレス王の物語</dd></div>
+ <div><dt>開發公司</dt><dd>Gust（ガスト）</dd></div>
+ <div><dt>發行時間</dt><dd>1994 年 3 月 18 日</dd></div>
+ <div><dt>原版平台</dt><dd>NEC PC-9801</dd></div>
+ <div><dt>遊戲類型</dt><dd>回合制策略角色扮演</dd></div>
+ <div><dt>繁體中文版</dt><dd>1996 年 · DOS</dd></div>
+ <div><dt>中文代理發行</dt><dd>松崗電腦</dd></div>
+ <div><dt>網站製作</dt><dd>蕭雲</dd></div>
+</dl><div id="eventList" aria-label="劇情與地點列表"><h2 class="save-party-heading">持有物品（72／720）</h2>
+      <div class="save-inventory-add"><select id="inventoryItem" aria-label="選擇新增物品"><option value="0" selected="">傳說之劍</option><option value="1">軍神之劍</option><option value="2">修羅之劍</option><option value="3">戰神之劍</option><option value="4">光之劍</option><option value="5">大地之劍</option><option value="6">龍捲之劍</option><option value="7">閃電之劍</option><option value="8">龍之劍</option><option value="9">王者之劍</option><option value="10">大元帥之劍</option><option value="11">公爵之劍</option><option value="12">巴特爾之劍</option><option value="13">神聖之劍</option><option value="14">炎之劍</option><option value="15">冰之劍</option><option value="16">帕德尼斯之劍</option><option value="17">貴人之劍</option><option value="18">銀劍</option><option value="19">長劍</option><option value="20">短劍</option><option value="21">光輝之刀</option><option value="22">妖刀村雨</option><option value="23">霞之刀</option><option value="24">斬刀</option><option value="25">忍者刀</option><option value="26">巴特爾刀</option><option value="27">灼熱之刀</option><option value="28">哈里健刀</option><option value="29">異國之刀</option><option value="30">暗殺者之刀</option><option value="31">銀刀</option><option value="32">瘦月刀</option><option value="33">黑刀</option><option value="34">蠻刀</option><option value="35">錐刀</option><option value="36">佩刀</option><option value="37">弓刀</option><option value="38">小刀</option><option value="39">勇者之斧</option><option value="40">聖戰士之斧</option><option value="41">破壞之斧</option><option value="42">巴爾特之斧</option><option value="43">雷鳴之斧</option><option value="44">地裂之斧</option><option value="45">三日月之斧</option><option value="46">魔人之斧</option><option value="47">巨人之斧</option><option value="48">巨大之斧</option><option value="49">寬斧</option><option value="50">銀之斧</option><option value="51">鋼鐵之斧</option><option value="52">手斧</option><option value="53">無雙之槍</option><option value="54">水月之槍</option><option value="55">雷神之槍</option><option value="56">風神之槍</option><option value="57">巴爾特之槍</option><option value="58">龍槍</option><option value="59">神聖之槍</option><option value="60">強者之槍</option><option value="61">黃金之槍</option><option value="62">巨大之槍</option><option value="63">銀槍</option><option value="64">長槍</option><option value="65">短槍</option><option value="66">騎士之長矛</option><option value="67">昇龍之長矛</option><option value="68">神聖之長矛</option><option value="69">光之長矛</option><option value="70">龍之長矛</option><option value="71">巴爾特長矛</option><option value="72">雷鳴長矛</option><option value="73">地震長矛</option><option value="74">火之長矛</option><option value="75">冰之長矛</option><option value="76">天空長矛</option><option value="77">聖騎士之長矛</option><option value="78">龍騎士之長矛</option><option value="79">黃金長矛</option><option value="80">銀之長矛</option><option value="81">小型長矛</option><option value="82">木頭長矛</option><option value="83">流星之弓</option><option value="84">疾風之弓</option><option value="85">巴爾特之弓</option><option value="86">神聖之弓</option><option value="87">火炎之弓</option><option value="88">冰塊之弓</option><option value="89">巨大之弓</option><option value="90">銀之弓</option><option value="91">合成弓</option><option value="92">強弓</option><option value="93">長弓</option><option value="94">短弓</option><option value="95">狩獵弓</option><option value="96">魔界之棒</option><option value="97">幻魔之棒</option><option value="98">智力之棒</option><option value="99">大魔術師之棒</option><option value="100">大魔導師之棒</option><option value="101">金鋼石之棒</option><option value="102">雷之棒</option><option value="103">火之棒</option><option value="104">水之棒</option><option value="105">風之棒</option><option value="106">土之棒</option><option value="107">光之棒</option><option value="108">銀棒</option><option value="109">使用魔法之棒</option><option value="110">木棒</option><option value="111">靈界之杖</option><option value="112">天界之杖</option><option value="113">全智之杖</option><option value="114">尼亞斯之杖</option><option value="115">大僧正之杖</option><option value="116">大神官之杖</option><option value="117">法王之杖</option><option value="118">能力之杖</option><option value="119">金鋼石之杖</option><option value="120">光之杖</option><option value="121">神聖之杖</option><option value="122">魔法之杖</option><option value="123">銀杖</option><option value="124">賢者之杖</option><option value="125">聖職者之杖</option><option value="126">驅除惡魔之杖</option><option value="127">木杖</option><option value="128">傳說之鎧</option><option value="129">勇者之鎧</option><option value="130">修羅之鎧</option><option value="131">騎士之鎧</option><option value="132">昇龍之鎧</option><option value="133">無雙之鎧</option><option value="134">戰神之鎧</option><option value="135">耶之裝甲</option><option value="136">龍鎧</option><option value="137">巴爾特裝甲</option><option value="138">光之鎧</option><option value="139">魔法之鎧</option><option value="140">騎士之鎧</option><option value="141">戰士之鎧</option><option value="142">金鋼石之鎧</option><option value="143">神聖之鎧</option><option value="144">王者之鎧</option><option value="145">黃金之鎧</option><option value="146">真紅之鎧</option><option value="147">金屬之鎧</option><option value="148">銀之鎧</option><option value="149">鋼之鎧</option><option value="150">司克爾裝甲</option><option value="151">鐵之鎧</option><option value="152">青銅之鎧</option><option value="153">切引之鎧</option><option value="154">銅之鎧</option><option value="155">皮之鎧</option><option value="156">流星之衣</option><option value="157">靈界之衣</option><option value="158">天界之衣</option><option value="159">全智之衣</option><option value="160">妖封之服</option><option value="161">光輝之服</option><option value="162">軍神之服</option><option value="163">龍之服</option><option value="164">巴爾特服</option><option value="165">光之衣</option><option value="166">魔法之衣</option><option value="167">神聖之衣</option><option value="168">黃金之衣</option><option value="169">銀之衣</option><option value="170">太陽之衣</option><option value="171">月之衣</option><option value="172">星之衣</option><option value="173">絹之服</option><option value="174">皮之服</option><option value="175">布服</option><option value="176">魔界之袍</option><option value="177">幻魔之袍</option><option value="178">神秘之袍</option><option value="179">大魔術師之袍</option><option value="180">大魔導師之袍</option><option value="181">光之袍</option><option value="182">魔法之袍</option><option value="183">妖精之袍</option><option value="184">金色之袍</option><option value="185">太陽之袍</option><option value="186">月之袍</option><option value="187">星之袍</option><option value="188">銀袍</option><option value="189">使用魔法之袍</option><option value="190">絹之袍</option><option value="191">木棉之袍</option><option value="192">傳說之盾</option><option value="193">無雙之盾</option><option value="194">勇者之盾</option><option value="195">騎士之盾</option><option value="196">昇龍之盾</option><option value="197">修羅之盾</option><option value="198">軍神之盾</option><option value="199">戰神之盾</option><option value="200">耶之盾</option><option value="201">龍盾</option><option value="202">巴爾特盾</option><option value="203">光之盾</option><option value="204">魔法之盾</option><option value="205">金鋼石之盾</option><option value="206">神聖之盾</option><option value="207">王者之盾</option><option value="208">黃金之盾</option><option value="209">真紅之盾</option><option value="210">太陽之盾</option><option value="211">月之盾</option><option value="212">星之盾</option><option value="213">塔盾</option><option value="214">騎乘盾</option><option value="215">銀盾</option><option value="216">大盾</option><option value="217">風箏盾</option><option value="218">小型盾</option><option value="219">木盾</option><option value="220">流星手套</option><option value="221">刀折手套</option><option value="222">光輝手套</option><option value="223">疾風手套</option><option value="224">龍皮手套</option><option value="225">巴爾特手套</option><option value="226">光之手套</option><option value="227">魔法手套</option><option value="228">金鋼石手套</option><option value="229">神聖手套</option><option value="230">黃金手套</option><option value="231">真紅手套</option><option value="232">鋼手套</option><option value="233">銀手套</option><option value="234">鐵手套</option><option value="235">皮手套</option><option value="236">魔界手鐲</option><option value="237">幻魔手鐲</option><option value="238">靈界手鐲</option><option value="239">天界手鐲</option><option value="240">金智手鐲</option><option value="241">尼亞斯手鐲</option><option value="242">妖精手鐲</option><option value="243">光之手鐲</option><option value="244">太陽手鐲</option><option value="245">月之手鐲</option><option value="246">星之手鐲</option><option value="247">愛爾夫手鐲</option><option value="248">魔族手鐲</option><option value="249">神聖手鐲</option><option value="250">聖職者手鐲</option><option value="251">魔法手鐲</option><option value="252">守衛手鐲</option><option value="253">金手鐲</option><option value="254">銀手鐲</option><option value="255">願望手鐲</option><option value="256">古代神耳環</option><option value="257">神秘耳環</option><option value="258">女神耳環</option><option value="259">不可思議之耳環</option><option value="260">妖精耳環</option><option value="261">天使耳環</option><option value="262">太陽耳環</option><option value="263">月之耳環</option><option value="264">星之耳環</option><option value="265">神聖耳環</option><option value="266">鑽石耳環</option><option value="267">金耳環</option><option value="268">銀耳環</option><option value="269">古代神項鍊</option><option value="270">神秘項鍊</option><option value="271">女神項鍊</option><option value="272">不可思議項鍊</option><option value="273">妖精項鍊</option><option value="274">天使項鍊</option><option value="275">太陽項鍊</option><option value="276">月之項鍊</option><option value="277">星之項鍊</option><option value="278">神聖項鍊</option><option value="279">鑽石項鍊</option><option value="280">金項鍊</option><option value="281">銀項鍊</option><option value="282">尼亞斯之綢</option><option value="283">光之綢</option><option value="284">神聖之綢</option><option value="285">金之綢</option><option value="286">銀之綢</option><option value="287">絹之綢</option><option value="288">古代神戒指</option><option value="289">神秘戒指</option><option value="290">女神戒指</option><option value="291">太陽戒指</option><option value="292">月之戒指</option><option value="293">星之戒指</option><option value="294">神聖戒指</option><option value="295">鑽石戒指</option><option value="296">金戒指</option><option value="297">銀戒指</option><option value="298">大魔術師之帶</option><option value="299">大魔導師之帶</option><option value="300">光之帶</option><option value="301">勇氣之帶</option><option value="302">使用魔法之帶</option><option value="303">皮帶</option><option value="304">霸者斗蓬</option><option value="305">魔法斗蓬</option><option value="306">光之斗蓬</option><option value="307">神聖斗蓬</option><option value="308">太陽斗蓬</option><option value="309">月之斗蓬</option><option value="310">星之斗蓬</option><option value="311">銀狼斗蓬</option><option value="312">力之斗蓬</option><option value="313">護身斗蓬</option><option value="314">疾風斗蓬</option><option value="315">幸運斗蓬</option><option value="316">真紅斗蓬</option><option value="317">黃金斗蓬</option><option value="318">銀色斗蓬</option><option value="319">皮革斗蓬</option><option value="320">神藥</option><option value="321">天使之淚</option><option value="322">妖精之淚</option><option value="323">生樹之葉</option><option value="324">仙藥</option><option value="325">神秘之水</option><option value="326">愛爾夫之傷藥</option><option value="327">治病草</option><option value="328">回復丸</option><option value="329">回復草</option><option value="330">藥草丸</option><option value="331">藥草</option><option value="332">體力之秘藥</option><option value="333">體源之秘藥</option><option value="334">敏捷之秘藥</option><option value="335">靈敏之秘藥</option><option value="336">美之秘藥</option><option value="337">魅惑之秘藥</option><option value="338">運之秘藥</option><option value="339">幸福之秘藥</option><option value="340">力之秘藥</option><option value="341">體力之秘藥</option><option value="342">剛力之秘藥</option><option value="343">守衛之秘藥</option><option value="344">防禦之秘藥</option><option value="345">鐵壁之秘藥</option><option value="346">法力之秘藥</option><option value="347">魔法秘藥</option><option value="348">魔力秘藥</option><option value="349">魔破秘藥</option><option value="350">魔防秘藥</option><option value="351">抗魔秘藥</option><option value="352">金塊</option><option value="353">Ｄ龍之牙</option><option value="354">獅子之毛皮</option><option value="355">狼之毛皮</option><option value="356">銀狼之毛皮</option><option value="357">金熊之爪</option><option value="358">Ｒ龍之牙</option><option value="359">阿姆斯之遺言</option><option value="360">黃金之鑰</option><option value="361">神官之證</option><option value="362">黑龍之笛</option><option value="363">王家之髮飾</option><option value="364">尼亞斯之護符</option><option value="365">銀之女神像</option><option value="383">復活之水滴</option></select>
+      <button id="btnAddInventory">＋ 新增</button></div>
+      <div class="save-inventory-list"><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 4.3478260869565215%"></span><span>帕德尼斯之劍</span><div class="save-inventory-quantity"><button data-inventory-remove="16" aria-label="減少帕德尼斯之劍">−</button><b>1</b><button data-inventory-add="16" aria-label="增加帕德尼斯之劍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:73.33333333333333% 95.65217391304348%"></span><span>王家之髮飾</span><div class="save-inventory-quantity"><button data-inventory-remove="363" aria-label="減少王家之髮飾">−</button><b>1</b><button data-inventory-add="363" aria-label="增加王家之髮飾">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:26.666666666666668% 0%"></span><span>光之劍</span><div class="save-inventory-quantity"><button data-inventory-remove="4" aria-label="減少光之劍">−</button><b>1</b><button data-inventory-add="4" aria-label="增加光之劍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:20% 0%"></span><span>戰神之劍</span><div class="save-inventory-quantity"><button data-inventory-remove="3" aria-label="減少戰神之劍">−</button><b>1</b><button data-inventory-add="3" aria-label="增加戰神之劍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:13.333333333333334% 0%"></span><span>修羅之劍</span><div class="save-inventory-quantity"><button data-inventory-remove="2" aria-label="減少修羅之劍">−</button><b>1</b><button data-inventory-add="2" aria-label="增加修羅之劍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:6.666666666666667% 0%"></span><span>軍神之劍</span><div class="save-inventory-quantity"><button data-inventory-remove="1" aria-label="減少軍神之劍">−</button><b>1</b><button data-inventory-add="1" aria-label="增加軍神之劍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 0%"></span><span>傳說之劍</span><div class="save-inventory-quantity"><button data-inventory-remove="0" aria-label="減少傳說之劍">−</button><b>1</b><button data-inventory-add="0" aria-label="增加傳說之劍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:53.333333333333336% 4.3478260869565215%"></span><span>斬刀</span><div class="save-inventory-quantity"><button data-inventory-remove="24" aria-label="減少斬刀">−</button><b>1</b><button data-inventory-add="24" aria-label="增加斬刀">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:60% 4.3478260869565215%"></span><span>忍者刀</span><div class="save-inventory-quantity"><button data-inventory-remove="25" aria-label="減少忍者刀">−</button><b>1</b><button data-inventory-add="25" aria-label="增加忍者刀">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:46.666666666666664% 4.3478260869565215%"></span><span>霞之刀</span><div class="save-inventory-quantity"><button data-inventory-remove="23" aria-label="減少霞之刀">−</button><b>1</b><button data-inventory-add="23" aria-label="增加霞之刀">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:33.33333333333333% 4.3478260869565215%"></span><span>光輝之刀</span><div class="save-inventory-quantity"><button data-inventory-remove="21" aria-label="減少光輝之刀">−</button><b>1</b><button data-inventory-add="21" aria-label="增加光輝之刀">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:40% 4.3478260869565215%"></span><span>妖刀村雨</span><div class="save-inventory-quantity"><button data-inventory-remove="22" aria-label="減少妖刀村雨">−</button><b>1</b><button data-inventory-add="22" aria-label="增加妖刀村雨">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:73.33333333333333% 8.695652173913043%"></span><span>雷鳴之斧</span><div class="save-inventory-quantity"><button data-inventory-remove="43" aria-label="減少雷鳴之斧">−</button><b>1</b><button data-inventory-add="43" aria-label="增加雷鳴之斧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:66.66666666666666% 8.695652173913043%"></span><span>巴爾特之斧</span><div class="save-inventory-quantity"><button data-inventory-remove="42" aria-label="減少巴爾特之斧">−</button><b>1</b><button data-inventory-add="42" aria-label="增加巴爾特之斧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:60% 8.695652173913043%"></span><span>破壞之斧</span><div class="save-inventory-quantity"><button data-inventory-remove="41" aria-label="減少破壞之斧">−</button><b>1</b><button data-inventory-add="41" aria-label="增加破壞之斧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:53.333333333333336% 8.695652173913043%"></span><span>聖戰士之斧</span><div class="save-inventory-quantity"><button data-inventory-remove="40" aria-label="減少聖戰士之斧">−</button><b>1</b><button data-inventory-add="40" aria-label="增加聖戰士之斧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:46.666666666666664% 8.695652173913043%"></span><span>勇者之斧</span><div class="save-inventory-quantity"><button data-inventory-remove="39" aria-label="減少勇者之斧">−</button><b>1</b><button data-inventory-add="39" aria-label="增加勇者之斧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:60% 13.043478260869565%"></span><span>巴爾特之槍</span><div class="save-inventory-quantity"><button data-inventory-remove="57" aria-label="減少巴爾特之槍">−</button><b>1</b><button data-inventory-add="57" aria-label="增加巴爾特之槍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:53.333333333333336% 13.043478260869565%"></span><span>風神之槍</span><div class="save-inventory-quantity"><button data-inventory-remove="56" aria-label="減少風神之槍">−</button><b>1</b><button data-inventory-add="56" aria-label="增加風神之槍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:46.666666666666664% 13.043478260869565%"></span><span>雷神之槍</span><div class="save-inventory-quantity"><button data-inventory-remove="55" aria-label="減少雷神之槍">−</button><b>1</b><button data-inventory-add="55" aria-label="增加雷神之槍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:40% 13.043478260869565%"></span><span>水月之槍</span><div class="save-inventory-quantity"><button data-inventory-remove="54" aria-label="減少水月之槍">−</button><b>1</b><button data-inventory-add="54" aria-label="增加水月之槍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:33.33333333333333% 13.043478260869565%"></span><span>無雙之槍</span><div class="save-inventory-quantity"><button data-inventory-remove="53" aria-label="減少無雙之槍">−</button><b>1</b><button data-inventory-add="53" aria-label="增加無雙之槍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:40% 17.391304347826086%"></span><span>龍之長矛</span><div class="save-inventory-quantity"><button data-inventory-remove="70" aria-label="減少龍之長矛">−</button><b>1</b><button data-inventory-add="70" aria-label="增加龍之長矛">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:33.33333333333333% 17.391304347826086%"></span><span>光之長矛</span><div class="save-inventory-quantity"><button data-inventory-remove="69" aria-label="減少光之長矛">−</button><b>1</b><button data-inventory-add="69" aria-label="增加光之長矛">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:26.666666666666668% 17.391304347826086%"></span><span>神聖之長矛</span><div class="save-inventory-quantity"><button data-inventory-remove="68" aria-label="減少神聖之長矛">−</button><b>1</b><button data-inventory-add="68" aria-label="增加神聖之長矛">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:20% 17.391304347826086%"></span><span>昇龍之長矛</span><div class="save-inventory-quantity"><button data-inventory-remove="67" aria-label="減少昇龍之長矛">−</button><b>1</b><button data-inventory-add="67" aria-label="增加昇龍之長矛">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:13.333333333333334% 17.391304347826086%"></span><span>騎士之長矛</span><div class="save-inventory-quantity"><button data-inventory-remove="66" aria-label="減少騎士之長矛">−</button><b>1</b><button data-inventory-add="66" aria-label="增加騎士之長矛">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:46.666666666666664% 21.73913043478261%"></span><span>火炎之弓</span><div class="save-inventory-quantity"><button data-inventory-remove="87" aria-label="減少火炎之弓">−</button><b>1</b><button data-inventory-add="87" aria-label="增加火炎之弓">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:40% 21.73913043478261%"></span><span>神聖之弓</span><div class="save-inventory-quantity"><button data-inventory-remove="86" aria-label="減少神聖之弓">−</button><b>1</b><button data-inventory-add="86" aria-label="增加神聖之弓">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:33.33333333333333% 21.73913043478261%"></span><span>巴爾特之弓</span><div class="save-inventory-quantity"><button data-inventory-remove="85" aria-label="減少巴爾特之弓">−</button><b>1</b><button data-inventory-add="85" aria-label="增加巴爾特之弓">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:26.666666666666668% 21.73913043478261%"></span><span>疾風之弓</span><div class="save-inventory-quantity"><button data-inventory-remove="84" aria-label="減少疾風之弓">−</button><b>1</b><button data-inventory-add="84" aria-label="增加疾風之弓">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:20% 21.73913043478261%"></span><span>流星之弓</span><div class="save-inventory-quantity"><button data-inventory-remove="83" aria-label="減少流星之弓">−</button><b>1</b><button data-inventory-add="83" aria-label="增加流星之弓">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:26.666666666666668% 26.08695652173913%"></span><span>大魔導師之棒</span><div class="save-inventory-quantity"><button data-inventory-remove="100" aria-label="減少大魔導師之棒">−</button><b>1</b><button data-inventory-add="100" aria-label="增加大魔導師之棒">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:20% 26.08695652173913%"></span><span>大魔術師之棒</span><div class="save-inventory-quantity"><button data-inventory-remove="99" aria-label="減少大魔術師之棒">−</button><b>1</b><button data-inventory-add="99" aria-label="增加大魔術師之棒">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:13.333333333333334% 26.08695652173913%"></span><span>智力之棒</span><div class="save-inventory-quantity"><button data-inventory-remove="98" aria-label="減少智力之棒">−</button><b>1</b><button data-inventory-add="98" aria-label="增加智力之棒">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:6.666666666666667% 26.08695652173913%"></span><span>幻魔之棒</span><div class="save-inventory-quantity"><button data-inventory-remove="97" aria-label="減少幻魔之棒">−</button><b>1</b><button data-inventory-add="97" aria-label="增加幻魔之棒">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 26.08695652173913%"></span><span>魔界之棒</span><div class="save-inventory-quantity"><button data-inventory-remove="96" aria-label="減少魔界之棒">−</button><b>1</b><button data-inventory-add="96" aria-label="增加魔界之棒">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:33.33333333333333% 30.434782608695656%"></span><span>法王之杖</span><div class="save-inventory-quantity"><button data-inventory-remove="117" aria-label="減少法王之杖">−</button><b>1</b><button data-inventory-add="117" aria-label="增加法王之杖">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:13.333333333333334% 30.434782608695656%"></span><span>尼亞斯之杖</span><div class="save-inventory-quantity"><button data-inventory-remove="114" aria-label="減少尼亞斯之杖">−</button><b>1</b><button data-inventory-add="114" aria-label="增加尼亞斯之杖">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:100% 26.08695652173913%"></span><span>靈界之杖</span><div class="save-inventory-quantity"><button data-inventory-remove="111" aria-label="減少靈界之杖">−</button><b>1</b><button data-inventory-add="111" aria-label="增加靈界之杖">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 30.434782608695656%"></span><span>天界之杖</span><div class="save-inventory-quantity"><button data-inventory-remove="112" aria-label="減少天界之杖">−</button><b>1</b><button data-inventory-add="112" aria-label="增加天界之杖">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:6.666666666666667% 30.434782608695656%"></span><span>全智之杖</span><div class="save-inventory-quantity"><button data-inventory-remove="113" aria-label="減少全智之杖">−</button><b>1</b><button data-inventory-add="113" aria-label="增加全智之杖">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:33.33333333333333% 34.78260869565217%"></span><span>無雙之鎧</span><div class="save-inventory-quantity"><button data-inventory-remove="133" aria-label="減少無雙之鎧">−</button><b>1</b><button data-inventory-add="133" aria-label="增加無雙之鎧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:20% 34.78260869565217%"></span><span>騎士之鎧</span><div class="save-inventory-quantity"><button data-inventory-remove="131" aria-label="減少騎士之鎧">−</button><b>1</b><button data-inventory-add="131" aria-label="增加騎士之鎧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:13.333333333333334% 34.78260869565217%"></span><span>修羅之鎧</span><div class="save-inventory-quantity"><button data-inventory-remove="130" aria-label="減少修羅之鎧">−</button><b>1</b><button data-inventory-add="130" aria-label="增加修羅之鎧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:6.666666666666667% 34.78260869565217%"></span><span>勇者之鎧</span><div class="save-inventory-quantity"><button data-inventory-remove="129" aria-label="減少勇者之鎧">−</button><b>1</b><button data-inventory-add="129" aria-label="增加勇者之鎧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 34.78260869565217%"></span><span>傳說之鎧</span><div class="save-inventory-quantity"><button data-inventory-remove="128" aria-label="減少傳說之鎧">−</button><b>1</b><button data-inventory-add="128" aria-label="增加傳說之鎧">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:86.66666666666667% 39.130434782608695%"></span><span>靈界之衣</span><div class="save-inventory-quantity"><button data-inventory-remove="157" aria-label="減少靈界之衣">−</button><b>1</b><button data-inventory-add="157" aria-label="增加靈界之衣">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:13.333333333333334% 43.47826086956522%"></span><span>軍神之服</span><div class="save-inventory-quantity"><button data-inventory-remove="162" aria-label="減少軍神之服">−</button><b>1</b><button data-inventory-add="162" aria-label="增加軍神之服">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:80% 39.130434782608695%"></span><span>流星之衣</span><div class="save-inventory-quantity"><button data-inventory-remove="156" aria-label="減少流星之衣">−</button><b>1</b><button data-inventory-add="156" aria-label="增加流星之衣">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:6.666666666666667% 43.47826086956522%"></span><span>光輝之服</span><div class="save-inventory-quantity"><button data-inventory-remove="161" aria-label="減少光輝之服">−</button><b>1</b><button data-inventory-add="161" aria-label="增加光輝之服">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 43.47826086956522%"></span><span>妖封之服</span><div class="save-inventory-quantity"><button data-inventory-remove="160" aria-label="減少妖封之服">−</button><b>1</b><button data-inventory-add="160" aria-label="增加妖封之服">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:26.666666666666668% 47.82608695652174%"></span><span>大魔導師之袍</span><div class="save-inventory-quantity"><button data-inventory-remove="180" aria-label="減少大魔導師之袍">−</button><b>1</b><button data-inventory-add="180" aria-label="增加大魔導師之袍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:20% 47.82608695652174%"></span><span>大魔術師之袍</span><div class="save-inventory-quantity"><button data-inventory-remove="179" aria-label="減少大魔術師之袍">−</button><b>1</b><button data-inventory-add="179" aria-label="增加大魔術師之袍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:13.333333333333334% 47.82608695652174%"></span><span>神秘之袍</span><div class="save-inventory-quantity"><button data-inventory-remove="178" aria-label="減少神秘之袍">−</button><b>1</b><button data-inventory-add="178" aria-label="增加神秘之袍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:6.666666666666667% 47.82608695652174%"></span><span>幻魔之袍</span><div class="save-inventory-quantity"><button data-inventory-remove="177" aria-label="減少幻魔之袍">−</button><b>1</b><button data-inventory-add="177" aria-label="增加幻魔之袍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 47.82608695652174%"></span><span>魔界之袍</span><div class="save-inventory-quantity"><button data-inventory-remove="176" aria-label="減少魔界之袍">−</button><b>1</b><button data-inventory-add="176" aria-label="增加魔界之袍">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:26.666666666666668% 52.17391304347826%"></span><span>昇龍之盾</span><div class="save-inventory-quantity"><button data-inventory-remove="196" aria-label="減少昇龍之盾">−</button><b>1</b><button data-inventory-add="196" aria-label="增加昇龍之盾">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:20% 52.17391304347826%"></span><span>騎士之盾</span><div class="save-inventory-quantity"><button data-inventory-remove="195" aria-label="減少騎士之盾">−</button><b>1</b><button data-inventory-add="195" aria-label="增加騎士之盾">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:13.333333333333334% 52.17391304347826%"></span><span>勇者之盾</span><div class="save-inventory-quantity"><button data-inventory-remove="194" aria-label="減少勇者之盾">−</button><b>1</b><button data-inventory-add="194" aria-label="增加勇者之盾">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:6.666666666666667% 52.17391304347826%"></span><span>無雙之盾</span><div class="save-inventory-quantity"><button data-inventory-remove="193" aria-label="減少無雙之盾">−</button><b>1</b><button data-inventory-add="193" aria-label="增加無雙之盾">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 52.17391304347826%"></span><span>傳說之盾</span><div class="save-inventory-quantity"><button data-inventory-remove="192" aria-label="減少傳說之盾">−</button><b>1</b><button data-inventory-add="192" aria-label="增加傳說之盾">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 60.86956521739131%"></span><span>龍皮手套</span><div class="save-inventory-quantity"><button data-inventory-remove="224" aria-label="減少龍皮手套">−</button><b>1</b><button data-inventory-add="224" aria-label="增加龍皮手套">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:100% 56.52173913043478%"></span><span>疾風手套</span><div class="save-inventory-quantity"><button data-inventory-remove="223" aria-label="減少疾風手套">−</button><b>1</b><button data-inventory-add="223" aria-label="增加疾風手套">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:93.33333333333333% 56.52173913043478%"></span><span>光輝手套</span><div class="save-inventory-quantity"><button data-inventory-remove="222" aria-label="減少光輝手套">−</button><b>1</b><button data-inventory-add="222" aria-label="增加光輝手套">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:86.66666666666667% 56.52173913043478%"></span><span>刀折手套</span><div class="save-inventory-quantity"><button data-inventory-remove="221" aria-label="減少刀折手套">−</button><b>1</b><button data-inventory-add="221" aria-label="增加刀折手套">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:80% 56.52173913043478%"></span><span>流星手套</span><div class="save-inventory-quantity"><button data-inventory-remove="220" aria-label="減少流星手套">−</button><b>1</b><button data-inventory-add="220" aria-label="增加流星手套">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:0% 65.21739130434783%"></span><span>金智手鐲</span><div class="save-inventory-quantity"><button data-inventory-remove="240" aria-label="減少金智手鐲">−</button><b>1</b><button data-inventory-add="240" aria-label="增加金智手鐲">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:100% 60.86956521739131%"></span><span>天界手鐲</span><div class="save-inventory-quantity"><button data-inventory-remove="239" aria-label="減少天界手鐲">−</button><b>1</b><button data-inventory-add="239" aria-label="增加天界手鐲">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:93.33333333333333% 60.86956521739131%"></span><span>靈界手鐲</span><div class="save-inventory-quantity"><button data-inventory-remove="238" aria-label="減少靈界手鐲">−</button><b>1</b><button data-inventory-add="238" aria-label="增加靈界手鐲">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:86.66666666666667% 60.86956521739131%"></span><span>幻魔手鐲</span><div class="save-inventory-quantity"><button data-inventory-remove="237" aria-label="減少幻魔手鐲">−</button><b>1</b><button data-inventory-add="237" aria-label="增加幻魔手鐲">＋</button></div></div><div class="save-inventory-row"><span class="item-icon item-sprite" aria-hidden="true" style="background-position:80% 60.86956521739131%"></span><span>魔界手鐲</span><div class="save-inventory-quantity"><button data-inventory-remove="236" aria-label="減少魔界手鐲">−</button><b>1</b><button data-inventory-add="236" aria-label="增加魔界手鐲">＋</button></div></div></div></div></aside>
+<main><header class="top-banner"><nav id="mainNav" class="site-nav" aria-label="所有功能"><a href="flow/" data-section="settings" data-setting-section="flow" class="" data-seo-link="">流程</a><a href="story/" data-section="story" class="" data-seo-link="">劇情</a><a href="world/" data-section="world" class="" data-seo-link="">地圖</a><a href="shops/" data-section="settings" data-setting-section="shops" class="" data-seo-link="">商店</a><a href="battles/" data-section="battles" class="" data-seo-link="">戰鬥</a><a href="equipment/" data-section="settings" data-setting-section="equipment" class="" data-seo-link="">裝備</a><a href="items/" data-section="settings" data-setting-section="items" class="" data-seo-link="">道具</a><a href="characters/" data-section="settings" data-setting-section="characters" class="" data-seo-link="">角色</a><a href="enemies/" data-section="settings" data-setting-section="enemies" class="" data-seo-link="">敵人</a><a href="spells/" data-section="settings" data-setting-section="spells" class="" data-seo-link="">魔法</a><a href="classes/" data-section="settings" data-setting-section="classes" class="" data-seo-link="">職系</a><a href="races/" data-section="settings" data-setting-section="races" class="" data-seo-link="">種族</a><a href="formula/" data-section="settings" data-setting-section="formula" class="" data-seo-link="">公式</a><a href="save/" data-section="save" class="selected" data-seo-link="">存檔</a></nav></header><div id="runtimeStatus" role="status" class="dialogue" hidden=""></div>
+<section id="homePanel" class="home-panel" hidden=""><div class="home-hero"><img class="home-scene" src="assets/scenes/SEEN59.png" alt="亞里斯王物語主要角色" fetchpriority="high" decoding="async"><img class="home-title-zh" src="assets/title/TITL_ZH.png" alt="亞里斯王物語"><img class="home-title-en" src="assets/title/TITL_006.png" alt="The Story of King Aress"></div></section>
+<div id="storyWorkspace" hidden=""><div class="reading-width"><div class="story-meta" hidden=""><div class="source-line" id="sourceLine"><span>開場</span><span class="breadcrumb-separator">›</span><strong>蘭呼爾村</strong><button id="showLocation">地圖 ↗</button></div></div>
+<section id="storyPanel"><div class="stage" id="stage" tabindex="0" aria-label="劇情畫面，點擊或按空白鍵繼續"><div class="empty-scene" id="emptyScene" hidden=""><span>The Story of<br><b>King Aress</b></span></div><img id="scene" class="scene" alt="SEEN58.GZO" src="assets/scenes/SEEN58.png"><div id="mapBackdrop" class="world-map story-map-backdrop" aria-label="地圖背景" hidden=""></div><div id="conversationLayer" class="conversation-layer"><div id="portraitRow" class="portrait-row" hidden=""><i id="leftFace" class="portrait" role="img" aria-label="左側頭像" hidden=""></i><i id="rightFace" class="portrait" role="img" aria-label="右側頭像" hidden=""></i></div><div id="dialogue" class="dialogue" role="button" tabindex="0" aria-label="左鍵繼續下一段，右鍵返回上一段" hidden=""><div class="speech"><div id="speaker" class="speaker"></div><div id="body" class="body" aria-live="polite"></div></div></div><div id="rewardPanel" class="reward-panel" hidden=""></div></div><div id="interlude" class="interlude" hidden=""></div><div id="storyBattleLink" class="story-battle-link" hidden=""></div></div><div id="storyBattle" hidden=""></div><div class="story-bottom-bar" style="--story-progress: 4.3478260869565215%;"><span id="storyProgress" class="story-progress-accessible" role="progressbar" aria-label="本段劇情進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="4"></span><div class="nav"><button id="restart" class="restart-button" title="回到本段開頭（Home 鍵）" aria-label="回到本段開頭">⏮</button><div class="story-button-group" role="group" aria-label="劇情翻頁"><button id="prev" title="上一段（←鍵；也可在對話框按右鍵）" aria-label="上一段" disabled="">◀</button><button id="next" title="下一段（→鍵、空白鍵或點擊畫面；End 鍵跳到本段結尾）" aria-label="下一段">▶</button></div></div><div class="story-bottom-status"><div class="condition-banner" id="conditionBanner" role="status"></div></div></div></section></div></div>
+<section id="settingsPanel" class="settings" hidden=""><div class="section-heading settings-heading"><h2 id="settingsTitle">公式</h2><input id="settingsFilter" type="search" placeholder="搜尋目前分類" aria-label="搜尋目前分類" hidden=""><div id="shopViewSwitch" class="shop-view-switch btn-group" role="group" aria-label="商店內容" hidden=""><a class="selected seo-link" data-shop-view="products" aria-pressed="true" href="shops/?town=0&amp;shop=products" data-seo-link="">商品</a><a data-shop-view="lottery" aria-pressed="false" class="seo-link" href="shops/?town=0&amp;shop=lottery" data-seo-link="">抽獎</a></div></div><div id="settingsContent"><section id="flow" hidden=""></section><section id="equipment" hidden=""></section><section id="items" hidden=""></section><section id="characters" hidden=""></section><section id="enemies" hidden=""></section><section id="spells" hidden=""></section><section id="classes" hidden=""></section><section id="races" hidden=""></section><section id="shops" hidden=""></section><section id="formula"></section></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+<section id="worldPanel" hidden=""><div class="section-heading"><h2>地圖</h2><nav class="world-half-switch btn-group" role="group" aria-label="切換世界地圖"><button data-world="1" class="selected" aria-pressed="true">前半世界</button><button data-world="2" aria-pressed="false">後半世界</button></nav></div><div class="world-layout"><div class="world-map" id="worldMap"></div><div id="locationInfo" class="location-info"></div></div></section>
+<section id="battlesPanel" hidden=""><div id="fieldViewer"></div></section>
+<section id="savePanel" class="save-panel" data-rendered="true">
+      <div class="save-header-row">
+          <div class="save-title-box">
+            <h1>存檔編輯器</h1>
+            <span id="saveFileBadge" class="save-file-badge">ARESS1.PRJ (38,213 bytes)</span>
+          </div>
+          <div class="save-action-group">
+            <input type="file" id="saveFileInput" accept=".PRJ,.prj" hidden="">
+            <button id="btnUploadSave" class="btn-subtle" title="上傳電腦中的 ARESS*.PRJ 檔案">選擇 PRJ 存檔</button>
+            <button id="btnLoadSample1" class="btn-subtle" title="載入範例存檔（含全角色、滿級體驗）">載入範例存檔 (滿級)</button>
+            <button id="btnLoadSample0" class="btn-subtle" title="載入初始遊戲存檔">載入初始存檔</button>
+            <button id="btnDownloadSave" class="btn-gold" title="回存二進位並下載為 ARESS1.PRJ">下載存檔 (.PRJ)</button>
+          </div>
+        </div>
+
+      <div class="save-top-card">
+        <!-- 存檔基本資訊 -->
+        <div class="save-meta-grid">
+          <div class="meta-field">
+            <label>存檔標題（最多 18 位元組）</label>
+            <div class="meta-input-group">
+              <input type="text" id="inputSaveTitle" maxlength="18" placeholder="輸入存檔標題">
+            </div>
+          </div>
+
+          <div class="meta-field">
+            <label>持有金錢（最多 65,535）</label>
+            <div class="meta-input-group save-money-group">
+              <input type="number" id="inputSaveMoney" min="0" max="65535" placeholder="0">
+              <button id="btnMaxMoney" class="btn-subtle" title="將金錢改為最大值 65535G">全滿</button>
+            </div>
+          </div>
+
+          <div class="meta-field">
+            <label>神殿奉獻次數</label>
+            <div class="meta-input-group">
+              <input type="number" id="inputSaveDonation" min="0" max="255" placeholder="0">
+            </div>
+          </div>
+
+          <div class="meta-field meta-progress">
+            <label>主線進度</label>
+            <div class="meta-input-group">
+              <select id="inputSaveProgress"><option value="0">0 — 歐克之森林</option><option value="1">1 — 山賊之谷</option><option value="2">2 — 山澗</option><option value="3">3 — 內歐里亞村 · 初訪</option><option value="4">4 — 米內巴之町</option><option value="5">5 — 內歐里亞村 · 再次來訪</option><option value="6">6 — 盜賊之城堡</option><option value="7">7 — 內歐里亞村 · 三度來訪</option><option value="8">8 — 神殿</option><option value="9">9 — 古戰場</option><option value="10">10 — 尼可姆斯村 · 初訪</option><option value="11">11 — 岩場</option><option value="12">12 — 沙丘</option><option value="13">13 — 沙漠街道</option><option value="14">14 — 赤色沙漠</option><option value="15">15 — 卡斯尼爾城</option><option value="16">16 — 尼可姆斯村 · 再次來訪</option><option value="17">17 — 沙漠</option><option value="18">18 — 特魯遜郊外 · 初訪</option><option value="19">19 — 奧西亞村</option><option value="20">20 — 庫爾之森林</option><option value="21">21 — 洛花村</option><option value="22">22 — 新馬爾山</option><option value="23">23 — 特魯遜郊外 · 再次來訪</option><option value="24">24 — 特魯遜城</option><option value="25">25 — 塔吉內烏斯國境 · 初訪</option><option value="26">26 — 尼卡歐港町</option><option value="27">27 — 布洛亞港</option><option value="28">28 — 阿姆斯之館</option><option value="29">29 — 布洛亞島火山口</option><option value="30">30 — 火山洞窟</option><option value="31">31 — 塔吉內烏斯國境 · 再次來訪</option><option value="32">32 — 南端之城堡</option><option value="33">33 — 怒爾河</option><option value="34">34 — 平原</option><option value="35">35 — 達瑞斯村</option><option value="36">36 — 塔吉內烏斯城門</option><option value="37">37 — 塔吉內烏斯城</option><option value="38">38 — 黃金山</option><option value="39">39 — 肯托亞村</option><option value="40">40 — 理可路城堡</option><option value="41">41 — 沼地</option><option value="42">42 — 階理士鎮</option><option value="43">43 — 卡特亞神殿</option><option value="44">44 — 小妖精森林</option><option value="45">45 — 宋爾玄鎮</option><option value="46">46 — 送爾玄堡</option><option value="47">47 — 烏卡那吉爾城 · 初訪</option><option value="48">48 — 頓亞橋 · 初訪</option><option value="49">49 — 烏卡那吉爾城 · 再次來訪</option><option value="50">50 — 山小屋</option><option value="51">51 — 頓亞橋 · 再次來訪</option><option value="52">52 — 背石堡</option><option value="53">53 — 塔兒亞山</option><option value="54">54 — 維斯帕尼亞王國</option><option value="55">55 — 拉納鎮</option><option value="56">56 — 拉切斯塔湖</option><option value="57">57 — 森林入口</option><option value="58">58 — 維斯帕森林 · 初訪</option><option value="59">59 — 維斯帕尼亞</option><option value="60">60 — 尼亞斯地下神殿</option><option value="61">61 — 龍之宅邸</option><option value="62">62 — 傳說之街 · 初訪</option><option value="63">63 — 古代的洞窟</option><option value="64">64 — 傳說之街 · 再次來訪</option><option value="65" selected="">65 — 維斯帕森林 · 再次來訪</option><option value="66">66 — 維斯帕尼亞城 · 進入</option><option value="67">67 — 維斯帕尼亞城 · 戰鬥一</option><option value="68">68 — 維斯帕尼亞城 · 戰鬥二</option><option value="69">69 — 維斯帕尼亞城 · 戰鬥三</option><option value="70">70 — 維斯帕尼亞城 · 戰鬥四</option><option value="71">71 — 主線結束</option></select>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- 角色篩選與捷徑功能 -->
+      <div class="save-roster-toolbar">
+        <div class="roster-tabs">
+          <button class="roster-tab active" data-tab="party">已加入 (<span id="tabPartyNum">64</span>)</button>
+          <button class="roster-tab" data-tab="all">全部角色 (64)</button>
+          <button class="roster-tab" data-tab="dead">死亡 (<span id="tabDeadNum">0</span>)</button>
+          <button class="roster-tab" data-tab="nonparty">未加入 (<span id="tabNonPartyNum">0</span>)</button>
+        </div>
+        <div class="roster-quick-tools">
+          <button id="btnMaxPartyStats" class="btn-subtle" title="將當前隊伍中所有角色的基礎能力提升至上限">全隊伍能力全滿</button>
+          <button id="btnMaxPartyClasses" class="btn-subtle" title="將當前隊伍中所有角色開放全職業並升至 25 級">全隊伍職業滿級</button>
+          <input type="search" id="rosterSearch" class="roster-search" placeholder="搜尋角色 / 職系">
+        </div>
+      </div>
+
+      <!-- 角色卡片網格 -->
+      <div id="saveCharGrid" class="save-char-grid">
+        <article class="save-char-card in-party" data-char-id="0" tabindex="0" role="button" aria-label="編輯亞里斯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="亞里斯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:0% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">亞里斯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>貴族系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">30,326</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,583</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">1,583</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">773</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">390</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="1" tabindex="0" role="button" aria-label="編輯卡西斯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="卡西斯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:6.666666666666667% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">卡西斯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>弓兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">31,097</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,367</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">1,589</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">207</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">134</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="2" tabindex="0" role="button" aria-label="編輯湯姆森">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="湯姆森" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:13.333333333333334% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">湯姆森</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>步兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">39,321</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">3,063</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">1,767</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">152</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">97</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="3" tabindex="0" role="button" aria-label="編輯歐基斯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="歐基斯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:20% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">歐基斯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>盜賊系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">26,728</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,747</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">1,373</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">253</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">122</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="4" tabindex="0" role="button" aria-label="編輯阿諾尼爾">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="阿諾尼爾" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:26.666666666666668% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">阿諾尼爾</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>術師系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">22,873</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">695</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">1,379</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">2,452</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">1,212</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="5" tabindex="0" role="button" aria-label="編輯妮娜">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="妮娜" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:33.33333333333333% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">妮娜</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>貴族系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">32,896</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">3,251</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">1,567</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">774</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">436</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="6" tabindex="0" role="button" aria-label="編輯馬克斯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="馬克斯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:40% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">馬克斯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">45,746</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">3,867</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">2,307</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">135</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">83</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="7" tabindex="0" role="button" aria-label="編輯契爾奴">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="契爾奴" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:46.666666666666664% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">契爾奴</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>導師系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">26,471</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">839</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">2,159</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">2,667</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">1,780</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="8" tabindex="0" role="button" aria-label="編輯伊尼爾">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="伊尼爾" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:53.333333333333336% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">伊尼爾</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>貴族系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">32,382</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,403</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">2,975</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">765</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">778</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="9" tabindex="0" role="button" aria-label="編輯耶克">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="耶克" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:60% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">耶克</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>騎士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">45,746</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">5,027</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">3,323</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">240</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">123</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="10" tabindex="0" role="button" aria-label="編輯哈千">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="哈千" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:66.66666666666666% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">哈千</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>騎士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">45,232</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,995</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">3,291</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">273</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">151</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="11" tabindex="0" role="button" aria-label="編輯德瓦魯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="德瓦魯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:73.33333333333333% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">德瓦魯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>盜賊系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">27,499</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,347</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">3,387</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">233</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">971</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="12" tabindex="0" role="button" aria-label="編輯史德利">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="史德利" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:80% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">史德利</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>騎士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">43,947</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,947</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,247</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">272</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">879</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="13" tabindex="0" role="button" aria-label="編輯卡爾">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="卡爾" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:86.66666666666667% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">卡爾</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>龍兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">45,489</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">5,931</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">3,531</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">703</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">387</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="14" tabindex="0" role="button" aria-label="編輯加文生">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="加文生" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:93.33333333333333% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">加文生</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>騎士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">46,260</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,947</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,199</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">244</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">854</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="15" tabindex="0" role="button" aria-label="編輯夏兒路">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="夏兒路" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:100% 0%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">夏兒路</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>騎士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">45,746</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">5,043</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,239</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">244</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">847</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="16" tabindex="0" role="button" aria-label="編輯桑妮亞">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="桑妮亞" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:0% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">桑妮亞</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>導師系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">28,527</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,171</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,835</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">2,904</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">4,238</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="17" tabindex="0" role="button" aria-label="編輯卡茲拉">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="卡茲拉" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:6.666666666666667% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">卡茲拉</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>軍師系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">25,443</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,415</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">3,599</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">891</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">1,792</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="18" tabindex="0" role="button" aria-label="編輯羅瓦爾">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="羅瓦爾" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:13.333333333333334% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">羅瓦爾</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>軍師系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">25,443</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,543</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">3,631</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">829</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">1,772</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="19" tabindex="0" role="button" aria-label="編輯卡  菲">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="卡  菲" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:20% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">卡  菲</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>騎士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">45,489</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,563</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,455</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">284</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,637</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="20" tabindex="0" role="button" aria-label="編輯瓦德那">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="瓦德那" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:26.666666666666668% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">瓦德那</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>貴族系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">32,639</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">5,431</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,207</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">777</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,038</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="21" tabindex="0" role="button" aria-label="編輯達蒙斯將軍">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="達蒙斯將軍" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:33.33333333333333% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">達蒙斯將軍</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>貴族系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">33,153</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,495</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,199</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,011</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,984</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="22" tabindex="0" role="button" aria-label="編輯亞魯培爾德">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="亞魯培爾德" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:40% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">亞魯培爾德</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">44,975</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">7,687</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,827</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">146</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,078</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="23" tabindex="0" role="button" aria-label="編輯思頓">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="思頓" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:46.666666666666664% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">思頓</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>弓兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">31,611</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,803</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">2,463</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">224</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">131</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="24" tabindex="0" role="button" aria-label="編輯司那克">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="司那克" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:53.333333333333336% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">司那克</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">47,031</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,131</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,123</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">89</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">777</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="25" tabindex="0" role="button" aria-label="編輯撒巴亞">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="撒巴亞" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:60% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">撒巴亞</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>平民系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">32,125</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">5,783</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,047</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">536</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,772</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="26" tabindex="0" role="button" aria-label="編輯拉亞登">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="拉亞登" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:66.66666666666666% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">拉亞登</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>騎士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">44,718</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,627</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,479</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">236</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,622</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="27" tabindex="0" role="button" aria-label="編輯理司爾亞">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="理司爾亞" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:73.33333333333333% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">理司爾亞</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>平民系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">33,410</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,527</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,923</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">518</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,439</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="28" tabindex="0" role="button" aria-label="編輯洛基亞">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="洛基亞" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:80% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">洛基亞</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">44,718</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">7,075</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,631</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">187</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,592</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="29" tabindex="0" role="button" aria-label="編輯瑪榭洛">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="瑪榭洛" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:86.66666666666667% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">瑪榭洛</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">45,489</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,947</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,663</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">179</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,591</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="30" tabindex="0" role="button" aria-label="編輯德尼基亞">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="德尼基亞" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:93.33333333333333% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">德尼基亞</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">46,517</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,155</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,035</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">147</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">817</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="31" tabindex="0" role="button" aria-label="編輯蘿勃特">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="蘿勃特" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:100% 8.333333333333332%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">蘿勃特</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">46,774</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,203</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,995</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">133</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">808</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="32" tabindex="0" role="button" aria-label="編輯邦貝克">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="邦貝克" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:0% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">邦貝克</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>司祭系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">25,957</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,867</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,371</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,757</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">4,165</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="33" tabindex="0" role="button" aria-label="編輯漢德亞">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="漢德亞" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:6.666666666666667% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">漢德亞</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>龍兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">48,059</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">7,187</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,087</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,151</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">4,144</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="34" tabindex="0" role="button" aria-label="編輯布魯諾">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="布魯諾" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:13.333333333333334% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">布魯諾</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>龍兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">57,825</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">8,055</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">8,059</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,724</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,894</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="35" tabindex="0" role="button" aria-label="編輯沃兒夫">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="沃兒夫" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:20% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">沃兒夫</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>術師系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">24,415</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">1,755</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,475</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">2,904</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">4,218</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="36" tabindex="0" role="button" aria-label="編輯莉莉安">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="莉莉安" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:26.666666666666668% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">莉莉安</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>王族系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">32,639</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,179</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,255</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,211</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">3,102</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="37" tabindex="0" role="button" aria-label="編輯阿德夫拉爾">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="阿德夫拉爾" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:33.33333333333333% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">阿德夫拉爾</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>騎士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">45,232</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,675</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,755</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">214</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,397</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="38" tabindex="0" role="button" aria-label="編輯愛得華">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="愛得華" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:40% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">愛得華</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>步兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">35,466</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,355</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,911</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">107</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">3,671</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="39" tabindex="0" role="button" aria-label="編輯傑姆斯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="傑姆斯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:46.666666666666664% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">傑姆斯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>僧侶系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">31,354</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">1,703</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">2,075</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">2,384</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">1,934</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="40" tabindex="0" role="button" aria-label="編輯喬伊斯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="喬伊斯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:53.333333333333336% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">喬伊斯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>弓兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">34,695</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,603</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,623</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">600</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,307</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="41" tabindex="0" role="button" aria-label="編輯娜妲莉">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="娜妲莉" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:60% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">娜妲莉</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>弓兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">33,924</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,571</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,639</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">592</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,314</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="42" tabindex="0" role="button" aria-label="編輯湯瑪士">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="湯瑪士" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:66.66666666666666% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">湯瑪士</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>步兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">38,807</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,563</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,399</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">174</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,577</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="43" tabindex="0" role="button" aria-label="編輯艾咪亞">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="艾咪亞" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:73.33333333333333% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">艾咪亞</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">46,003</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">7,059</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,639</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">173</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,592</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="44" tabindex="0" role="button" aria-label="編輯西魯貝斯特">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="西魯貝斯特" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:80% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">西魯貝斯特</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>弓兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">38,036</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,267</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,523</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">582</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,446</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="45" tabindex="0" role="button" aria-label="編輯斯達恩">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="斯達恩" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:86.66666666666667% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">斯達恩</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>步兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">39,321</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,611</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,463</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">176</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,593</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="46" tabindex="0" role="button" aria-label="編輯查理斯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="查理斯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:93.33333333333333% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">查理斯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>步兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">39,064</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,579</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,447</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">176</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,594</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="47" tabindex="0" role="button" aria-label="編輯卡德蒙斯">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="卡德蒙斯" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:100% 16.666666666666664%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">卡德蒙斯</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>步兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">38,807</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,611</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">7,463</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">192</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,594</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="48" tabindex="0" role="button" aria-label="編輯佳那利思">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="佳那利思" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:0% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">佳那利思</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>平民系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">32,125</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">5,039</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,123</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">516</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,369</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="49" tabindex="0" role="button" aria-label="編輯基亞勃特">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="基亞勃特" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:6.666666666666667% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">基亞勃特</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>弓兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">44,975</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">7,195</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,959</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,245</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,645</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="50" tabindex="0" role="button" aria-label="編輯帕德拉">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="帕德拉" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:13.333333333333334% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">帕德拉</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>平民系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">33,153</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,447</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,947</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">465</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,442</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="51" tabindex="0" role="button" aria-label="編輯安東尼">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="安東尼" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:20% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">安東尼</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>術師系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">24,415</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">1,867</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,215</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">2,890</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">4,019</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="52" tabindex="0" role="button" aria-label="編輯帕西拔爾">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="帕西拔爾" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:26.666666666666668% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">帕西拔爾</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>神官系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">29,041</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">3,283</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,487</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">2,222</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">4,321</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="53" tabindex="0" role="button" aria-label="編輯拉伊薩達">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="拉伊薩達" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:33.33333333333333% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">拉伊薩達</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>弓兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">38,807</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">3,903</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">2,527</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">741</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">386</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="54" tabindex="0" role="button" aria-label="編輯羅拉">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="羅拉" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:40% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">羅拉</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>平民系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">32,125</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">5,943</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,343</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">555</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,288</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="55" tabindex="0" role="button" aria-label="編輯尼可">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="尼可" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:46.666666666666664% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">尼可</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>盜賊系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">28,784</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">5,439</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,259</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">335</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,295</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">5</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="56" tabindex="0" role="button" aria-label="編輯安娜">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="安娜" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:53.333333333333336% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">安娜</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>平民系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">32,125</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">4,367</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,907</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">489</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,441</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="57" tabindex="0" role="button" aria-label="編輯理查">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="理查" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:60% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">理查</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>步兵系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">39,835</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,127</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,183</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">159</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,933</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="58" tabindex="0" role="button" aria-label="編輯史考特">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="史考特" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:66.66666666666666% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">史考特</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>司祭系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">26,728</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,147</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">5,003</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,736</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">3,595</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="59" tabindex="0" role="button" aria-label="編輯麥克">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="麥克" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:73.33333333333333% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">麥克</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>神官系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">26,471</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,195</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,971</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,706</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">3,542</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="60" tabindex="0" role="button" aria-label="編輯夏恩">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="夏恩" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:80% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">夏恩</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">50,115</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,735</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,391</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">275</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">2,991</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="61" tabindex="0" role="button" aria-label="編輯馬魯達">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="馬魯達" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:86.66666666666667% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">馬魯達</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>平民系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">33,667</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">3,867</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">3,543</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">474</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">1,167</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="62" tabindex="0" role="button" aria-label="編輯可詹特">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="可詹特" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:93.33333333333333% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">可詹特</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>神官系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">26,728</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">2,131</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">4,963</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">1,595</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">3,504</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">3</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="save-char-card in-party" data-char-id="63" tabindex="0" role="button" aria-label="編輯亞魯洛夫">
+          <div class="card-top">
+            <div class="card-portrait-wrap">
+              <i class="sprite-image" role="img" aria-label="亞魯洛夫" style="--sprite-image:url(&quot;portraits/FACE_SPRITE.png&quot;);--sprite-size:1600% 1300%;--sprite-position:100% 25%"></i>
+            </div>
+            <div class="card-title-wrap">
+              <h3 class="card-char-name">亞魯洛夫</h3>
+              <div class="card-char-meta">
+                <span>Lv.25</span>
+                <span>戰士系</span>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card-stat-bars">
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">生命力</span>
+              <span class="card-stat-val">54,227</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">攻擊力</span>
+              <span class="card-stat-val">6,863</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">防禦力</span>
+              <span class="card-stat-val">6,455</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">魔法力</span>
+              <span class="card-stat-val">352</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">抗魔力</span>
+              <span class="card-stat-val">3,028</span>
+            </div>
+            <div class="card-stat-row">
+              <span class="card-stat-lbl">移動力</span>
+              <span class="card-stat-val">4</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- 角色詳細抽屜容器 -->
+      <div id="saveDropzone" class="save-drop-overlay" hidden=""><div><strong>放開以載入存檔</strong><p>將 ARESS*.PRJ 檔案拖曳至畫面任意位置</p></div></div>
+      <div id="saveDrawer" class="save-drawer-scrim" hidden="">
+        <div id="saveDrawerPanel" class="save-drawer-panel" role="dialog" aria-modal="true" aria-label="編輯角色"></div>
+      </div>
+    </section>
+<noscript><p>完整內容與頁面連結可直接閱讀；劇情播放、搜尋、排序及地圖操作需要 JavaScript。</p></noscript></main></div>
+<template id="rewardTemplate"><h2></h2><div class="reward-items"></div></template>
+<template id="rewardItemTemplate"><article class="reward-item"><span class="item-icon item-sprite" role="img"></span><span data-label=""></span></article></template>
+<template id="partyMemberTemplate"><button class="reward-item party-member"><span data-portrait=""></span><span data-label=""></span></button></template>
+<template id="classUnlockLabelTemplate"><small data-class-name="">可轉職為<br></small></template>
+<template id="moneyTemplate"><h2>獲得金錢</h2><p class="money-change"></p></template>
+<template id="choiceTemplate"><h2>請選擇</h2><div class="choices"><button class="primary"></button><button></button></div></template>
+
+<script src="assets/seo-templates.js?v=59c788e9e38b"></script><script src="assets/seo-routes.js?v=59c788e9e38b"></script><script src="assets/seo.js?v=59c788e9e38b"></script><script src="assets/loader.js?v=59c788e9e38b"></script></body></html>

@@ -29,8 +29,16 @@ function loadScript(src){
   document.body.appendChild(script);
  });
 }
-const assetVersion='2e82a86847e8';
+const assetVersion='59c788e9e38b';
 const versioned=src=>src+'?v='+assetVersion;
+let savePromise = null;
+window.AressLoadSave = () => {
+ if(window.AressSaveEditorUI)return Promise.resolve();
+ if(!savePromise)savePromise=loadScript(versioned('assets/save-editor.js'))
+  .then(()=>loadScript(versioned('assets/save-ui.js')))
+  .catch(error=>{savePromise=null;throw error;});
+ return savePromise;
+};
 function loadStoryData(id=130){
  if(D.events?.[id])return Promise.resolve();
  const group=id<71||id>=130?'main':'side';

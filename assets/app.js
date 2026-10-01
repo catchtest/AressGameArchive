@@ -61,7 +61,7 @@ const pageFromLocation=()=>{
  if(seo)return {section:seo.section,setting:seo.setting||''};
  const route=location.hash.slice(1);
  if(settingLabels[route])return {section:'settings',setting:route};
- return {section:['story','world','battles'].includes(route)?route:'home',setting:''};
+ return {section:['story','world','battles','save'].includes(route)?route:'home',setting:''};
 };
 const hasDialogue=id=>!!D.event_has_dialogue[id];
 const compactSidebar=window.matchMedia('(max-width: 1000px)');
@@ -87,6 +87,7 @@ function setImage(id,name,category){
 function showEvents(){
  $('homeInfo').hidden=section!=='home';
  $('eventList').hidden=section==='home';
+ if(section==='save'){window.AressSaveEditorUI?.renderSidebar();return;}
  document.querySelectorAll('[data-story-group]').forEach(b=>{const on=b.dataset.storyGroup===storyGroup;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',on);});
  document.querySelectorAll('[data-battle-group]').forEach(b=>{const on=b.dataset.battleGroup===battleGroup;b.classList.toggle('selected',on);b.setAttribute('aria-pressed',on);});
  if(section==='settings'){showSettingsSidebar();return;}
@@ -199,10 +200,15 @@ function setSection(next,updateUrl=true){
    }).catch(()=>{});
    return;
   }
+ if(next==='save'&&!window.AressSaveEditorUI){
+  AressLoadSave().then(()=>{if(request===sectionRequest)setSection(next,updateUrl);}).catch(()=>{});
+  return;
+ }
  if(next==='story'&&!history.length){prepareEvent(eventId);render();}
  section=next;
  document.body.dataset.section=next;
- for(const name of ['home','story','settings','world','battles'])$(name==='story'?'storyWorkspace':name+'Panel').hidden=name!==next;
+ for(const name of ['home','story','settings','world','battles','save'])$(name==='story'?'storyWorkspace':name+'Panel').hidden=name!==next;
+  if(next==='save'&&window.AressSaveEditorUI)window.AressSaveEditorUI.render();
  document.querySelectorAll('a[data-section],button[data-section]').forEach(b=>b.classList.toggle('selected',b.dataset.section===next&&(next!=='settings'||b.dataset.settingSection===settingId)));
   $('storyCategories').hidden=next!=='story';$('battleCategories').hidden=next!=='battles';showEvents();
   if(next==='world')renderWorld();
@@ -589,7 +595,7 @@ window.addEventListener('popstate',applyLocation);
 window.history.replaceState({section:initialPage.section,setting:initialPage.setting||''},'',location.href);
 setSidebarHidden(compactSidebar.matches);
 compactSidebar.addEventListener('change',event=>setSidebarHidden(event.matches));
-$('eventList').addEventListener('click',event=>{if(compactSidebar.matches&&event.target.closest('button,a.seo-link'))requestAnimationFrame(()=>setSidebarHidden(true));});
+$('eventList').addEventListener('click',event=>{if(compactSidebar.matches&&event.target.closest('button,a.seo-link')&&!event.target.closest('[data-save-remove]'))requestAnimationFrame(()=>setSidebarHidden(true));});
 // Injected only into the isolated SEO build, inside the original app closure.
 // Every view and story frame uses the existing renderer and extracted data.
 const seoReferences = Object.keys(settingLabels);
@@ -635,6 +641,7 @@ async function seoRoutes() {
  if(repeat)add('battles/repeat/','重複戰鬥',{section:'battles',field:repeat.file});
  for (const field of A.fields) add(`battles/${field.file.replace(/\.[^.]+$/,'').toLowerCase()}/`,field.title,{section:'battles',field:field.file});
  add('sacrifice/','擋刀事件',{section:'settings',setting:'characters',special:true});
+ add('save/','存檔編輯器',{section:'save'});
  return routes;
 }
 async function seoApply(route,options={}) {
@@ -669,7 +676,11 @@ async function seoApply(route,options={}) {
   await AressLoadBattle();fieldFile=route.field;
   const field=A.fields.find(f=>f.file===fieldFile);battleGroup=field.battle_type;
   setSection('battles',false);await renderBattle($('fieldViewer'),field);
- }else setSection('home',false);
+ }else if(route.section==='save'){
+   await AressLoadSave();
+   setSection('save',false);
+   await window.AressSaveEditorUI.init();
+  }else setSection('home',false);
  await seoTick();await seoTick();
  await Promise.all([...document.querySelectorAll('.app img')].filter(image=>image.getClientRects().length&&image.src).map(image=>image.decode().catch(()=>{})));
  if(!options.preserveScroll)window.scrollTo(0,0);
