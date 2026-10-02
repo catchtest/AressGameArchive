@@ -1,6 +1,0 @@
-:where(a.seo-link){display:inline-block;text-decoration:none;font:inherit;color:var(--ink);cursor:pointer;text-align:center}
-.seo-row-link{color:inherit;text-decoration:none}
-.seo-page-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.archive-table td:has(.equipment-class-tags){text-align:center;vertical-align:middle}
-.equipment-class-tags{align-items:center;justify-content:center}
-#spells .archive-table tbody tr:nth-child(even){background:transparent}

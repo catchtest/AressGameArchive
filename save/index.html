@@ -19,9 +19,8 @@
   <meta name="twitter:image" content="https://catchtest.github.io/AressGameArchive/assets/scenes/SEEN59.png">
   <title>存檔編輯器｜亞里斯王物語（アレス王の物語）遊戲資料站</title>
 
-  <link rel="stylesheet" href="assets/site.css?v=59c788e9e38b">
-  <link rel="stylesheet" href="assets/save-editor.css?v=59c788e9e38b">
-<link rel="stylesheet" href="assets/seo.css?v=59c788e9e38b"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"存檔編輯器｜亞里斯王物語（アレス王の物語）遊戲資料站","description":"《亞里斯王物語》存檔編輯器。線上讀取與編輯遊戲存檔，支援全角色能力、職系、裝備與持有金錢修改。","url":"https://catchtest.github.io/AressGameArchive/save/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"亞里斯王物語（アレス王の物語）遊戲資料站","url":"https://catchtest.github.io/AressGameArchive/"}}</script></head>
+  <link rel="stylesheet" href="assets/site.css?v=06f6852543b6">
+<link rel="stylesheet" href="assets/save-editor.css?v=06f6852543b6"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"存檔編輯器｜亞里斯王物語（アレス王の物語）遊戲資料站","description":"《亞里斯王物語》存檔編輯器。線上讀取與編輯遊戲存檔，支援全角色能力、職系、裝備與持有金錢修改。","url":"https://catchtest.github.io/AressGameArchive/save/","inLanguage":"zh-Hant","isPartOf":{"@type":"WebSite","name":"亞里斯王物語（アレス王の物語）遊戲資料站","url":"https://catchtest.github.io/AressGameArchive/"}}</script></head>
 <body data-page-section="save" data-page-setting="" class="" data-section="save" data-seo-route="{&quot;path&quot;:&quot;save/&quot;,&quot;label&quot;:&quot;存檔編輯器&quot;,&quot;section&quot;:&quot;save&quot;,&quot;page&quot;:&quot;save/&quot;,&quot;url&quot;:&quot;save/&quot;}"><div class="app"><aside id="sidebar"><button id="toggleSidebar" class="sidebar-toggle" aria-controls="sidebar" aria-expanded="true" title="收起側欄">‹</button><a id="homeLink" class="brand" href="./" aria-label="返回首頁" data-seo-link=""><span class="brand-english">The Story of<br><strong>King Aress</strong></span></a><div class="subtitle">亞里斯王物語 遊戲資料站</div><nav id="storyCategories" class="story-categories btn-group" aria-label="劇情分類" hidden=""><a data-story-group="main" class="selected seo-link" aria-pressed="true" href="story/" data-seo-link="">主線劇情</a><a data-story-group="side" aria-pressed="false" class="seo-link" href="story/?event=71&amp;group=side" data-seo-link="">地點劇情</a></nav><nav id="battleCategories" class="story-categories btn-group" aria-label="戰鬥分類" hidden=""><a data-battle-group="main" class="selected seo-link" aria-pressed="true" href="battles/" data-seo-link="">主線戰鬥</a><a data-battle-group="repeat" aria-pressed="false" class="seo-link" href="battles/?field=FLD044.DAT" data-seo-link="">重複戰鬥</a></nav><dl id="homeInfo" class="home-sidebar-info" hidden="">
  <div><dt>遊戲原名</dt><dd>アレス王の物語</dd></div>
  <div><dt>開發公司</dt><dd>Gust（ガスト）</dd></div>
@@ -313,14 +312,13 @@
       <div class="save-header-row">
           <div class="save-title-box">
             <h1>存檔編輯器</h1>
-            <span id="saveFileBadge" class="save-file-badge">ARESS1.PRJ (38,213 bytes)</span>
           </div>
           <div class="save-action-group">
             <input type="file" id="saveFileInput" accept=".PRJ,.prj" hidden="">
             <button id="btnUploadSave" class="btn-subtle" title="上傳電腦中的 ARESS*.PRJ 檔案">選擇 PRJ 存檔</button>
             <button id="btnLoadSample1" class="btn-subtle" title="載入範例存檔（含全角色、滿級體驗）">載入範例存檔 (滿級)</button>
             <button id="btnLoadSample0" class="btn-subtle" title="載入初始遊戲存檔">載入初始存檔</button>
-            <button id="btnDownloadSave" class="btn-gold" title="回存二進位並下載為 ARESS1.PRJ">下載存檔 (.PRJ)</button>
+            <button id="btnDownloadSave" class="btn-gold" title="依選擇的存檔位置下載">下載存檔 (.PRJ)</button>
           </div>
         </div>
 
@@ -328,24 +326,25 @@
         <!-- 存檔基本資訊 -->
         <div class="save-meta-grid">
           <div class="meta-field">
-            <label>存檔標題（最多 18 位元組）</label>
+            <label for="inputSaveSlot">存檔位置</label>
+            <div class="meta-input-group"><select id="inputSaveSlot"><option value="1" selected="">1 號</option><option value="2">2 號</option><option value="3">3 號</option><option value="4">4 號</option><option value="5">5 號</option></select></div>
+          </div>
+          <div class="meta-field">
+            <label>存檔標題</label>
             <div class="meta-input-group">
               <input type="text" id="inputSaveTitle" maxlength="18" placeholder="輸入存檔標題">
             </div>
           </div>
 
           <div class="meta-field">
-            <label>持有金錢（最多 65,535）</label>
-            <div class="meta-input-group save-money-group">
-              <input type="number" id="inputSaveMoney" min="0" max="65535" placeholder="0">
-              <button id="btnMaxMoney" class="btn-subtle" title="將金錢改為最大值 65535G">全滿</button>
-            </div>
+            <div class="save-money-heading"><label>持有金錢</label><button id="btnMaxMoney" class="btn-subtle" title="將金錢改為最大值 65535G">全滿</button></div>
+            <div class="meta-input-group"><input type="number" id="inputSaveMoney" min="0" max="65535" placeholder="0"></div>
           </div>
 
           <div class="meta-field">
             <label>神殿奉獻次數</label>
             <div class="meta-input-group">
-              <input type="number" id="inputSaveDonation" min="0" max="255" placeholder="0">
+              <input type="number" id="inputSaveDonation" min="0" max="99" placeholder="0">
             </div>
           </div>
 
@@ -365,9 +364,9 @@
       <div class="save-roster-toolbar">
         <div class="roster-tabs">
           <button class="roster-tab active" data-tab="party">已加入 (<span id="tabPartyNum">64</span>)</button>
-          <button class="roster-tab" data-tab="all">全部角色 (64)</button>
           <button class="roster-tab" data-tab="dead">死亡 (<span id="tabDeadNum">0</span>)</button>
           <button class="roster-tab" data-tab="nonparty">未加入 (<span id="tabNonPartyNum">0</span>)</button>
+          <button class="roster-tab" data-tab="all">全部角色 (64)</button>
         </div>
         <div class="roster-quick-tools">
           <button id="btnMaxPartyStats" class="btn-subtle" title="將當前隊伍中所有角色的基礎能力提升至上限">全隊伍能力全滿</button>
@@ -3145,4 +3144,4 @@
 <template id="moneyTemplate"><h2>獲得金錢</h2><p class="money-change"></p></template>
 <template id="choiceTemplate"><h2>請選擇</h2><div class="choices"><button class="primary"></button><button></button></div></template>
 
-<script src="assets/seo-templates.js?v=59c788e9e38b"></script><script src="assets/seo-routes.js?v=59c788e9e38b"></script><script src="assets/seo.js?v=59c788e9e38b"></script><script src="assets/loader.js?v=59c788e9e38b"></script></body></html>
+<script src="assets/loader.js?v=06f6852543b6"></script></body></html>
